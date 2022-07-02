@@ -250,7 +250,8 @@ public interface HCollection {
      * exception.
      */
     void clear();
-    // Comparison and hashing
+
+    // COMPARISON AND HASING
 
     /**
      * Compares the specified object with this collection for equality.
@@ -281,7 +282,7 @@ public interface HCollection {
      * @return true if the specified object is equal to this collection
      *
      * @see Object#equals(Object)
-     * @see HList#equals(Object)
+     * @see HSet#equals(Object)
      */
     boolean equals(Object obj);
 
