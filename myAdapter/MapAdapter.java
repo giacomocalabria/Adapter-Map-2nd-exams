@@ -141,9 +141,20 @@ public class MapAdapter implements HMap{
      *  modified while the operation is in progress.
      * 
      *  @param t Mapping to be stored in this map.
+     *  @throws NullPointerException the specified map is null, or if this map does not permit null keys or values, and the specified
+     *  map contains null keys or values.
      */
 
-    public void putAll(HMap t){  
+    public void putAll(HMap t){
+        if (t == null)
+            throw new NullPointerException();
+
+        HSet ks = t.keySet();
+
+        for (HIterator i = ks.iterator(); i.hasNext();) {
+            Object key = i.next();
+			table.put(key,get(key));
+		}
     }
 
     /**
@@ -167,7 +178,13 @@ public class MapAdapter implements HMap{
      */
     
     public HSet keySet(){
-        return null;
+        HSet ks = new HSet();
+
+        for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
+            ks.add(e.nextElement());
+        }
+
+        return ks;
     }
 
     /**
@@ -183,7 +200,13 @@ public class MapAdapter implements HMap{
      */
 
     public HCollection values(){
-        return null;
+        HCollection vc = new HCollection();
+
+        for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
+            vc.add(e.nextElement());
+        }
+
+        return vc;
     }
 
     /**
@@ -200,14 +223,12 @@ public class MapAdapter implements HMap{
 
     public HSet entrySet(){
        
-        /*questa implementazione non funziona !!
-        HSet set = new java.util.Set();
+        HSet es = new HSet();
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
-            set.add(e.nextElement());
+            es.add(e.nextElement());
         }
-        return set;*/
+        return es;
 
-        return null;
     }
 
     //COMPARISION AND HASHING
