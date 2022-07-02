@@ -1,7 +1,5 @@
 package myAdapter;
 
-import java.util.Map;
-
 public interface HMap{
     //QUERY OPERATIONS
 

@@ -2,6 +2,7 @@ package myAdapter;
 
 import java.util.Objects;
 import java.util.Enumeration;
+import java.util.Map;
 
 /**
  *  The Hashtable class behaves like the Hashtable class from
@@ -27,7 +28,7 @@ public class Hashtable {
         hashtable = new java.util.Hashtable(initialCapacity, loadFactor);
     }
 
-    public Hashtable(HMap t){
+    public Hashtable(Map t){
         hashtable = new java.util.Hashtable(t);
     }
 
