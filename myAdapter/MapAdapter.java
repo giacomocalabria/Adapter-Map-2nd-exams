@@ -40,7 +40,6 @@ public class MapAdapter implements HMap{
         return table.isEmpty();
     }
 
-
     /**
      *  Returns true if this map contains a mapping for the specified key. 
      *  More formally, returns true if and only if this map contains at a mapping for a key k such 
@@ -48,7 +47,6 @@ public class MapAdapter implements HMap{
      *  @param key key whose presence in this map is to be tested
      *  @return true if this map contains a mapping for the specified key
      */
-
     public boolean containsKey(Object key){
         return table.containsKey(key);
     }
@@ -61,7 +59,6 @@ public class MapAdapter implements HMap{
      *  @param value value whose presence in this map is to be tested
      *  @return true if this map maps one or more keys to the specified value.
      */
-
     public boolean containsValue(Object value){
         for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
             if (e.nextElement().equals(value))
@@ -86,7 +83,6 @@ public class MapAdapter implements HMap{
      *  @return the value to which this map maps the specified key, or null if the
      *  map contains no mapping for this key.
      */
-
     public Object get(Object key){
         return table.get(key);
     }
@@ -105,7 +101,6 @@ public class MapAdapter implements HMap{
      *  was no mapping for key. A null return can also indicate that the map previously
      *  associated null with the specified key, if the implementation supports null values.
      */
-
     public Object put(Object key, Object value){
         return table.put(key, value);
     }
@@ -126,7 +121,6 @@ public class MapAdapter implements HMap{
      *  @param key key whose mapping is to be removed from the map.
      *  @return previous value associated with specified key, or null if there was no mapping for key.
      */
-    
     public Object remove(Object key){
         return table.remove(key);
     }
@@ -144,7 +138,6 @@ public class MapAdapter implements HMap{
      *  @throws NullPointerException the specified map is null, or if this map does not permit null keys or values, and the specified
      *  map contains null keys or values.
      */
-
     public void putAll(HMap t){
         if (t == null)
             throw new NullPointerException();
@@ -160,7 +153,6 @@ public class MapAdapter implements HMap{
     /**
      *  Removes all mappings from this map (optional operation).
      */
-
     public void clear(){
         table.clear();
     }
@@ -176,7 +168,6 @@ public class MapAdapter implements HMap{
      * 
      *  @return a set view of the keys contained in this map
      */
-    
     public HSet keySet(){
         HSet ks = new HSet();
 
@@ -198,7 +189,6 @@ public class MapAdapter implements HMap{
      * 
      *  @return a collection view of the values contained in this map
      */
-
     public HCollection values(){
         HCollection vc = new HCollection();
 
@@ -220,7 +210,6 @@ public class MapAdapter implements HMap{
      * 
      *  @return a set view of the mappings contained in this map.
      */
-
     public HSet entrySet(){
        
         HSet es = new HSet();
@@ -245,7 +234,6 @@ public class MapAdapter implements HMap{
      *  @see Hashtable
      *  @see Object.hashCode()
      */
-    
     public boolean equals(Object o){
         return table.equals(o);
     }
