@@ -27,9 +27,83 @@ public class Hashtable {
         hashtable = new java.util.Hashtable(initialCapacity, loadFactor);
     }
 
-    public Hashtable(java.util.Map t){
+    public Hashtable(HMap t){
         hashtable = new java.util.Hashtable(t);
     }
 
+    public void clear(){
+        hashtable.clear();
+    }
+
+    public Object clone(){
+        return hashtable.clone();
+    }
+
+    public boolean contains(Object value){
+        return hashtable.contains(value);
+    }
+
+    public boolean containsKey(Object key){
+        return hashtable.containsKey(key);
+    }
+
+    public boolean containsValue(Object value){
+        return hashtable.containsValue(value);
+    }
+
+    public Enumeration elements(){
+        return hashtable.elements();
+    }
+
+    public HSet entrySet(){
+        return hashtable.entrySet();
+    }
+
+    public boolean equals(Object o){
+        return hashtable.equals(o);
+    }
+
+    public Object get(Object key){
+        return hashtable.get(key);
+    }
+
+    public int hashCode(){
+        return hashtable.hashCode();
+    }
+
+    public boolean isEmpty(){
+        return hashtable.isEmpty();
+    }
     
+    public Enumeration keys(){
+        return hashtable.keys();
+    }
+
+    public HSet keySet(){
+        return hashtable.keySet();
+    }
+
+    public Object put(Object key, Object value){
+        return hashtable.put(key, value);
+    }
+
+    public void putAll(HMap t){
+        hashtable.putAll(t);
+    }
+
+    public Object remove(Object key){
+        return hashtable.remove(key);
+    }
+
+    public int size(){
+        return hashtable.size();
+    }
+
+    public String toString(){
+        return hashtable.toString();
+    }
+
+    public HCollection values(){
+        return hashtable.values();
+    }
 }
