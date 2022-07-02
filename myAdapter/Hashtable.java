@@ -1,8 +1,6 @@
 package myAdapter;
 
-import java.util.Objects;
 import java.util.Enumeration;
-import java.util.Map;
 
 /**
  *  The Hashtable class behaves like the Hashtable class from
@@ -13,98 +11,66 @@ import java.util.Map;
  *  @see java.util.Hashtable
  */
 
-public class Hashtable {
-    java.util.Hashtable hashtable;
+public class Hashtable extends Object{
+    java.util.Hashtable table;
 
     public Hashtable(){
-        hashtable = new java.util.Hashtable();
+        table = new java.util.Hashtable();
     }
 
     public Hashtable(int initialCapacity){
-        hashtable = new java.util.Hashtable(initialCapacity);
-    }
-
-    public Hashtable(int initialCapacity, float loadFactor){
-        hashtable = new java.util.Hashtable(initialCapacity, loadFactor);
-    }
-
-    public Hashtable(Map t){
-        hashtable = new java.util.Hashtable(t);
+        table = new java.util.Hashtable(initialCapacity);
     }
 
     public void clear(){
-        hashtable.clear();
-    }
-
-    public Object clone(){
-        return hashtable.clone();
+        table.clear();
     }
 
     public boolean contains(Object value){
-        return hashtable.contains(value);
+        return table.contains(value);
     }
 
     public boolean containsKey(Object key){
-        return hashtable.containsKey(key);
-    }
-
-    public boolean containsValue(Object value){
-        return hashtable.containsValue(value);
+        return table.containsKey(key);
     }
 
     public Enumeration elements(){
-        return hashtable.elements();
-    }
-
-    public HSet entrySet(){
-        return hashtable.entrySet();
-    }
-
-    public boolean equals(Object o){
-        return hashtable.equals(o);
+        return table.elements();
     }
 
     public Object get(Object key){
-        return hashtable.get(key);
-    }
-
-    public int hashCode(){
-        return hashtable.hashCode();
+        return table.get(key);
     }
 
     public boolean isEmpty(){
-        return hashtable.isEmpty();
+        return table.isEmpty();
     }
     
     public Enumeration keys(){
-        return hashtable.keys();
-    }
-
-    public HSet keySet(){
-        return hashtable.keySet();
+        return table.keys();
     }
 
     public Object put(Object key, Object value){
-        return hashtable.put(key, value);
-    }
-
-    public void putAll(HMap t){
-        hashtable.putAll(t);
+        return table.put(key, value);
     }
 
     public Object remove(Object key){
-        return hashtable.remove(key);
+        return table.remove(key);
     }
 
     public int size(){
-        return hashtable.size();
+        return table.size();
     }
 
     public String toString(){
-        return hashtable.toString();
+        return table.toString();
+    }
+    
+    public boolean equals(Object o){
+        return table.equals(o);
     }
 
-    public HCollection values(){
-        return hashtable.values();
+    public int hashCode(){
+        return table.hashCode();
     }
 }

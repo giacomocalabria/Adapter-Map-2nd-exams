@@ -13,28 +13,28 @@ public interface HMap{
 
     Object get(Object key);
 
-    HSet entrySet();
-
-    HSet keySet();
-
-    HCollection values();
-
     //MODIFICATION OPERATIONS
 
     Object put(Object key, Object value);
 
     Object remove (Object key);
 
-    //COMPARISION AND HASHING
-
-    boolean equals(Object o);
-
-    int hashCode();
-
     //BULK OPERATIONS
 
     void putAll(HMap t);
 
     void clear();
+
+    HSet keySet();
+
+    HCollection values();
+
+    HSet entrySet();
+    
+    //COMPARISION AND HASHING
+
+    boolean equals(Object o);
+
+    int hashCode();
  
 }
