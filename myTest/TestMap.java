@@ -1,3 +1,4 @@
+package myTest;
 import myAdapter.*;
 
 public class TestMap
