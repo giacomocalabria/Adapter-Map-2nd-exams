@@ -13,13 +13,23 @@ import java.util.Enumeration;
  */
 
 public class MapAdapter implements HMap{
+
+
+    // MapAdapter is a Object Adapter
     private Hashtable table;
 
+    // Counts the number of modifications
+    protected int modificationCount;
+
+    /**
+     * Default constructor with no arguments.
+     */
     public MapAdapter(){
+        modificationCount = 0;
         table = new Hashtable();
     }
 
-    //QUERY OPERATIONS
+    // QUERY OPERATIONS
 
     /**
      * Returns the number of elements in this map. If this map contains more than
@@ -98,10 +108,12 @@ public class MapAdapter implements HMap{
      *  @param key key with which the specified value is to be associated.
      *  @param value value to be associated with the specified key.
      *  @return previous value associated with specified key, or null if there
-     *  was no mapping for key. A null return can also indicate that the map previously
-     *  associated null with the specified key, if the implementation supports null values.
+     *          was no mapping for key. A null return can also indicate that the
+     *          map previously associated null with the specified key, if the
+     *          implementation supports null values.
      */
     public Object put(Object key, Object value){
+        modificationCount ++;
         return table.put(key, value);
     }
 
@@ -122,10 +134,16 @@ public class MapAdapter implements HMap{
      *  @return previous value associated with specified key, or null if there was no mapping for key.
      */
     public Object remove(Object key){
-        return table.remove(key);
+        Object value = table.remove(key); //null if not removed, valid otherwise
+
+        if(value == null)
+            return null;
+
+        modificationCount ++; // If this was modified increments modidification count
+        return value;
     }
 
-    //BULK OPERATIONS
+    // BULK OPERATIONS
 
     /**
      *  Copies all of the mappings from the specified map to this map (optional operation).
@@ -148,12 +166,14 @@ public class MapAdapter implements HMap{
             Object key = i.next();
 			table.put(key,get(key));
 		}
+        modificationCount ++;
     }
 
     /**
      *  Removes all mappings from this map (optional operation).
      */
     public void clear(){
+        modificationCount ++;
         table.clear();
     }
 
@@ -169,7 +189,7 @@ public class MapAdapter implements HMap{
      *  @return a set view of the keys contained in this map
      */
     public HSet keySet(){
-        HSet ks = new HSet();
+        HSet ks = new SetAdapter();
 
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
             ks.add(e.nextElement());
@@ -211,15 +231,17 @@ public class MapAdapter implements HMap{
      *  @return a set view of the mappings contained in this map.
      */
     public HSet entrySet(){
-        HSet es = new HSet();
-        for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
-            es.add(e.nextElement());
+        HSet es = new SetAdapter();
+        for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+            Object key = e.nextElement();
+            EntryAdapter en = new EntryAdapter(key,get(key));
+            es.add(en);
         }
         return es;
 
     }
 
-    //COMPARISION AND HASHING
+    // COMPARISION AND HASHING
     
     /**
      *  Compares the specified object with this map for equality. Returns true
@@ -251,5 +273,50 @@ public class MapAdapter implements HMap{
      */
     public int hashCode(){
         return table.hashCode();
+    }
+
+    private class EntryAdapter implements HEntry{
+
+        private Object key;
+
+        private Object value;
+
+        public EntryAdapter(){
+            this(null,null);
+        }
+
+        public EntryAdapter(Object akey, Object avalue){
+            key = akey;
+            value = avalue;
+        }
+
+        public Object getValue(){
+            return value;
+        }
+
+        public Object getKey(){
+            return key;
+        }
+
+        /**
+         *   Replaces the value corresponding to this entry with the specified value
+         *   (optional operation).() Writes through to the map.) The behavior of this
+         *   call is undefined if the mapping has already been removed from the map
+         *   (by the iterator's remove operation).
+         * 
+         *   @param value new value to be stored in this entry
+         *   @return old value corresponging to the entry
+         */
+
+        public Object setValue(Object newValue){
+            Object oldValue = getValue();
+            value = newValue;
+            return oldValue;
+        }
+
+    }
+
+    private class SetAdapter implements HSet{
+
     }
 }
