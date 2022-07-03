@@ -14,11 +14,11 @@ import java.util.Arrays;
 public class TestSuiteMapAdapter {
     
     int count = 0;
-	HMap m = null;
-	HSet s1 = null;
-	HSet ks = null;
-	HIterator iter = null;
-	HCollection c = null;
+    HMap m = null;
+    HSet s1 = null;
+    HSet ks = null;
+    HIterator iter = null;
+    HCollection c = null;
 
     static long timeStart = 0;
     /**
@@ -32,6 +32,8 @@ public class TestSuiteMapAdapter {
         timeStart = System.currentTimeMillis();
     }
 
+    String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+
     /**
      * Before JUnit method. It initializes the two lists and the
      * collection used in this suite.
@@ -40,8 +42,10 @@ public class TestSuiteMapAdapter {
     public void beforeMethod()
     {
         m = new MapAdapter();
-        s1 = new MapAdapter();;
-        coll = new ListAdapter();
+        for(int i=0;i<args.length;i++)
+		{
+			m.put(args[i], args[i]);
+		}
         
     }
 
