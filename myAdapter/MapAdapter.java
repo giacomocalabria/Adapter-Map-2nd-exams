@@ -211,7 +211,6 @@ public class MapAdapter implements HMap{
      *  @return a set view of the mappings contained in this map.
      */
     public HSet entrySet(){
-       
         HSet es = new HSet();
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
             es.add(e.nextElement());
