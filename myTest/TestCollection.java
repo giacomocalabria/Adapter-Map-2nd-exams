@@ -2,6 +2,7 @@ package myTest;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import myAdapter.*;
 
 public class TestCollection {
 	
@@ -11,20 +12,20 @@ public class TestCollection {
 	 * @safe.summary
 	 */
 
-	MyCollection head = new CollectionAdapter();
+	HCollection head = new CollectionAdapter();
 	boolean h = head.add("Collection Adapter");
 	
-	MyCollection param = new CollectionAdapter();
+	HCollection param = new CollectionAdapter();
 	boolean aa = param.add("aaa");
 	boolean bb = param.add("bbb");
 	boolean cc = param.add("ccc");
 	
-	MyCollection intersect = new CollectionAdapter();
+	HCollection intersect = new CollectionAdapter();
 	boolean aaa = intersect.add("aaa");
 	boolean bbb = intersect.add("bbb");
 	boolean ccc = intersect.add("ccc");
 	
-	MyCollection ct = new CollectionAdapter();
+	HCollection ct = new CollectionAdapter();
 	boolean first = ct.add("Collection Adapter");
 	boolean a = ct.add("aaa");
 	boolean b = ct.add("bbb");
@@ -92,7 +93,7 @@ public class TestCollection {
 	 * @safe.summary test metodo equals(Object o) e controllo se sono uguali
 	 */
 	public void equals_o() {
-		MyCollection temp = new CollectionAdapter();
+		HCollection temp = new CollectionAdapter();
 		temp.add("Collection Adapter");
 		temp.add("aaa");
 		temp.add("bbb");

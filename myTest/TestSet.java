@@ -16,7 +16,7 @@ public class TestSet
 
 		//change to actual adapters
 		s = new SetAdapter();
-		c = new ListAdapter();
+		c = new CollectionAdapter();
 
 		System.out.println("Test Set");
 
