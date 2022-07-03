@@ -26,7 +26,7 @@ public class MapAdapter implements HMap{
      */
     public MapAdapter(){
         modificationCount = 0;
-        table = new Hashtable();
+        table = new Hashtable(); 
     }
 
     // QUERY OPERATIONS
@@ -339,79 +339,66 @@ public class MapAdapter implements HMap{
 
     private class SetAdapter implements HSet{
 
-        @Override
         public int size() {
             // TODO Auto-generated method stub
             return 0;
         }
 
-        @Override
         public boolean isEmpty() {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean contains(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public HIterator iterator() {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public Object[] toArray() {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public Object[] toArray(Object[] arrayTarget) {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public boolean add(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean remove(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean containsAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean addAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean removeAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean retainAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public void clear() {
             // TODO Auto-generated method stub
             
@@ -421,79 +408,66 @@ public class MapAdapter implements HMap{
 
     private class CollectionAdapter implements HCollection{
 
-        @Override
         public int size() {
             // TODO Auto-generated method stub
             return 0;
         }
 
-        @Override
         public boolean isEmpty() {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean contains(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public HIterator iterator() {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public Object[] toArray() {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public Object[] toArray(Object[] arrayTarget) {
             // TODO Auto-generated method stub
             return null;
         }
 
-        @Override
         public boolean add(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean remove(Object obj) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean containsAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean addAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean removeAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public boolean retainAll(HCollection coll) {
             // TODO Auto-generated method stub
             return false;
         }
 
-        @Override
         public void clear() {
             // TODO Auto-generated method stub
             

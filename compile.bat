@@ -1,0 +1,1 @@
+javac -cp "./JUnit/*;./Matcher/*" myAdapter/*.java myTest/*.java

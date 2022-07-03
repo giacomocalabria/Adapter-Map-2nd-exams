@@ -11,7 +11,7 @@ import java.util.Enumeration;
  *  @see java.util.Hashtable
  */
 
-public class Hashtable extends Object{
+public class Hashtable{
     java.util.Hashtable table;
 
     public Hashtable(){
