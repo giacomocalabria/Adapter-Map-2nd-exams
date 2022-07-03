@@ -8,7 +8,7 @@ import java.util.Enumeration;
  * the version of Java Micro Edition CLDC 1.1. The last one has
  * fewer methods than the standard Java's one.
  * 
- * @author Nicola Maritan
+ * @author Giacomo Calabria
  * @see java.util.Vector
  */
 

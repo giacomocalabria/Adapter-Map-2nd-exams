@@ -192,7 +192,9 @@ public class MapAdapter implements HMap{
         HSet ks = new SetAdapter();
 
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
-            ks.add(e.nextElement());
+            HEntry me = (HEntry) e.nextElement();
+			Object key = me.getKey();
+			ks.add(key);
         }
 
         return ks;
@@ -211,11 +213,9 @@ public class MapAdapter implements HMap{
      */
     public HCollection values(){
         HCollection vc = new CollectionAdapter();
-
         for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
-            vc.add(e.nextElement());
+            vc.add(((HEntry) e.nextElement()).getValue());;
         }
-
         return vc;
     }
 
@@ -233,12 +233,11 @@ public class MapAdapter implements HMap{
     public HSet entrySet(){
         HSet es = new SetAdapter();
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-            Object key = e.nextElement();
-            EntryAdapter en = new EntryAdapter(key,get(key));
-            es.add(en);
+            Object tmp = e.nextElement();
+            MapEntryAdapter me = new MapEntryAdapter(tmp);
+            es.add(me);
         }
         return es;
-
     }
 
     // COMPARISION AND HASHING
@@ -288,27 +287,21 @@ public class MapAdapter implements HMap{
      *  @see Map.entrySet()
      */
 
-    private class EntryAdapter implements HEntry{
+    public class MapEntryAdapter implements HEntry{
 
         private Object key;
-
         private Object value;
 
-        public EntryAdapter(){
-            this(null,null);
-        }
-
-        public EntryAdapter(Object akey, Object avalue){
-            key = akey;
-            value = avalue;
+        public MapEntryAdapter(Object akey){
+            this.key = akey;
         }
 
         public Object getValue(){
-            return value;
+            return this.value;
         }
 
         public Object getKey(){
-            return key;
+            return this.key;
         }
 
         /**
@@ -323,155 +316,19 @@ public class MapAdapter implements HMap{
 
         public Object setValue(Object newValue){
             Object oldValue = getValue();
-            value = newValue;
+            this.value = newValue;
             return oldValue;
         }
 
-        public boolean equals(Object e2){
-            EntryAdapter e = (EntryAdapter) e2;
-            return (this.getKey()==null ? e.getKey()==null : this.getKey().equals(e.getKey()))  && (this.getValue()==null ?  e.getValue()==null : this.getValue().equals(e.getValue()));
+        public boolean equals(Object o){
+            if( !(o instanceof MapEntryAdapter))
+                return false;
+            MapEntryAdapter e = (MapEntryAdapter) o;
+            return(this.key.equals(e.key) && this.value.equals(e.value));
         }
 
         public int hashCode(){
-            return this.hashCode();
+            return (new String(key.toString() + ":" + value.toString())).hashCode();
         }
-    }
-
-    private class SetAdapter implements HSet{
-
-        public int size() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public boolean isEmpty() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean contains(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public HIterator iterator() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public Object[] toArray() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public Object[] toArray(Object[] arrayTarget) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public boolean add(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean remove(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean containsAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean addAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean removeAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean retainAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public void clear() {
-            // TODO Auto-generated method stub
-            
-        }
-        
-    }
-
-    private class CollectionAdapter implements HCollection{
-
-        public int size() {
-            // TODO Auto-generated method stub
-            return 0;
-        }
-
-        public boolean isEmpty() {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean contains(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public HIterator iterator() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public Object[] toArray() {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public Object[] toArray(Object[] arrayTarget) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
-        public boolean add(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean remove(Object obj) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean containsAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean addAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean removeAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public boolean retainAll(HCollection coll) {
-            // TODO Auto-generated method stub
-            return false;
-        }
-
-        public void clear() {
-            // TODO Auto-generated method stub
-            
-        }
-        
     }
 }
