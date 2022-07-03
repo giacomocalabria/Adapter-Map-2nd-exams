@@ -210,7 +210,7 @@ public class MapAdapter implements HMap{
      *  @return a collection view of the values contained in this map
      */
     public HCollection values(){
-        HCollection vc = new HCollection();
+        HCollection vc = new CollectionAdapter();
 
         for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
             vc.add(e.nextElement());
@@ -275,6 +275,19 @@ public class MapAdapter implements HMap{
         return table.hashCode();
     }
 
+    /**
+     *  A map entry (key-value pair). The Map.entrySet method returns a collection-view
+     *  of the map, whose elements are of this class. The only way to obtain a reference
+     *  to a map entry is from the iterator of this collection-view. These Map.Entry
+     *  objects are valid only for the duration of the iteration; more formally, the
+     *  behavior of a map entry is undefined if the backing map has been modified after
+     *  the entry was returned by the iterator, except through the iterator's own remove
+     *  operation, or through the setValue operation on a map entry returned by the iterator.
+     * 
+     *  @author Giacomo Calabria
+     *  @see Map.entrySet()
+     */
+
     private class EntryAdapter implements HEntry{
 
         private Object key;
@@ -314,9 +327,177 @@ public class MapAdapter implements HMap{
             return oldValue;
         }
 
+        public boolean equals(Object e2){
+            EntryAdapter e = (EntryAdapter) e2;
+            return (this.getKey()==null ? e.getKey()==null : this.getKey().equals(e.getKey()))  && (this.getValue()==null ?  e.getValue()==null : this.getValue().equals(e.getValue()));
+        }
+
+        public int hashCode(){
+            return this.hashCode();
+        }
     }
 
     private class SetAdapter implements HSet{
 
+        @Override
+        public int size() {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public HIterator iterator() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Object[] toArray() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Object[] toArray(Object[] arrayTarget) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public boolean add(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean addAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public void clear() {
+            // TODO Auto-generated method stub
+            
+        }
+        
+    }
+
+    private class CollectionAdapter implements HCollection{
+
+        @Override
+        public int size() {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public boolean isEmpty() {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean contains(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public HIterator iterator() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Object[] toArray() {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public Object[] toArray(Object[] arrayTarget) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public boolean add(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean remove(Object obj) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean containsAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean addAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean removeAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public boolean retainAll(HCollection coll) {
+            // TODO Auto-generated method stub
+            return false;
+        }
+
+        @Override
+        public void clear() {
+            // TODO Auto-generated method stub
+            
+        }
+        
     }
 }
