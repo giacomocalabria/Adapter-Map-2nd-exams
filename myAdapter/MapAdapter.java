@@ -3,13 +3,12 @@ package myAdapter;
 import java.util.Enumeration;
 
 /**
- *  MapAdapter adapts the Hashtable class from Java CLDC 1.1 to the
- *  HMap interface. Therefore it's an Adapter design
- *  pattern. 
+ *  MapAdapter adapts the {@link Hashtable} class from Java CLDC 1.1 to the
+ *  {@link HMap} interface. Therefore it's an Adapter design pattern. 
  * 
  *  @version 1.0
  *  @author Giacomo Calabria
- *  @see HMap
+ *  @see {@link HMap}
  */
 
 public class MapAdapter implements HMap{

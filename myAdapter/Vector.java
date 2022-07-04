@@ -1,7 +1,7 @@
 package myAdapter;
 
-import java.util.Objects;
 import java.util.Enumeration;
+import java.util.Objects;
 
 /**
  * The Vector class behaves like the Vector class from
@@ -9,7 +9,7 @@ import java.util.Enumeration;
  * fewer methods than the standard Java's one.
  * 
  * @author Giacomo Calabria
- * @see java.util.Vector
+ * @see ava.util.Vector
  */
 
 public class Vector {
