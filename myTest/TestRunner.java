@@ -13,7 +13,7 @@ import java.util.List;
  * JUnit framework.
  * 
  * @version JUnit 4.13
- * @author Nicola Maritan
+ * @author Giacomo Calabria
  */
 public class TestRunner
 {
@@ -35,16 +35,18 @@ public class TestRunner
         Result testResults;
 
         System.out.println("TestRunner started. Starting test executions.\n");
-        testResults = JUnitCore.runClasses(TestSuiteListAdapter.class,
+        
+        /*testResults = JUnitCore.runClasses(TestSuiteListAdapter.class,
                                            TestSuiteListAdapterIterator.class,
                                            TestSuiteSubListAdapter.class,
                                            TestSuiteSubListAdapterIterator.class,
                                            TestSuiteSubListAdapterSubList.class,
                                            TestSuiteSubListAdapterIteratorSubList.class);
+        */
 
         System.out.println("\nTestRunner ended. All the tests have been completed.");
 
-        elaborateResults(testResults);
+        //elaborateResults(testResults);
         printStatistics();
     }
 
