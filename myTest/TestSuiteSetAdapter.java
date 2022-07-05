@@ -2,14 +2,10 @@ package myTest;
 
 // JUnit imports
 import org.junit.*;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 // Adapter package import
 import myAdapter.*;
-
-// Other imports
-import java.util.Arrays;
 
 public class TestSuiteSetAdapter {
     

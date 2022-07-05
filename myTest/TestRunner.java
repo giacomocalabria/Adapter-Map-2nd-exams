@@ -36,14 +36,13 @@ public class TestRunner
      * command line. Starting point for all testing.
      * @param args - unused
      */
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args){
         // Contains the test result from calling JUnitCore.runClasses
         Result testResults;
 
         System.out.println("TestRunner started. Starting test executions.\n");
         
-        testResults = JUnitCore.runClasses(TestSuiteMapAdapter.class);
+        testResults = JUnitCore.runClasses(TestSuiteMapAdapter.class, TestSuiteCollectionAdapter.class, TestSuiteSetAdapter.class, TestCollection.class);
 
         System.out.println("\nTestRunner ended. All the tests have been completed.");
 
