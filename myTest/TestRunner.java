@@ -7,10 +7,9 @@ import org.junit.runner.notification.Failure;
 import java.util.*;
 
 /**
- * TestRunner class can be launched through command line to
- * invoke all tests for myTest package. In fact it has a main
- * method to initiate and run all the testing. It is based on
- * JUnit framework.
+ * TestRunner class can be launched through command line to invoke all tests
+ * for myTest package. In fact it has a main method to initiate and run all
+ * the testing. It is based on JUnit framework.
  * 
  * Main class to execute {@link myTest}
  * <p>
