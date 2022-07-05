@@ -84,14 +84,7 @@ public class MapAdapter implements HMap{
      *  @throws NullPointerException if the specified value is null (this map does not permit null values).
      */
     public boolean containsValue(Object value) throws NullPointerException{
-        if (value == null)
-            throw new NullPointerException();
-            
-        for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
-            if (e.nextElement().equals(value))
-                return true;
-        }
-        return false;
+        return table.contains(value);
     }
 
     /**
@@ -197,15 +190,14 @@ public class MapAdapter implements HMap{
         if (t == null)
             throw new NullPointerException();
         
-        if (t.isEmpty())
-            return;
+        //if (t.isEmpty()) return;
 
-        HSet ks = t.keySet();
-
-        for (HIterator i = ks.iterator(); i.hasNext();) {
-            Object key = i.next();
-			table.put(key,get(key));
-		}
+        HSet ks = t.entrySet();
+        HIterator i = ks.iterator();
+        while(i.hasNext()){
+            HEntry me = (HEntry) i.next();
+			table.put(me.getKey(),me.getValue());
+		} 
         modificationCount ++;
     }
 
@@ -289,6 +281,7 @@ public class MapAdapter implements HMap{
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
             Object tmp = e.nextElement();
             MapEntryAdapter me = new MapEntryAdapter(tmp);
+            me.setValue(table.get(tmp));
             es.add(me);
         }
         return es;
@@ -318,8 +311,11 @@ public class MapAdapter implements HMap{
 
         if(this.isEmpty() && map.isEmpty())
             return true;
+
+		HSet s1 = map.entrySet();
+		HSet s2 = entrySet();
         
-        return table.equals(o);
+		return s1.equals(s2);
     }
 
     /**

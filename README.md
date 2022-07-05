@@ -2,14 +2,13 @@
 
 Secondo appello dell' esame del corso di Elementi di Ingegneria del Software
 
-Link utili: 
+Link utili:
 
 * [http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/]()
-* [http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/MapAdapter.java]()
+* [MapAdapter](http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/MapAdapter.java)
 * [http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/SetAdapter.java]()
 * [http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/CollectionAdapter.java]()
 * [http://geas.dei.unipd.it/IS2/Esempi/2004-2005/adapter/CollectionAdapterIterator.java]()
-
 
 CLDC1.1
 

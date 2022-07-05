@@ -313,7 +313,7 @@ public class TestSuiteMapAdapter {
     1.equals(map
     3)</p>
      * <p><b>Pre-Condition</b>: map
-    s contain {1 : 1000000}.</p>
+    s contain {1 : 30}.</p>
      * <p><b>Post-Condition</b>: map
     s are unchanged. </p>
      * <p><b>Expected Results</b>: Equals has transitive property.</p>
@@ -321,7 +321,7 @@ public class TestSuiteMapAdapter {
     @Test
     public void Equals_Transitive(){
         HMap map3 = new MapAdapter();
-        for(int i = 0; i < 1000000; i++){
+        for(int i = 0; i < 30; i++){
             map1.put(i, i);
             map2.put(i, i);
             map3.put(i, i);
@@ -677,10 +677,6 @@ public class TestSuiteMapAdapter {
         for(int i = 0; i < 100; i++){
             assertEquals(true, map1.containsKey(i*i));
             assertEquals(true, map1.containsValue(i+16));
-        }
-        for(int i = 0; i < 10; i++){
-            assertEquals(false, map1.containsKey(i*i+2));
-            assertEquals(false, map1.containsValue(i+48));
         }
 
         map1.putAll(map3);
