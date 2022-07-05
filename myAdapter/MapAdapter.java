@@ -8,9 +8,7 @@ import java.util.Enumeration;
  *  have a restrictions on the keys and values they contain. In fact null keys
  *  or values are forbidden. 
  * 
- *  <p>
- *  Therefore it's an Adapter design pattern.
- * 
+ *  <p>Therefore it's an Adapter design pattern.
  *  
  *  @version 1.0
  *  @author Giacomo Calabria
@@ -354,7 +352,6 @@ public class MapAdapter implements HMap{
      *  @author Giacomo Calabria
      *  @see Map.entrySet()
      */
-
     public class MapEntryAdapter implements HEntry{
 
         private Object key;
