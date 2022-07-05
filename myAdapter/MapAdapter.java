@@ -471,12 +471,27 @@ public class MapAdapter implements HMap{
     
         public Object[] toArray() {
             Object[] arr = new Object[size()];
-            
+            int i = 0;
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                MapEntryAdapter me = new MapEntryAdapter(tmp);
+                me.setValue(table.get(tmp));
+                arr[i] = me;
+                i++;
+            }
             return arr;
         }
     
         public Object[] toArray(Object[] arrayTarget) {
-            return toArray(); //ATTENZIONE
+            int i = 0;
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                MapEntryAdapter me = new MapEntryAdapter(tmp);
+                me.setValue(table.get(tmp));
+                arrayTarget[i] = me;
+                i++;
+            }
+            return arrayTarget;
         }
     
         public boolean add(Object obj) {
@@ -492,6 +507,107 @@ public class MapAdapter implements HMap{
             if (table.remove(em.getKey()) == null)
                 return false;
             return true;
+        }
+    
+        public boolean containsAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(!table.contains(tmp))
+                    return false;
+            }
+            return true;
+        }
+    
+        public boolean addAll(HCollection coll) {
+            return false;
+        }
+    
+        public boolean removeAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            boolean hasRemAll = false;
+            while(i.hasNext()){
+                hasRemAll = vec.removeElement(i.next());
+            }
+            return hasRemAll;
+        }
+    
+        public boolean retainAll(HCollection coll) {
+            boolean hasRetAll = false;
+            HIterator i = this.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(! coll.contains(tmp)){
+                    i.remove();
+                    hasRetAll = true;
+                }
+            }
+            return hasRetAll;
+        }
+    
+        public void clear(){
+            table.clear();
+        }
+    
+        public boolean equals(Object o){
+            if(! (o instanceof CollectionAdapter)){
+                return false;
+            }
+            CollectionAdapter ca = (CollectionAdapter) o;
+            return vec.equals(ca.vec);
+        }
+    
+        public int hashCode(){
+            return vec.hashCode();
+        }
+    }
+
+    private class SubValuesCollectionAdapter implements HCollection{
+        public SubValuesCollectionAdapter(Hashtable table){}
+
+        public int size() {
+            return table.size();
+        }
+
+        public boolean isEmpty() {
+            return table.isEmpty();
+        }
+    
+        public boolean contains(Object obj){
+            return table.contains(obj);
+        }
+    
+        public HIterator iterator() {
+            return null;
+        }
+    
+        public Object[] toArray() {
+            Object[] arr = new Object[size()];
+            int i = 0;
+            for (Enumeration e = table.elements() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                arr[i] = table.get(tmp);
+                i++;
+            }
+            return arr;
+        }
+    
+        public Object[] toArray(Object[] arrayTarget) {
+            int i = 0;
+            for (Enumeration e = table.elements() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                arrayTarget[i] = table.get(tmp);
+                i++;
+            }
+            return arrayTarget;
+        }
+    
+        public boolean add(Object obj) {
+            return false;
+        }
+    
+        public boolean remove(Object obj){
+            return false;
         }
     
         public boolean containsAll(HCollection coll) {
