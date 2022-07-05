@@ -4,6 +4,10 @@ public class CollectionAdapter implements HCollection{
 
     private Vector vec;
 
+    public CollectionAdapter(){
+        vec = new Vector();
+    }
+
     public int size() {
         return vec.size();
     }
@@ -12,7 +16,7 @@ public class CollectionAdapter implements HCollection{
         return vec.isEmpty();
     }
 
-    public boolean contains(Object obj) {
+    public boolean contains(Object obj){
         return vec.contains(obj);
     }
 

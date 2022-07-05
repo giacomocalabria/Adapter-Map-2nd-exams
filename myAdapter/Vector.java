@@ -8,6 +8,8 @@ import java.util.Objects;
  * the version of Java Micro Edition CLDC 1.1. The last one has
  * fewer methods than the standard Java's one.
  * 
+ * <p> Important: in this Vector is forbidden null elements
+ * 
  * @author Giacomo Calabria
  * @see ava.util.Vector
  */
@@ -28,7 +30,9 @@ public class Vector {
         vector = new java.util.Vector(initialCapacity, capacityIncrement);
     }
 
-    public void addElement(Object obj){
+    public void addElement(Object obj) throws NullPointerException{
+        if (obj == null)
+            throw new NullPointerException();
         vector.addElement(obj);
     }
 
@@ -36,7 +40,9 @@ public class Vector {
         return vector.capacity();
     }
 
-    public boolean contains(Object elem){
+    public boolean contains(Object elem) throws NullPointerException{
+        if (elem == null)
+            throw new NullPointerException();
         return vector.contains(elem);
     }
 
@@ -60,15 +66,21 @@ public class Vector {
         return vector.firstElement();
     }
 
-    public int indexOf(Object elem){
+    public int indexOf(Object elem) throws NullPointerException{
+        if (elem == null)
+            throw new NullPointerException();
         return vector.indexOf(elem);
     }
 
-    public int indexOf(Object elem, int index){
+    public int indexOf(Object elem, int index) throws NullPointerException{
+        if (elem == null)
+            throw new NullPointerException();
         return vector.indexOf(elem, index);
     }
 
-    public void insertElementAt(Object obj, int index){
+    public void insertElementAt(Object obj, int index) throws NullPointerException{
+        if (obj == null)
+            throw new NullPointerException();
         vector.insertElementAt(obj, index);
     }
 
@@ -80,11 +92,15 @@ public class Vector {
         return vector.lastElement();
     }
 
-    public int lastIndexOf(Object elem){
+    public int lastIndexOf(Object elem) throws NullPointerException{
+        if (elem == null)
+            throw new NullPointerException();
         return vector.lastIndexOf(elem);
     }
 
-    public int lastIndexOf(Object elem, int index){
+    public int lastIndexOf(Object elem, int index) throws NullPointerException{
+        if (elem == null)
+            throw new NullPointerException();
         return vector.lastIndexOf(elem, index);
     }
 
@@ -92,7 +108,9 @@ public class Vector {
         vector.removeAllElements();
     }
 
-    public boolean removeElement(Object obj){
+    public boolean removeElement(Object obj) throws NullPointerException{
+        if (obj == null)
+            throw new NullPointerException();
         return vector.removeElement(obj);
     }
 
@@ -100,7 +118,9 @@ public class Vector {
         vector.removeElementAt(index);
     }
 
-    public void setElementAt(Object obj, int index){
+    public void setElementAt(Object obj, int index) throws NullPointerException{
+        if (obj == null)
+            throw new NullPointerException();
         vector.setElementAt(obj, index);
     }
 
