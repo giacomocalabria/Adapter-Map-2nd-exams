@@ -151,6 +151,16 @@ public class TestSuiteMapAdapter {
     // ************************** CONTAINS KEY & VALUE METHOD **************************************
 
     @Test
+    public void Contains_EmptyMapKey(){
+        assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsKey("ci"));
+    }
+
+    @Test
+    public void Contains_EmptyMapValue(){
+        assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsValue("ci"));
+    }
+
+    @Test
     public void Contains_1Key_and2(){
 
         assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsKey("ci"));

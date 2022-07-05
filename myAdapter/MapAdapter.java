@@ -4,8 +4,14 @@ import java.util.Enumeration;
 
 /**
  *  MapAdapter adapts the {@link Hashtable} class from Java CLDC 1.1 to the
- *  {@link HMap} interface. Therefore it's an Adapter design pattern. 
+ *  {@link HMap} interface. Due to this adaptee this implementation of the map
+ *  have a restrictions on the keys and values they contain. In fact null keys
+ *  or values are forbidden. 
  * 
+ *  <p>
+ *  Therefore it's an Adapter design pattern.
+ * 
+ *  
  *  @version 1.0
  *  @author Giacomo Calabria
  *  @see {@link HMap}
@@ -31,19 +37,19 @@ public class MapAdapter implements HMap{
     // QUERY OPERATIONS
 
     /**
-     * Returns the number of elements in this map. If this map contains more than
-     * Integer.MAX_VALUE elements, returns Integer.MAX_VALUE.
+     * Returns the number of key-value mappings in this map. If this map contains
+     * more than Integer.MAX_VALUE elements, returns Integer.MAX_VALUE.
      *
-     * @return the number of elements in this map.
+     * @return the number of key-value mappings in this map.
      */
     public int size(){
         return table.size();
     }
 
     /**
-     * Returns true if this map contains no elements.
+     * Returns true if this map contains no key-value mappings.
      *
-     * @return true if this map contains no elements.
+     * @return true if this map contains no key-value mappings.
      */
     public boolean isEmpty(){
         return table.isEmpty();
@@ -55,9 +61,9 @@ public class MapAdapter implements HMap{
      *  that (key==null ? k==null : key.equals(k)). (There can be at most one such mapping.)
      *  @param key key whose presence in this map is to be tested
      *  @return true if this map contains a mapping for the specified key
-     *  @throws NullPointerException if key is null.
+     *  @throws NullPointerException if the key is null (this map does not permit null key).
      */
-    public boolean containsKey(Object key){
+    public boolean containsKey(Object key) throws NullPointerException{
         return table.containsKey(key);
     }
 
@@ -68,9 +74,9 @@ public class MapAdapter implements HMap{
      *  probably require time linear in the map size for most implementations of the Map interface.
      *  @param value value whose presence in this map is to be tested
      *  @return true if this map maps one or more keys to the specified value.
-     *  @throws NullPointerException if value is null.
+     *  @throws NullPointerException if the value is null (this map does not permit null values).
      */
-    public boolean containsValue(Object value){
+    public boolean containsValue(Object value) throws NullPointerException{
         if (value == null)
             throw new NullPointerException();
             
