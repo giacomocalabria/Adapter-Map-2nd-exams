@@ -2,6 +2,8 @@ package myAdapter;
 
 import java.util.Enumeration;
 
+import org.hamcrest.core.IsInstanceOf;
+
 /**
  *  MapAdapter adapts the {@link Hashtable} class from Java CLDC 1.1 to the
  *  {@link HMap} interface. Due to this adaptee this implementation of the map
@@ -277,14 +279,16 @@ public class MapAdapter implements HMap{
      * @return a set view of the mappings contained in this map
      */
     public HSet entrySet(){
-        HSet es = new SetAdapter();
+        /*HSet es = new SetAdapter();
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
             Object tmp = e.nextElement();
             MapEntryAdapter me = new MapEntryAdapter(tmp);
             me.setValue(table.get(tmp));
             es.add(me);
         }
-        return es;
+        return es;*/
+
+        return new SubEntrySetAdapter(table);
     }
 
     // COMPARISION AND HASHING
@@ -437,6 +441,109 @@ public class MapAdapter implements HMap{
          */
         public int hashCode(){
             return (new String(key.toString() + ":" + value.toString())).hashCode();
+        }
+    }
+
+    private class SubEntrySetAdapter implements HSet{
+        public SubEntrySetAdapter(Hashtable table){}
+
+        public int size() {
+            return table.size();
+        }
+
+        public boolean isEmpty() {
+            return table.isEmpty();
+        }
+    
+        public boolean contains(Object obj){
+            if(! (obj instanceof HEntry)){
+                return false;
+            }
+
+            HEntry em = (HEntry) obj;
+
+            return (table.contains(em.getValue()) && table.containsKey(em.getKey()));
+        }
+    
+        public HIterator iterator() {
+            return null;
+        }
+    
+        public Object[] toArray() {
+            Object[] arr = new Object[size()];
+            
+            return arr;
+        }
+    
+        public Object[] toArray(Object[] arrayTarget) {
+            return toArray(); //ATTENZIONE
+        }
+    
+        public boolean add(Object obj) {
+            return false;
+        }
+    
+        public boolean remove(Object obj){
+            if(! (obj instanceof HEntry)){
+                return false;
+            }
+
+            HEntry em = (HEntry) obj;
+            if (table.remove(em.getKey()) == null)
+                return false;
+            return true;
+        }
+    
+        public boolean containsAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(!table.contains(tmp))
+                    return false;
+            }
+            return true;
+        }
+    
+        public boolean addAll(HCollection coll) {
+            return false;
+        }
+    
+        public boolean removeAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            boolean hasRemAll = false;
+            while(i.hasNext()){
+                hasRemAll = vec.removeElement(i.next());
+            }
+            return hasRemAll;
+        }
+    
+        public boolean retainAll(HCollection coll) {
+            boolean hasRetAll = false;
+            HIterator i = this.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(! coll.contains(tmp)){
+                    i.remove();
+                    hasRetAll = true;
+                }
+            }
+            return hasRetAll;
+        }
+    
+        public void clear(){
+            table.clear();
+        }
+    
+        public boolean equals(Object o){
+            if(! (o instanceof CollectionAdapter)){
+                return false;
+            }
+            CollectionAdapter ca = (CollectionAdapter) o;
+            return vec.equals(ca.vec);
+        }
+    
+        public int hashCode(){
+            return vec.hashCode();
         }
     }
 }

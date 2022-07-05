@@ -48,38 +48,40 @@ public interface HCollection {
     // Query Operations
 
     /**
-     * Returns the number of elements in this collection. If this collection
-     * contains more than Integer.MAX_VALUE elements, returns
-     * Integer.MAX_VALUE.
+     * Returns the number of elements in this collection.  If this collection
+     * contains more than {@code Integer.MAX_VALUE} elements, returns
+     * {@code Integer.MAX_VALUE}.
      *
      * @return the number of elements in this collection
      */
     int size();
 
     /**
-     * Returns true if this collection contains no elements.
+     * Returns {@code true} if this collection contains no elements.
      *
-     * @return true if this collection contains no elements
+     * @return {@code true} if this collection contains no elements
      */
     boolean isEmpty();
 
     /**
-     * Returns true if this collection contains the specified element. More
-     * formally, returns true if and only if this collection contains at
-     * least one element e such that
-     * (o==null ? e==null : o.equals(e)).
+     * Returns {@code true} if this collection contains the specified element.
+     * More formally, returns {@code true} if and only if this collection
+     * contains at least one element {@code e} such that
+     * {@code Objects.equals(o, e)}.
      *
-     * @param obj element whose presence in this collection is to be tested.
-     * @return true if this collection contains the specified element
+     * @param o element whose presence in this collection is to be tested
+     * @return {@code true} if this collection contains the specified
+     *         element
      */
-    boolean contains(Object obj);
+    boolean contains(Object o);
 
     /**
-     * Returns an iterator over the elements in this collection. There are no
-     * guarantees concerning the order in which the elements are returned (unless
-     * this collection is an instance of some class that provides a guarantee).
+     * Returns an iterator over the elements in this collection.  There are no
+     * guarantees concerning the order in which the elements are returned
+     * (unless this collection is an instance of some class that provides a
+     * guarantee).
      *
-     * @return an Iterator over the elements in this collection
+     * @return an {@code Iterator} over the elements in this collection
      */
     HIterator iterator();
 
@@ -137,13 +139,13 @@ public interface HCollection {
      * </pre>
      * <p>
      *
-     * Note that toArray(new Object[0]) is identical in function to
-     * toArray().
+     * <p>Note that {@code toArray(new Object[0])} is identical in function to
+     * {@code toArray()}.
      *
-     * @param arrayTarget the array into which the elements of this collection are
-     *                    to be stored, if it is big enough; otherwise, a new array
-     *                    of the same runtime type is allocated for this purpose.
-     * @return an array containing the elements of this collection
+     * @param arrayTarget the array into which the elements of this collection are to be
+     *                      stored, if it is big enough; otherwise, a new array of the same
+     *                      runtime type is allocated for this purpose.
+     * @return an array containing all of the elements in this collection
      *
      * @throws NullPointerException if the specified array is null.
      */
@@ -154,76 +156,81 @@ public interface HCollection {
 
     /**
      * Ensures that this collection contains the specified element (optional
-     * operation). Returns true if this collection changed as a result of the call.
-     * (Returns false if this collection does not permit duplicates and already
-     * contains the specified element.)
-     * <p>
+     * operation).  Returns {@code true} if this collection changed as a
+     * result of the call.  (Returns {@code false} if this collection does
+     * not permit duplicates and already contains the specified element.)<p>
      *
      * Collections that support this operation may place limitations on what
-     * elements may be added to this collection. In particular, some collections
-     * will refuse to add null elements, and others will impose restrictions on the
-     * type of elements that may be added. Collection classes should clearly specify
-     * in their documentation any restrictions on what elements may be added.
-     * <p>
+     * elements may be added to this collection.  In particular, some
+     * collections will refuse to add {@code null} elements, and others will
+     * impose restrictions on the type of elements that may be added.
+     * Collection classes should clearly specify in their documentation any
+     * restrictions on what elements may be added.<p>
      *
-     * If a collection refuses to add a particular element for any reason other than
-     * that it already contains the element, it <i>must</i> throw an exception
-     * (rather than returning false). This preserves the invariant that a collection
-     * always contains the specified element after this call returns.
+     * If a collection refuses to add a particular element for any reason
+     * other than that it already contains the element, it <i>must</i> throw
+     * an exception (rather than returning {@code false}).  This preserves
+     * the invariant that a collection always contains the specified element
+     * after this call returns.
      *
-     * @param obj element whose presence in this collection is to be ensured.
-     * @return true if this collection changed as a result of the call
+     * @param e element whose presence in this collection is to be ensured
+     * @return {@code true} if this collection changed as a result of the
+     *         call
      */
     boolean add(Object obj);
 
     /**
-     * Removes a single instance of the specified element from this collection, if
-     * it is present (optional operation). More formally, removes an element e such
-     * that (o==null ? e==null : o.equals(e)), if this collection contains one or
-     * more such elements. Returns true if this collection contained the specified
-     * element (or equivalently, if this collection changed as a result of the
-     * call).
+     * Removes a single instance of the specified element from this
+     * collection, if it is present (optional operation).  More formally,
+     * removes an element {@code e} such that
+     * {@code Objects.equals(o, e)}, if
+     * this collection contains one or more such elements.  Returns
+     * {@code true} if this collection contained the specified element (or
+     * equivalently, if this collection changed as a result of the call).
      *
-     * @param obj element to be removed from this collection, if present.
-     * @return true if this collection changed as a result of the call
+     * @param o element to be removed from this collection, if present
+     * @return {@code true} if an element was removed as a result of this call
      */
     boolean remove(Object obj);
 
     // Bulk Operations
 
     /**
-     * Returns true if this collection contains all of the elements in the
-     * specified collection.
+     * Returns {@code true} if this collection contains all of the elements
+     * in the specified collection.
      *
-     * @param coll collection to be checked for containment in this collection.
-     * @return true if this collection contains all of the elements in the
-     *         specified collection
+     * @param  c collection to be checked for containment in this collection
+     * @return {@code true} if this collection contains all of the elements
+     *         in the specified collection
      * @throws NullPointerException if the specified collection is null.
-     * @see #contains(Object)
+     * @see    #contains(Object)
      */
     boolean containsAll(HCollection coll);
 
     /**
      * Adds all of the elements in the specified collection to this collection
-     * (optional operation). The behavior of this operation is undefined if the
-     * specified collection is modified while the operation is in progress. (This
-     * implies that the behavior of this call is undefined if the specified
-     * collection is this collection, and this collection is nonempty.)
+     * (optional operation).  The behavior of this operation is undefined if
+     * the specified collection is modified while the operation is in progress.
+     * (This implies that the behavior of this call is undefined if the
+     * specified collection is this collection, and this collection is
+     * nonempty.)
      *
-     * @param coll elements to be inserted into this collection.
-     * @return true if this collection changed as a result of the call
+     * @param c collection containing elements to be added to this collection
+     * @return {@code true} if this collection changed as a result of the call
+     * @throws NullPointerException if the specified collection is null.
      * @see #add(Object)
      */
     boolean addAll(HCollection coll);
 
     /**
+     * Removes all of this collection's elements that are also contained in the
+     * specified collection (optional operation).  After this call returns,
+     * this collection will contain no elements in common with the specified
+     * collection.
      *
-     * Removes all this collection's elements that are also contained in the
-     * specified collection (optional operation). After this call returns, this
-     * collection will contain no elements in common with the specified collection.
-     *
-     * @param coll elements to be removed from this collection.
-     * @return true if this collection changed as a result of the call
+     * @param c collection containing elements to be removed from this collection
+     * @return {@code true} if this collection changed as a result of the
+     *         call
      *
      * @throws NullPointerException if the specified collection is null.
      * @see #remove(Object)
@@ -233,12 +240,12 @@ public interface HCollection {
 
     /**
      * Retains only the elements in this collection that are contained in the
-     * specified collection (optional operation). In other words, removes from this
-     * collection all of its elements that are not contained in the specified
-     * collection.
+     * specified collection (optional operation).  In other words, removes from
+     * this collection all of its elements that are not contained in the
+     * specified collection.
      *
-     * @param coll elements to be retained in this collection.
-     * @return true if this collection changed as a result of the call
+     * @param c collection containing elements to be retained in this collection
+     * @return {@code true} if this collection changed as a result of the call
      *
      * @throws NullPointerException if the specified collection is null.
      * @see #remove(Object)
@@ -247,55 +254,58 @@ public interface HCollection {
     boolean retainAll(HCollection coll);
 
     /**
-     * Removes all of the elements from this collection (optional operation). This
-     * collection will be empty after this method returns unless it throws an
-     * exception.
+     * Removes all of the elements from this collection (optional operation).
+     * The collection will be empty after this method returns.
+     *
      */
     void clear();
 
     // COMPARISON AND HASING
 
     /**
-     * Compares the specified object with this collection for equality.
-     * <p>
+     * Compares the specified object with this collection for equality. <p>
      *
-     * While the Collection interface adds no stipulations to the general
-     * contract for the Object.equals, programmers who implement the
-     * Collection interface "directly" (in other words, create a class that
-     * is a Collection but is not a Set or a List) must
-     * exercise care if they choose to override the Object.equals. It is
-     * not necessary to do so, and the simplest course of action is to rely on
-     * Object's implementation, but the implementer may wish to implement a
-     * "value comparison" in place of the default "reference comparison." (The
-     * List and Set interfaces mandate such value comparisons.)
-     * <p>
+     * While the {@code Collection} interface adds no stipulations to the
+     * general contract for the {@code Object.equals}, programmers who
+     * implement the {@code Collection} interface "directly" (in other words,
+     * create a class that is a {@code Collection} but is not a {@code Set}
+     * or a {@code List}) must exercise care if they choose to override the
+     * {@code Object.equals}.  It is not necessary to do so, and the simplest
+     * course of action is to rely on {@code Object}'s implementation, but
+     * the implementor may wish to implement a "value comparison" in place of
+     * the default "reference comparison."  (The {@code List} and
+     * {@code Set} interfaces mandate such value comparisons.)<p>
      *
-     * The general contract for the Object.equals method states that equals
-     * must be symmetric (in other words, a.equals(b) if and only if
-     * b.equals(a)). The contracts for List.equals and
-     * Set.equals state that lists are only equal to other lists, and sets
-     * to other sets. Thus, a custom equals method for a collection class
-     * that implements neither the List nor Set interface must
-     * return false when this collection is compared to any list or set.
-     * (By the same logic, it is not possible to write a class that correctly
-     * implements both the Set and List interfaces.)
+     * The general contract for the {@code Object.equals} method states that
+     * equals must be symmetric (in other words, {@code a.equals(b)} if and
+     * only if {@code b.equals(a)}).  The contracts for {@code List.equals}
+     * and {@code Set.equals} state that lists are only equal to other lists,
+     * and sets to other sets.  Thus, a custom {@code equals} method for a
+     * collection class that implements neither the {@code List} nor
+     * {@code Set} interface must return {@code false} when this collection
+     * is compared to any list or set.  (By the same logic, it is not possible
+     * to write a class that correctly implements both the {@code Set} and
+     * {@code List} interfaces.)
      *
-     * @param obj Object to be compared for equality with this collection.
-     * @return true if the specified object is equal to this collection
+     * @param o object to be compared for equality with this collection
+     * @return {@code true} if the specified object is equal to this
+     * collection
      *
      * @see Object#equals(Object)
-     * @see HSet#equals(Object)
+     * @see Set#equals(Object)
+     * @see List#equals(Object)
      */
-    boolean equals(Object obj);
+    boolean equals(Object o);
 
     /**
-     * Returns the hash code value for this collection. While the
-     * Collection interface adds no stipulations to the general contract
-     * for the Object.hashCode method, programmers should take note that
-     * any class that overrides the Object.equals method must also override
-     * the Object.hashCode method in order to satisfy the general contract
-     * for the Object.hashCodemethod. In particular, c1.equals(c2)
-     * implies that c1.hashCode()==c2.hashCode().
+     * Returns the hash code value for this collection.  While the
+     * {@code Collection} interface adds no stipulations to the general
+     * contract for the {@code Object.hashCode} method, programmers should
+     * take note that any class that overrides the {@code Object.equals}
+     * method must also override the {@code Object.hashCode} method in order
+     * to satisfy the general contract for the {@code Object.hashCode} method.
+     * In particular, {@code c1.equals(c2)} implies that
+     * {@code c1.hashCode()==c2.hashCode()}.
      *
      * @return the hash code value for this collection
      *

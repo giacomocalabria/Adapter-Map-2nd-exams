@@ -38,7 +38,7 @@ public class CollectionAdapter implements HCollection{
     }
 
     public Object[] toArray(Object[] arrayTarget) {
-        return toArray();
+        return toArray(); // ATTENZIONE
     }
 
     public boolean add(Object obj) {
