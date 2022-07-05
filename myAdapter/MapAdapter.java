@@ -55,6 +55,7 @@ public class MapAdapter implements HMap{
      *  that (key==null ? k==null : key.equals(k)). (There can be at most one such mapping.)
      *  @param key key whose presence in this map is to be tested
      *  @return true if this map contains a mapping for the specified key
+     *  @throws NullPointerException if key is null.
      */
     public boolean containsKey(Object key){
         return table.containsKey(key);
@@ -67,8 +68,12 @@ public class MapAdapter implements HMap{
      *  probably require time linear in the map size for most implementations of the Map interface.
      *  @param value value whose presence in this map is to be tested
      *  @return true if this map maps one or more keys to the specified value.
+     *  @throws NullPointerException if value is null.
      */
     public boolean containsValue(Object value){
+        if (value == null)
+            throw new NullPointerException();
+            
         for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
             if (e.nextElement().equals(value))
                 return true;
@@ -152,12 +157,16 @@ public class MapAdapter implements HMap{
      *  modified while the operation is in progress.
      * 
      *  @param t Mapping to be stored in this map.
-     *  @throws NullPointerException the specified map is null, or if this map does not permit null keys or values, and the specified
+     *  @throws NullPointerException the specified map is null, or if this map
+     *  does not permit null keys or values, and the specified
      *  map contains null keys or values.
      */
     public void putAll(HMap t){
         if (t == null)
             throw new NullPointerException();
+        
+        if (t.isEmpty())
+            return;
 
         HSet ks = t.keySet();
 
@@ -254,6 +263,14 @@ public class MapAdapter implements HMap{
      *  @see Object.hashCode()
      */
     public boolean equals(Object o){
+        if (!(o instanceof HMap))
+            return false;
+
+        HMap map = (HMap) o;
+
+        if(this.isEmpty() && map.isEmpty())
+            return true;
+        
         return table.equals(o);
     }
 
