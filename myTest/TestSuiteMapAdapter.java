@@ -20,7 +20,7 @@ public class TestSuiteMapAdapter {
     @BeforeClass
     public static void beforeClassMethod()
     {
-        System.out.println("TestSuiteListAdapterAdapter suite started.");
+        System.out.println("TestSuitemapAdapterAdapter suite started.");
         timeStart = System.currentTimeMillis();
     }
 
@@ -54,7 +54,7 @@ public class TestSuiteMapAdapter {
     @AfterClass
     public static void afterClassMethod()
     {
-        System.out.println("TestSuiteListAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
+        System.out.println("TestSuitemapAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
     // ****************************** SIZE METHOD *****************************
@@ -76,7 +76,7 @@ public class TestSuiteMapAdapter {
     @Test
     public void Size_Empty_0(){
 
-        assertEquals("Empty list does not have size of zero.", 0, map1.size());
+        assertEquals("Empty map does not have size of zero.", 0, map1.size());
         assertEquals("isEmpty did not returned true.", true, map1.isEmpty());
     }
 
@@ -96,7 +96,7 @@ public class TestSuiteMapAdapter {
     public void Size_1Element(){
 
         map1.put(1, 159);
-        assertEquals("Empty list does not have size of one.", 1, map1.size());
+        assertEquals("Empty map does not have size of one.", 1, map1.size());
         assertEquals("isEmpty did not returned false.", false, map1.isEmpty());
     }
 
@@ -118,7 +118,7 @@ public class TestSuiteMapAdapter {
         for(int i = 0; i < 5; i++){
             map1.put(i, (i+15)*(i+2));
         }
-        assertEquals("Empty list does not have size of one.", 5, map1.size());
+        assertEquals("Empty map does not have size of one.", 5, map1.size());
         assertEquals("isEmpty did not returned false.", false, map1.isEmpty());
     }
 
@@ -140,7 +140,7 @@ public class TestSuiteMapAdapter {
         for(int i = 0; i < 160; i++){
             map1.put(i, (i+15)*(i+2));
         }
-        assertEquals("Empty list does not have size of one.", 160, map1.size());
+        assertEquals("Empty map does not have size of one.", 160, map1.size());
         assertEquals("isEmpty did not returned false.", false, map1.isEmpty());
     }
 
@@ -269,10 +269,73 @@ public class TestSuiteMapAdapter {
         assertEquals("Two empty maps should equals.", true, map2.equals(map1));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The reflective property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be reflective,
+     * therefore x.equals(x) should always return true.</p>
+     * <p><b>Test Description</b>: The test invokes map
+    1.equals(map
+    1) when
+     * map1 is empty, when it has 10 elements and when it has 1000 elements.</p>
+     * <p><b>Pre-Condition</b>: Map is not null.</p>
+     * <p><b>Post-Condition</b>: map
+     has 1000 elements. </p>
+     * <p><b>Expected Results</b>: map
+     equals itself, therefore
+     * reflective property is valid.</p>
+     */
+    @Test
+    public void Equals_Reflective()
+    {
+        assertEquals("Reflective property is not met.", true, map1.equals(map1));    // MAp is empty
+        for(int i = 0; i < 10; i++){
+            map1.put(i,i);
+        }
+        assertEquals("Reflective property is not met.", true, map1.equals(map1));    // map is not empty, should return true anyways
+        for(int i = 0; i < 1000; i++){
+            map1.put(i,i);
+        }
+        assertEquals("Reflective property is not met.", true, map1.equals(map1));    // map is not empty, should return true anyways
+    }
+
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The transitive property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be transitive,
+     * therefore a.equals(b) and b.equals(c) {@literal =>} a.equals(c).</p>
+     * <p><b>Test Description</b>: The test invokes map
+    1.equals(map
+    2) and map
+    2.equals(map
+    3)
+     * and map
+    1.equals(map
+    3)</p>
+     * <p><b>Pre-Condition</b>: map
+    s contain {1 : 1000000}.</p>
+     * <p><b>Post-Condition</b>: map
+    s are unchanged. </p>
+     * <p><b>Expected Results</b>: Equals has transitive property.</p>
+     */
+    @Test
+    public void Equals_Transitive(){
+        HMap map3 = new MapAdapter();
+        for(int i = 0; i < 1000000; i++){
+            map1.put(i, i);
+            map2.put(i, i);
+            map3.put(i, i);
+        }
+
+        assertEquals("maps should be equal.", true, map1.equals(map2));
+        assertEquals("maps should be equal.", true, map2.equals(map3));
+        assertEquals("Transitive property is not met.",true, map1.equals(map3));
+    }
+
     //****************************** GET METHOD *******************************
 
     @Test
-    public void Get_0_1_0(){
+    public void Get_1(){
         assertEquals("The result should be null, the map is empty .",null, map1.get("chiave nulla"));
 
         map1.put(15,16.4);
@@ -284,6 +347,15 @@ public class TestSuiteMapAdapter {
         map1.remove(15);
         
         assertEquals("The result should be null, no key corresponding in this map .",null, map1.get(15));
+    }
+
+    @Test
+    public void Get_123(){
+        map1.put(654,1);
+        map1.put(456,2);
+        map1.put(546,3);
+        String res = "" + map1.get(654) + map1.get(456) + map1.get(546);
+        assertEquals("The result string sould be 123", "123", res);
     }
 
     /**
@@ -301,6 +373,33 @@ public class TestSuiteMapAdapter {
     @Test(expected = NullPointerException.class)
     public void Get_GetNullKey_NPException(){
         map1.get(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: get method test case.
+     * Test aim is to push the map
+     size to 10000 and check
+     * if the elements are stored correctly.</p>
+     * <p><b>Test Case Design</b>: Test the map
+     with a very large size.
+     * From the Sommerville: "Use sequences of different sizes in
+     * different tests."</p>
+     * <p><b>Test Description</b>: The test pushes 10000 elements to the
+     * map
+     and then checks every one of them with the get method.</p>
+     * <p><b>Pre-Condition</b>: The map
+     is Empty.</p>
+     * <p><b>Post-Condition</b>: The map
+     contains {0:10000}</p>
+     * <p><b>Expected Results</b>: Every one of the 10000 elements matches,
+     * therefore get returns each element in {0:10000}.</p>
+     */
+    @Test
+    public void Get_10000_All(){
+        for(int i = 0; i < 100000; i++)
+            map1.put(i,i);
+        for (int i = 0; i < 10000; i++)
+            assertEquals("Element at index " + i + "should be " + i, i, map1.get(i));
     }
 
     // ******************************** CLEAR METHOD **************************
@@ -453,6 +552,20 @@ public class TestSuiteMapAdapter {
         assertEquals(null, map1.remove("aa"));
     }
 
+    @Test
+    public void Remove_450ToEmpty(){
+        assertEquals("Size should be 0", 0, map1.size());
+        assertEquals("map should be empty.", true, map1.isEmpty());
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 0; i < 450; i++){
+            assertEquals((i+654)*i, map1.remove(i*i*i));
+        }
+        assertEquals("Size should be 0", 0, map1.size());
+        assertEquals("map should be empty.", true, map1.isEmpty());
+    }
+
     //********************************* PUTALL METHOD **************************
 
     /**
@@ -515,16 +628,94 @@ public class TestSuiteMapAdapter {
     public void PutAll_2TimesPut(){
         for(int i = 0; i < 100; i++)
             map2.put(i*i, i+16);
+        for(int i = 0; i < 100; i++){
+            assertEquals(true, map2.containsKey(i*i));
+            assertEquals(true, map2.containsValue(i+16));
+        }
+
+        assertEquals(true, map1.isEmpty());
 
         map1.putAll(map2);
-        for(int i = 0; i < 100; i++)
+
+        assertEquals(false, map1.isEmpty());
+        for(int i = 0; i < 100; i++){
             assertEquals(true, map1.containsKey(i*i));
+            assertEquals(true, map1.containsValue(i+16));
+        }
         
         map1.putAll(map2);
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 100; i++){
             assertEquals(true, map1.containsKey(i*i));
+            assertEquals(true, map1.containsValue(i+16));
+        }
+    }
+
+    @Test
+    public void PutAll_2Maps(){
+        for(int i = 0; i < 100; i++)
+            map2.put(i*i, i+16);
+        
+        HMap map3 = new MapAdapter();
+
+        for(int i = 0; i < 10; i++)
+            map3.put(i*i+2, i+48);
+        
+        for(int i = 0; i < 100; i++){
+            assertEquals(true, map2.containsKey(i*i));
+            assertEquals(true, map2.containsValue(i+16));
+        }
+
+        for(int i = 0; i < 10; i++){
+            assertEquals(true, map3.containsKey(i*i+2));
+            assertEquals(true, map3.containsValue(i+48));
+        }
+
+        assertEquals(true, map1.isEmpty());
+        map1.putAll(map2);
+
+        assertEquals(100, map1.size());
+        for(int i = 0; i < 100; i++){
+            assertEquals(true, map1.containsKey(i*i));
+            assertEquals(true, map1.containsValue(i+16));
+        }
+        for(int i = 0; i < 10; i++){
+            assertEquals(false, map1.containsKey(i*i+2));
+            assertEquals(false, map1.containsValue(i+48));
+        }
+
+        map1.putAll(map3);
+        for(int i = 0; i < 10; i++){
+            assertEquals(true, map1.containsKey(i*i+2));
+            assertEquals(true, map1.containsValue(i+48));
+        }
     }
 
 
+    // ******************* HASHCODE METHOD ************************************
+
+    @Test
+    public void HashCode_Prop(){
+        // Empty map case
+        assertEquals("maps should be equal.", true, map1.equals(map2));
+        assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
+
+        // One element case
+        map1.put(1,1);
+        map2.put(1,1);
+        assertEquals("maps should be equal.", true, map1.equals(map2));
+        assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
+
+        map1.put("ciao",164);
+        map2.put("ciao",164);
+        assertEquals("maps should be equal.", true, map1.equals(map2));
+        assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
+
+        for(int i = 0; i < 10; i++){
+            map1.put("ciao" + i,i + 164);
+            map2.put("ciao" + i,i + 164);
+        }
+        assertEquals("maps should be equal.", true, map1.equals(map2));
+        assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
+    }
 
 }

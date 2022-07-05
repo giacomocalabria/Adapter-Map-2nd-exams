@@ -41,16 +41,6 @@ public interface HIterator {
      * is modified while the iteration is in progress in any way other than by
      * calling this method, unless an overriding class has specified a
      * concurrent modification policy.
-     * <p>
-     * The behavior of an iterator is unspecified if this method is called
-     * after a call to the {@link #forEachRemaining forEachRemaining} method.
-     *
-     * @implSpec
-     * The default implementation throws an instance of
-     * {@link UnsupportedOperationException} and performs no other action.
-     *
-     * @throws UnsupportedOperationException if the {@code remove}
-     *         operation is not supported by this iterator
      *
      */
     void remove();

@@ -59,8 +59,6 @@ package myAdapter;
  *  @author Giacomo Calabria
  */
 
-
-
 public interface HMap{
     //QUERY OPERATIONS
 
