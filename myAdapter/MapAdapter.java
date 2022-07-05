@@ -228,7 +228,7 @@ public class MapAdapter implements HMap{
      * @return a set view of the keys contained in this map
      */
     public HSet keySet(){
-        HSet ks = new SetAdapter();
+        /*HSet ks = new SetAdapter();
 
         for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
             HEntry me = (HEntry) e.nextElement();
@@ -236,7 +236,9 @@ public class MapAdapter implements HMap{
 			ks.add(key);
         }
 
-        return ks;
+        return ks;*/
+
+        return new SubKeySetAdapter(table);
     }
 
     /**
@@ -255,11 +257,13 @@ public class MapAdapter implements HMap{
      * @return a collection view of the values contained in this map
      */
     public HCollection values(){
-        HCollection vc = new CollectionAdapter();
+        /*HCollection vc = new CollectionAdapter();
         for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
             vc.add(((HEntry) e.nextElement()).getValue());;
         }
-        return vc;
+        return vc;*/
+
+        return new SubValuesCollectionAdapter(table);
     }
 
     /**
@@ -445,7 +449,11 @@ public class MapAdapter implements HMap{
     }
 
     private class SubEntrySetAdapter implements HSet{
-        public SubEntrySetAdapter(Hashtable table){}
+        private Hashtable table;
+
+        public SubEntrySetAdapter(Hashtable table){
+            this.table = table;
+        }
 
         public int size() {
             return table.size();
@@ -527,7 +535,7 @@ public class MapAdapter implements HMap{
             HIterator i = coll.iterator();
             boolean hasRemAll = false;
             while(i.hasNext()){
-                hasRemAll = vec.removeElement(i.next());
+                //hasRemAll = table.remove(i.next());
             }
             return hasRemAll;
         }
@@ -550,15 +558,15 @@ public class MapAdapter implements HMap{
         }
     
         public boolean equals(Object o){
-            if(! (o instanceof CollectionAdapter)){
+            if(! (o instanceof SubEntrySetAdapter)){
                 return false;
             }
-            CollectionAdapter ca = (CollectionAdapter) o;
-            return vec.equals(ca.vec);
+            SubEntrySetAdapter sesa = (SubEntrySetAdapter) o;
+            return table.equals(sesa.table);
         }
     
         public int hashCode(){
-            return vec.hashCode();
+            return table.hashCode();
         }
     }
 
@@ -607,6 +615,13 @@ public class MapAdapter implements HMap{
         }
     
         public boolean remove(Object obj){
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                if(obj == table.get(tmp)){
+                    table.remove(tmp);
+                    return true;
+                }
+            }
             return false;
         }
     
@@ -628,7 +643,8 @@ public class MapAdapter implements HMap{
             HIterator i = coll.iterator();
             boolean hasRemAll = false;
             while(i.hasNext()){
-                hasRemAll = vec.removeElement(i.next());
+                if(table.remove(((HEntry) i.next()).getKey()) != null)
+                    hasRemAll = true;
             }
             return hasRemAll;
         }
@@ -655,11 +671,132 @@ public class MapAdapter implements HMap{
                 return false;
             }
             CollectionAdapter ca = (CollectionAdapter) o;
-            return vec.equals(ca.vec);
+            //return table.equals(ca.table);
+            return false;  
         }
     
         public int hashCode(){
-            return vec.hashCode();
+            return table.hashCode();
         }
     }
+
+    private class SubKeySetAdapter implements HSet{
+        public SubKeySetAdapter(Hashtable table){}
+
+        public int size() {
+            return table.size();
+        }
+
+        public boolean isEmpty() {
+            return table.isEmpty();
+        }
+    
+        public boolean contains(Object obj){
+            if(! (obj instanceof HEntry)){
+                return false;
+            }
+
+            HEntry em = (HEntry) obj;
+
+            return (table.contains(em.getValue()) && table.containsKey(em.getKey()));
+        }
+    
+        public HIterator iterator() {
+            return null;
+        }
+    
+        public Object[] toArray() {
+            Object[] arr = new Object[size()];
+            int i = 0;
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                MapEntryAdapter me = new MapEntryAdapter(tmp);
+                me.setValue(table.get(tmp));
+                arr[i] = me;
+                i++;
+            }
+            return arr;
+        }
+    
+        public Object[] toArray(Object[] arrayTarget) {
+            int i = 0;
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object tmp = e.nextElement();
+                MapEntryAdapter me = new MapEntryAdapter(tmp);
+                me.setValue(table.get(tmp));
+                arrayTarget[i] = me;
+                i++;
+            }
+            return arrayTarget;
+        }
+    
+        public boolean add(Object obj) {
+            return false;
+        }
+    
+        public boolean remove(Object obj){
+            if(! (obj instanceof HEntry)){
+                return false;
+            }
+
+            HEntry em = (HEntry) obj;
+            if (table.remove(em.getKey()) == null)
+                return false;
+            return true;
+        }
+    
+        public boolean containsAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(!table.contains(tmp))
+                    return false;
+            }
+            return true;
+        }
+    
+        public boolean addAll(HCollection coll) {
+            return false;
+        }
+    
+        public boolean removeAll(HCollection coll) {
+            HIterator i = coll.iterator();
+            boolean hasRemAll = false;
+            while(i.hasNext()){
+                //hasRemAll = tabletable.removeElement(i.next());
+            }
+            return hasRemAll;
+        }
+    
+        public boolean retainAll(HCollection coll) {
+            boolean hasRetAll = false;
+            HIterator i = this.iterator();
+            while(i.hasNext()){
+                Object tmp = i.next();
+                if(! coll.contains(tmp)){
+                    i.remove();
+                    hasRetAll = true;
+                }
+            }
+            return hasRetAll;
+        }
+    
+        public void clear(){
+            table.clear();
+        }
+    
+        public boolean equals(Object o){
+            if(! (o instanceof CollectionAdapter)){
+                return false;
+            }
+            CollectionAdapter ca = (CollectionAdapter) o;
+            ///return table.equals(ca.table);
+            return false;
+        }
+    
+        public int hashCode(){
+            return table.hashCode();
+        }
+    }
+
 }
