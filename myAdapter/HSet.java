@@ -29,6 +29,8 @@ package myAdapter;
  *  into the set may throw an exception or it may succeed, at the option of
  *  the implementation. Such exceptions are marked as "optional" in the 
  *  specification for this interface.
+ * 
+ *  @author Giacomo Calabria
  */
 
 public interface HSet extends HCollection{

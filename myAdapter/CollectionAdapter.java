@@ -1,5 +1,10 @@
 package myAdapter;
 
+/**
+ * 
+ * @author Giacomo Calabria
+ */
+
 public class CollectionAdapter implements HCollection{
 
     private Vector vec;

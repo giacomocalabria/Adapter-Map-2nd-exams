@@ -1,5 +1,10 @@
 package myAdapter;
 
+/**
+ * 
+ * @author Giacomo Calabria
+ */
+
 public class CollectionAdapterIterator implements HIterator{
 
     Vector vec;
