@@ -8,6 +8,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.NoSuchElementException;
+
 // Adapter package import
 import myAdapter.*;
 
@@ -506,6 +508,194 @@ public class TestSuiteSubValuesCollectionAdapter {
         Object[] arr = new Object[1];
         HCollection coll1 = map1.values();
         coll1.toArray(arr);
+    }
+
+    // ************************** BACKED FEATURE *************************
+
+    @Test
+    public void Backed_ClearPut(){
+        HCollection coll = map1.values();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        coll.clear();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        map1.clear();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+    }
+
+    @Test
+    public void Backed_putAllRemove(){
+        HCollection coll = map1.values();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map2.put(i,i);
+        }
+        map1.putAll(map2);
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        
+        HIterator iter = coll.iterator();
+        while(iter.hasNext())
+            coll.remove(iter.next());
+        
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        
+        map1.putAll(map2);
+
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+
+        for(int i = 0; i < 1000; i ++){
+            map1.remove(i);
+        }
+
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+    }
+
+    @Test
+    public void Backed_PutRemove(){
+        HCollection coll = map1.values();
+        assertFalse(coll.contains(156));
+        map1.put(15,156);
+        assertTrue(coll.contains(156));
+        map1.remove(15);
+        assertFalse(coll.contains(156));
+        map1.put(17,44);
+        assertTrue(map1.containsValue(44));
+        assertTrue(coll.contains(44));
+        coll.remove(44);
+        assertFalse(map1.containsValue(44));
+        assertFalse(coll.contains(44));
+    }
+
+    @Test
+    public void Backed_IteratorRemove(){
+        HCollection coll = map1.values();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        
+        HIterator iter = coll.iterator();
+        while(iter.hasNext())
+            iter.remove();
+        
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+    }
+
+    @Test
+    public void Backed_removeAll(){
+
+    }
+
+    @Test
+    public void Backed_retainAll(){
+
+    }
+
+    //****************************** ITERATOR METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of
+     * an iterator returned from an empty list
+     * calling hasNext and next. From the Sommerville:
+     * "Choose inputs that force the system to generate all error messages".</p>
+     * <p><b>Test Description</b>: an iterator is returned from empty
+     * list. iterator.hasNext() should be false, while
+     * next() should throw NoSuchElementException.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * <p><b>Expected Results</b>: hasNext returns false, NSEE is thrown.</p>
+     */
+    @Test (expected = NoSuchElementException.class)
+    public void Iterator_HasNext_Emtpy(){
+        HIterator iter = map1.values().iterator();
+        assertEquals("Empty collection iterator should not have next.", false, iter.hasNext());
+        iter.next();
+    }
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.
+     * List contains 1 element and the test iterate through
+     * it.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of 1
+     * element in the list. Therefore hasNext should return
+     * true while next() should return the only number
+     * in the list.</p>
+     * <p><b>Test Description</b>: The number 1 is added, and an iterator
+     * iterates through the list. After returning the first elements,
+     * it has no more next elements.</p>
+     * <p><b>Pre-Condition</b>: List contains 1, iterator has next.</p>
+     * <p><b>Post-Condition</b>: List contains 1, iterator has not next.</p>
+     * <p><b>Expected Results</b>: The first hasNext call returns true,
+     * the second returns false.</p>
+     */
+    @Test
+    public void Iterator_HasNext_Begin1_True()
+    {
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should have next.", true, iter.hasNext());
+        iter.next();
+        assertEquals("Should not have next.", false, iter.hasNext());
+    }
+
+    @Test
+    public void Iterator_Next_1(){
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should have 1 as next.", 1, iter.next());
+        assertEquals("Should not have next.", false, iter.hasNext());
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void Iterator_Remove_Empty_HISE(){
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should not have next.", false, iter.hasNext());
+        iter.remove();
+    }
+
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Test should throw an exception.</p>
+     * <p><b>Test Case Design</b>: Tests if for a list a remove method
+     * throws HIllegalStateException, as no prev or next has been 
+     * called, or remove or add have been called after the last call to
+     * next or previous</p>
+     * <p><b>Test Description</b>: remove is invoked by an iterator instance.</p>
+     * <p><b>Pre-Condition</b>: List has 1 element.</p>
+     * <p><b>Post-Condition</b>: List still has 1 element.</p>
+     * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
+     */
+    @Test (expected = IllegalStateException.class)
+    public void Remove_OneElement_HISE(){
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        iter.remove(); /* Exception throw as no prev or next has been
+                            called, or remove or add have been called after
+                            the last call to
+                            next or previous*/
     }
 
 }
