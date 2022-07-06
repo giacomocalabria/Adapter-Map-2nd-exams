@@ -493,23 +493,39 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test
     public void Remove_Empty(){
         HSet key1 = map1.keySet();
+        HSet entry1 = map1.entrySet();
+        HMap.HEntry em = new MapEntryAdapter(456);
+        em.setValue(654);
+        
         assertFalse(key1.remove(156));
+
+        assertFalse(entry1.remove(em));
     }
 
     @Test
-    public void Remove_ReturnOldValue(){
+    public void Remove_2Times(){
         map1.put(44, 987);
         HSet key1 = map1.keySet();
-        assertTrue(key1.remove(987));
-        assertFalse(key1.remove(987));
+        assertTrue(key1.remove(44));
+        assertFalse(key1.remove(44));
+        
+        map1.put(44, 987);
+        HMap.HEntry em = new MapEntryAdapter(44);
+        em.setValue(987);
+        HSet entry1 = map1.entrySet();
+        assertTrue(entry1.remove(em));
+        assertFalse(entry1.remove(em));
     }
 
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
         HSet key1 = map1.keySet();
+        HSet entry1 = map1.keySet();
+        HMap.HEntry em = new MapEntryAdapter(44);
+        em.setValue(987);
         assertFalse(key1.remove(44));
-        assertFalse(key1.remove("aa"));
+        assertFalse(entry1.remove(em));
     }
 
     /**
@@ -531,10 +547,21 @@ public class TestSuiteSubKeyEntrySetAdapter {
         }
         HSet key1 = map1.keySet();
         for(int i = 0; i < 450; i++){
-            assertTrue(key1.remove((i+654)*i));
+            assertTrue(key1.remove(i*i*i));
         }
         assertEquals("Size should be 0", 0, key1.size());
         assertEquals("map should be empty.", true, key1.isEmpty());
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet entry1 = map1.entrySet();
+        for(int i = 0; i < 450; i++){
+            HMap.HEntry em = new MapEntryAdapter(i*i*i);
+            em.setValue((i+654)*i);
+            assertTrue(entry1.remove(em));
+        }
+        assertEquals("Size should be 0", 0, entry1.size());
+        assertEquals("map should be empty.", true, entry1.isEmpty());
     }
 
     //************************* TOARRAY METHOD *********************************
@@ -560,6 +587,9 @@ public class TestSuiteSubKeyEntrySetAdapter {
         HSet key1 = map1.keySet();
         Object[] arr = key1.toArray();
         assertEquals("Empty list did not return empty array.", arr.length, 0);
+        HSet entry1 = map2.entrySet();
+        Object[] arr2 = entry1.toArray();
+        assertEquals("Empty list did not return empty array.", arr2.length, 0);
     }
 
     /**
@@ -573,16 +603,15 @@ public class TestSuiteSubKeyEntrySetAdapter {
      * <p><b>Test Description</b>: Inserts five 1 to the map. Then assertArrayEquals
      * is called.</p>
      * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list contains {1,1,1,1,1}.</p>
-     * <p><b>Expected Results</b>: list1.toArray() returns
-     * [1, 1, 1, 1, 1].</p>
+     * <p><b>Post-Condition</b>: The list contains {1}.</p>
+     * <p><b>Expected Results</b>: list1.toArray() returns [1].</p>
      */
     @Test
-    public void ToArray_11111_True(){
+    public void ToArray_1_True(){
         for(int i = 0; i < 5; i++)
-            map1.put(i,1);
+            map1.put(1,i);
         HSet key1 = map1.keySet();
-        Integer[] arr = {1,1,1,1,1};
+        Integer[] arr = {1};
         assertArrayEquals("Arrays do not match.", arr , key1.toArray());
     }
 
@@ -603,11 +632,19 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test
     public void ToArray_ArrayDest_1(){
         Object[] arr = new Object[1];
-        map1.put(1,1654);
+        map1.put(145,1654);
         HSet key1 = map1.keySet();
         key1.toArray(arr);
         assertEquals("The array size should be 1.", 1, arr.length);
-        assertEquals("The element should be 1654.", 1654, arr[0]);
+        assertEquals("The element should be 145.", 145, arr[0]);
+        
+        Object[] arr1 = new Object[1];
+        HSet entry1 = map1.entrySet();
+        entry1.toArray(arr1);
+        HMap.HEntry em = new MapEntryAdapter(145);
+        em.setValue(1654);
+        assertEquals("The array size should be 1.", 1, arr1.length);
+        assertEquals("The element should be 1654.", em, arr1[0]);
     }
 
     /**
@@ -621,9 +658,24 @@ public class TestSuiteSubKeyEntrySetAdapter {
      */
 
     @Test (expected = NullPointerException.class)
-    public void ToArrat_DestNull_NPException(){
+    public void ToArray_DestNullKey_NPException(){
         HSet key1 = map1.keySet();
         key1.toArray(null);
+    }
+    /**
+     * <p><b>Summary</b>: toArray(HSet) method test case.</p>
+     * <p><b>Test Case Design</b>: The test checks the method behaviour when the
+     * argument is null, which a special case.</p>
+     * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
+     * <p><b>Pre-Condition</b>: The map is empty</p>
+     * <p><b>Post-Condition</b>: The map is still empty.</p>
+     * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
+     */
+
+    @Test (expected = NullPointerException.class)
+    public void ToArray_DestNullEntry_NPException(){
+        HSet entry1 = map1.entrySet();
+        entry1.toArray(null);
     }
 
     /**
@@ -708,18 +760,18 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test
     public void Backed_PutRemove(){
-        HSet coll = map1.keySet();
-        assertFalse(coll.contains(156));
+        HSet key1 = map1.keySet();
+        assertFalse(key1.contains(156));
         map1.put(15,156);
-        assertTrue(coll.contains(156));
+        assertTrue(key1.contains(15));
         map1.remove(15);
-        assertFalse(coll.contains(156));
+        assertFalse(key1.contains(15));
         map1.put(17,44);
-        assertTrue(map1.containsValue(44));
-        assertTrue(coll.contains(44));
-        coll.remove(44);
-        assertFalse(map1.containsValue(44));
-        assertFalse(coll.contains(44));
+        assertTrue(map1.containsKey(17));
+        assertTrue(key1.contains(17));
+        key1.remove(17);
+        assertFalse(map1.containsValue(17));
+        assertFalse(key1.contains(17));
     }
 
     @Test

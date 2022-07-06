@@ -877,7 +877,7 @@ public class TestSuiteMapAdapter {
     }
 
     @Test
-    public void Emptying_KeySet_Iterator(){
+    public void Emptying_KeySet_ViaIterator(){
         String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);

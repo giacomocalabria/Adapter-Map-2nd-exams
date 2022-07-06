@@ -1173,11 +1173,15 @@ public class MapAdapter implements HMap{
          * @return an array containing all of the elements in this collection
          *
          * @throws NullPointerException if the specified array is null.
+         * @throws IllegalArgumentException if the specified array is smaller
          */
     
         public Object[] toArray(Object[] arrayTarget) {
             if(arrayTarget == null)
                 throw new NullPointerException();
+            if (arrayTarget.length < size())
+                throw new IllegalArgumentException();
+                //arrayTarget = new Object[size()];
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
                 arrayTarget[i] = e.nextElement();
@@ -1211,10 +1215,6 @@ public class MapAdapter implements HMap{
         public boolean remove(Object obj){
             if(obj == null)
                 throw new NullPointerException();
-
-            if(! (obj instanceof HEntry)){
-                return false;
-            }
 
             if (table.remove(obj) == null)
                 return false;
