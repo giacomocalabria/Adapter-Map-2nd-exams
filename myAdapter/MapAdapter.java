@@ -335,7 +335,7 @@ public class MapAdapter implements HMap{
      * {@code m1} and {@code m2}, as required by the general contract of
      * {@link Object#hashCode}.
      *
-     * @return the hash code value for this map
+     *  @return the hash code value for this map
      *  @see equals(Object)
      *  @see Map.Entry.hashCode()
      *  @see Object.hashCode()
@@ -345,6 +345,16 @@ public class MapAdapter implements HMap{
         return table.hashCode();
     }
 
+    /**
+     *  SubEntruSetAdapter is a private class used in order to give to Map's entrySet() method
+     *  a {@link HSet} interface. 
+     * 
+     *  @version 1.0
+     *  @author Giacomo Calabria
+     *  @see {@link HSet}
+     *  @see {@link HMap.entrySet()}
+     */
+
     private class SubEntrySetAdapter implements HSet{
         private Hashtable table;
 
@@ -352,14 +362,36 @@ public class MapAdapter implements HMap{
             this.table = table;
         }
 
+        /**
+         * Returns the number of elements in this collection.  If this collection
+         * contains more than {@code Integer.MAX_VALUE} elements, returns
+         * {@code Integer.MAX_VALUE}.
+         *
+         * @return the number of elements in this collection
+         */
         public int size() {
             return table.size();
         }
 
+        /**
+         * Returns {@code true} if this collection contains no elements.
+         *
+         * @return {@code true} if this collection contains no elements
+         */
         public boolean isEmpty() {
             return table.isEmpty();
         }
     
+        /**
+         * Returns {@code true} if this collection contains the specified element.
+         * More formally, returns {@code true} if and only if this collection
+         * contains at least one element {@code e} such that
+         * {@code Objects.equals(o, e)}.
+         *
+         * @param o element whose presence in this collection is to be tested
+         * @return {@code true} if this collection contains the specified
+         *         element
+         */
         public boolean contains(Object obj){
             if(obj == null)
                 throw new NullPointerException();
@@ -373,10 +405,34 @@ public class MapAdapter implements HMap{
             return (table.contains(em.getValue()) && table.containsKey(em.getKey()));
         }
     
+        /**
+         * Returns an iterator over the elements in this collection.  There are no
+         * guarantees concerning the order in which the elements are returned
+         * (unless this collection is an instance of some class that provides a
+         * guarantee).
+         *
+         * @return an {@code Iterator} over the elements in this collection
+         */
         public HIterator iterator() {
             return new SubEntrySetAdapterIterator(table);
         }
-    
+        
+        /**
+         * Returns an array containing all of the elements in this collection. If the
+         * collection makes any guarantees as to what order its elements are returned by
+         * its iterator, this method must return the elements in the same order.
+         * <p>
+         *
+         * The returned array will be "safe" in that no references to it are maintained
+         * by this collection. (In other words, this method must allocate a new array
+         * even if this collection is backed by an array). The caller is thus free to
+         * modify the returned array.
+         * <p>
+         *
+         * This method acts as bridge between array-based and collection-based APIs.
+         *
+         * @return an array containing all of the elements in this collection
+         */
         public Object[] toArray() {
             Object[] arr = new Object[size()];
             int i = 0;
@@ -392,7 +448,55 @@ public class MapAdapter implements HMap{
             return arr;
         }
     
+        /**
+         * Returns an array containing all of the elements in this collection; the
+         * runtime type of the returned array is that of the specified array. If the
+         * collection fits in the specified array, it is returned therein. Otherwise, a
+         * new array is allocated with the runtime type of the specified array and the
+         * size of this collection.
+         * <p>
+         *
+         * If this collection fits in the specified array with room to spare (i.e., the
+         * array has more elements than this collection), the element in the array
+         * immediately following the end of the collection is set to null. This
+         * is useful in determining the length of this collection <i>only</i> if the
+         * caller knows that this collection does not contain any null
+         * elements.)
+         * <p>
+         *
+         * If this collection makes any guarantees as to what order its elements are
+         * returned by its iterator, this method must return the elements in the same
+         * order.
+         * <p>
+         *
+         * Like the toArray method, this method acts as bridge between
+         * array-based and collection-based APIs. Further, this method allows precise
+         * control over the runtime type of the output array, and may, under certain
+         * circumstances, be used to save allocation costs
+         * <p>
+         *
+         * Suppose l is a List known to contain only strings. The
+         * following code can be used to dump the list into a newly allocated array of
+         * String:
+         *
+         * <pre>
+         * String[] x = (String[]) v.toArray(new String[0]);
+         * </pre>
+         * <p>
+         *
+         * <p>Note that {@code toArray(new Object[0])} is identical in function to
+         * {@code toArray()}.
+         *
+         * @param arrayTarget the array into which the elements of this collection are to be
+         *                      stored, if it is big enough; otherwise, a new array of the same
+         *                      runtime type is allocated for this purpose.
+         * @return an array containing all of the elements in this collection
+         *
+         * @throws NullPointerException if the specified array is null.
+         */
         public Object[] toArray(Object[] arrayTarget) {
+            if(arrayTarget == null)
+                throw new NullPointerException();
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
                 Object key = e.nextElement();
@@ -405,11 +509,28 @@ public class MapAdapter implements HMap{
             }
             return arrayTarget;
         }
+
+        /**
+         * This method is unsupported for entrySet()
+         */
     
         public boolean add(Object obj) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
     
+        /**
+         * Removes a single instance of the specified element from this
+         * collection, if it is present (optional operation).  More formally,
+         * removes an element {@code e} such that
+         * {@code Objects.equals(o, e)}, if
+         * this collection contains one or more such elements.  Returns
+         * {@code true} if this collection contained the specified element (or
+         * equivalently, if this collection changed as a result of the call).
+         *
+         * @param o element to be removed from this collection, if present
+         * @return {@code true} if an element was removed as a result of this call
+         * @throws NullPointerException if the specified object is {@code null}
+         */
         public boolean remove(Object obj){
             if(obj == null)
                 throw new NullPointerException();
@@ -424,6 +545,16 @@ public class MapAdapter implements HMap{
             return true;
         }
     
+        /**
+         * Returns {@code true} if this collection contains all of the elements
+         * in the specified collection.
+         *
+         * @param  c collection to be checked for containment in this collection
+         * @return {@code true} if this collection contains all of the elements
+         *         in the specified collection
+         * @throws NullPointerException if the specified collection is null.
+         * @see    #contains(Object)
+         */
         public boolean containsAll(HCollection coll) {
             HIterator i = coll.iterator();
             while(i.hasNext()){
@@ -433,12 +564,30 @@ public class MapAdapter implements HMap{
             }
             return true;
         }
-    
+        /**
+         * This method is unsupported for entrySet()
+         */
         public boolean addAll(HCollection coll) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
     
+        /**
+         * Removes all of this collection's elements that are also contained in the
+         * specified collection (optional operation).  After this call returns,
+         * this collection will contain no elements in common with the specified
+         * collection.
+         *
+         * @param c collection containing elements to be removed from this collection
+         * @return {@code true} if this collection changed as a result of the
+         *         call
+         *
+         * @throws NullPointerException if the specified collection is null.
+         * @see #remove(Object)
+         * @see #contains(Object)
+         */
         public boolean removeAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
             HIterator i = coll.iterator();
             boolean hasRemAll = false;
             while(i.hasNext()){
@@ -446,8 +595,23 @@ public class MapAdapter implements HMap{
             }
             return hasRemAll;
         }
+        /**
+         * Retains only the elements in this collection that are contained in the
+         * specified collection (optional operation).  In other words, removes from
+         * this collection all of its elements that are not contained in the
+         * specified collection.
+         *
+         * @param c collection containing elements to be retained in this collection
+         * @return {@code true} if this collection changed as a result of the call
+         *
+         * @throws NullPointerException if the specified collection is null.
+         * @see #remove(Object)
+         * @see #contains(Object)
+         */
     
         public boolean retainAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
             boolean hasRetAll = false;
             HIterator i = this.iterator();
             while(i.hasNext()){
@@ -460,10 +624,48 @@ public class MapAdapter implements HMap{
             return hasRetAll;
         }
     
+        /**
+         * Removes all of the elements from this collection (optional operation).
+         * The collection will be empty after this method returns.
+         *
+         */
         public void clear(){
             table.clear();
         }
-    
+
+        /**
+         * Compares the specified object with this collection for equality. <p>
+         *
+         * While the {@code Collection} interface adds no stipulations to the
+         * general contract for the {@code Object.equals}, programmers who
+         * implement the {@code Collection} interface "directly" (in other words,
+         * create a class that is a {@code Collection} but is not a {@code Set}
+         * or a {@code List}) must exercise care if they choose to override the
+         * {@code Object.equals}.  It is not necessary to do so, and the simplest
+         * course of action is to rely on {@code Object}'s implementation, but
+         * the implementor may wish to implement a "value comparison" in place of
+         * the default "reference comparison."  (The {@code List} and
+         * {@code Set} interfaces mandate such value comparisons.)<p>
+         *
+         * The general contract for the {@code Object.equals} method states that
+         * equals must be symmetric (in other words, {@code a.equals(b)} if and
+         * only if {@code b.equals(a)}).  The contracts for {@code List.equals}
+         * and {@code Set.equals} state that lists are only equal to other lists,
+         * and sets to other sets.  Thus, a custom {@code equals} method for a
+         * collection class that implements neither the {@code List} nor
+         * {@code Set} interface must return {@code false} when this collection
+         * is compared to any list or set.  (By the same logic, it is not possible
+         * to write a class that correctly implements both the {@code Set} and
+         * {@code List} interfaces.)
+         *
+         * @param o object to be compared for equality with this collection
+         * @return {@code true} if the specified object is equal to this
+         * collection
+         *
+         * @see Object#equals(Object)
+         * @see Set#equals(Object)
+         * @see List#equals(Object)
+         */
         public boolean equals(Object o){
             if(! (o instanceof SubEntrySetAdapter)){
                 return false;
@@ -483,7 +685,22 @@ public class MapAdapter implements HMap{
 
             return true;
         }
-    
+
+        /**
+         * Returns the hash code value for this collection.  While the
+         * {@code Collection} interface adds no stipulations to the general
+         * contract for the {@code Object.hashCode} method, programmers should
+         * take note that any class that overrides the {@code Object.equals}
+         * method must also override the {@code Object.hashCode} method in order
+         * to satisfy the general contract for the {@code Object.hashCode} method.
+         * In particular, {@code c1.equals(c2)} implies that
+         * {@code c1.hashCode()==c2.hashCode()}.
+         *
+         * @return the hash code value for this collection
+         *
+         * @see Object#hashCode()
+         * @see Object#equals(Object)
+         */
         public int hashCode(){
             return table.hashCode();
         }

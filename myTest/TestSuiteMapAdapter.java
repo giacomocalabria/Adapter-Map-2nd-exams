@@ -912,6 +912,9 @@ public class TestSuiteMapAdapter {
     public void Test_ValuesMethod(){
         int sm0, sm1, sm2, ss0, ss1, ss2;
         String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
 
         HCollection c = map1.values();
 
