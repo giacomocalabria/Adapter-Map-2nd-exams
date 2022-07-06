@@ -853,25 +853,6 @@ public class TestSuiteMapAdapter {
 
         s1.remove("carrozza");
 
-        if(sm2 == map1.size() || ss2 == s1.size() || s1.size() != map1.size()){
-            System.out.println("Removal from key set not working");
-            System.out.println("Before removal " + sm2 + " " + ss2 + " after removal " + map1.size() + " " + s1.size());
-
-        }
-        else
-        {
-            //System.out.println("Removal from key set is ok");
-
-            if(sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1)
-            {
-                System.out.println("\n*** keyset propaga modifiche a map ***\n");
-            }
-            else
-            {
-                System.out.println(sm0 + " " + sm1 + " " + sm2 + " " + ss0 + " " + ss1 + " " + ss2);
-            }
-        }
-
         assertFalse("Removal from key set not working",sm2 == map1.size() || ss2 == s1.size() || s1.size() != map1.size());
         assertTrue("KeySet non propaga modifiche a map", sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
     }
