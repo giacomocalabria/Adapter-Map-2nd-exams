@@ -2,8 +2,6 @@ package myAdapter;
 
 import java.util.Enumeration;
 
-import org.hamcrest.core.IsInstanceOf;
-
 /**
  *  MapAdapter adapts the {@link Hashtable} class from Java CLDC 1.1 to the
  *  {@link HMap} interface. Due to this adaptee this implementation of the map
@@ -320,6 +318,9 @@ public class MapAdapter implements HMap{
         if(this.isEmpty() && map.isEmpty())
             return true;
 
+        if (map.size() != this.size())
+            return false;
+
 		HSet s1 = map.entrySet();
 		HSet s2 = entrySet();
         
@@ -464,6 +465,9 @@ public class MapAdapter implements HMap{
         }
     
         public boolean contains(Object obj){
+            if(obj == null)
+                throw new NullPointerException();
+
             if(! (obj instanceof HEntry)){
                 return false;
             }
@@ -481,9 +485,11 @@ public class MapAdapter implements HMap{
             Object[] arr = new Object[size()];
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                MapEntryAdapter me = new MapEntryAdapter(tmp);
-                me.setValue(table.get(tmp));
+                Object key = e.nextElement();
+
+                MapEntryAdapter me = new MapEntryAdapter(key);
+                me.setValue(table.get(key));
+
                 arr[i] = me;
                 i++;
             }
@@ -493,9 +499,11 @@ public class MapAdapter implements HMap{
         public Object[] toArray(Object[] arrayTarget) {
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                MapEntryAdapter me = new MapEntryAdapter(tmp);
-                me.setValue(table.get(tmp));
+                Object key = e.nextElement();
+
+                MapEntryAdapter me = new MapEntryAdapter(key);
+                me.setValue(table.get(key));
+
                 arrayTarget[i] = me;
                 i++;
             }
@@ -507,6 +515,9 @@ public class MapAdapter implements HMap{
         }
     
         public boolean remove(Object obj){
+            if(obj == null)
+                throw new NullPointerException();
+
             if(! (obj instanceof HEntry)){
                 return false;
             }
@@ -562,7 +573,19 @@ public class MapAdapter implements HMap{
                 return false;
             }
             SubEntrySetAdapter sesa = (SubEntrySetAdapter) o;
-            return table.equals(sesa.table);
+
+            if(this.size() != sesa.size())
+                return false;
+
+            HIterator thisIterator = this.iterator();
+            HIterator sesaIterator = sesa.iterator();
+
+            while(thisIterator.hasNext() && sesaIterator.hasNext()){
+                if(!thisIterator.next().equals(sesaIterator.next()))
+                    return false;
+            }
+
+            return true;
         }
     
         public int hashCode(){
@@ -571,7 +594,11 @@ public class MapAdapter implements HMap{
     }
 
     private class SubValuesCollectionAdapter implements HCollection{
-        public SubValuesCollectionAdapter(Hashtable table){}
+        private Hashtable table;
+
+        public SubValuesCollectionAdapter(Hashtable table){
+            this.table = table;
+        }
 
         public int size() {
             return table.size();
@@ -582,6 +609,8 @@ public class MapAdapter implements HMap{
         }
     
         public boolean contains(Object obj){
+            if(obj == null)
+                throw new NullPointerException();
             return table.contains(obj);
         }
     
@@ -592,9 +621,9 @@ public class MapAdapter implements HMap{
         public Object[] toArray() {
             Object[] arr = new Object[size()];
             int i = 0;
-            for (Enumeration e = table.elements() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                arr[i] = table.get(tmp);
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object key = e.nextElement();
+                arr[i] = table.get(key);
                 i++;
             }
             return arr;
@@ -602,9 +631,9 @@ public class MapAdapter implements HMap{
     
         public Object[] toArray(Object[] arrayTarget) {
             int i = 0;
-            for (Enumeration e = table.elements() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                arrayTarget[i] = table.get(tmp);
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+                Object key = e.nextElement();
+                arrayTarget[i] = table.get(key);
                 i++;
             }
             return arrayTarget;
@@ -614,14 +643,22 @@ public class MapAdapter implements HMap{
             return false;
         }
     
+        /**
+         * Removes a single instance of the specified element from this collection, if
+         * it is present (optional operation). More formally, removes an element e such
+         * that (o==null ? e==null : o.equals(e)), if this collection contains one or
+         * more such elements. Returns true if this collection contained the specified
+         * element (or equivalently, if this collection changed as a result of the
+         * call).
+         *
+         * @param obj element to be removed from this collection, if present.
+         * @return true if this collection changed as a result of the call
+         */
         public boolean remove(Object obj){
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                if(obj == table.get(tmp)){
-                    table.remove(tmp);
-                    return true;
-                }
-            }
+            if(obj == null)
+                throw new NullPointerException();
+            if(table.remove(obj) == null)
+                return true;
             return false;
         }
     
@@ -665,14 +702,25 @@ public class MapAdapter implements HMap{
         public void clear(){
             table.clear();
         }
-    
+
         public boolean equals(Object o){
-            if(! (o instanceof CollectionAdapter)){
+            if(! (o instanceof SubValuesCollectionAdapter)){
                 return false;
             }
-            CollectionAdapter ca = (CollectionAdapter) o;
-            //return table.equals(ca.table);
-            return false;  
+            SubValuesCollectionAdapter sesa = (SubValuesCollectionAdapter) o;
+
+            if(this.size() != sesa.size())
+                return false;
+
+            HIterator thisIterator = this.iterator();
+            HIterator sesaIterator = sesa.iterator();
+
+            while(thisIterator.hasNext() && sesaIterator.hasNext()){
+                if(!thisIterator.next().equals(sesaIterator.next()))
+                    return false;
+            }
+            
+            return true;
         }
     
         public int hashCode(){
@@ -681,7 +729,11 @@ public class MapAdapter implements HMap{
     }
 
     private class SubKeySetAdapter implements HSet{
-        public SubKeySetAdapter(Hashtable table){}
+        private Hashtable table;
+
+        public SubKeySetAdapter(Hashtable table){
+            this.table = table;
+        }
 
         public int size() {
             return table.size();
@@ -692,13 +744,13 @@ public class MapAdapter implements HMap{
         }
     
         public boolean contains(Object obj){
+            if(obj == null)
+                throw new NullPointerException();
             if(! (obj instanceof HEntry)){
                 return false;
             }
-
-            HEntry em = (HEntry) obj;
-
-            return (table.contains(em.getValue()) && table.containsKey(em.getKey()));
+            
+            return table.containsKey(obj);
         }
     
         public HIterator iterator() {
@@ -709,10 +761,7 @@ public class MapAdapter implements HMap{
             Object[] arr = new Object[size()];
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                MapEntryAdapter me = new MapEntryAdapter(tmp);
-                me.setValue(table.get(tmp));
-                arr[i] = me;
+                arr[i] = e.nextElement();
                 i++;
             }
             return arr;
@@ -721,10 +770,7 @@ public class MapAdapter implements HMap{
         public Object[] toArray(Object[] arrayTarget) {
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object tmp = e.nextElement();
-                MapEntryAdapter me = new MapEntryAdapter(tmp);
-                me.setValue(table.get(tmp));
-                arrayTarget[i] = me;
+                arrayTarget[i] = e.nextElement();
                 i++;
             }
             return arrayTarget;
@@ -735,13 +781,16 @@ public class MapAdapter implements HMap{
         }
     
         public boolean remove(Object obj){
+            if(obj == null)
+                throw new NullPointerException();
+
             if(! (obj instanceof HEntry)){
                 return false;
             }
 
-            HEntry em = (HEntry) obj;
-            if (table.remove(em.getKey()) == null)
+            if (table.remove(obj) == null)
                 return false;
+
             return true;
         }
     
@@ -786,14 +835,25 @@ public class MapAdapter implements HMap{
         }
     
         public boolean equals(Object o){
-            if(! (o instanceof CollectionAdapter)){
+            if(! (o instanceof SubKeySetAdapter)){
                 return false;
             }
-            CollectionAdapter ca = (CollectionAdapter) o;
-            ///return table.equals(ca.table);
-            return false;
+            SubKeySetAdapter sesa = (SubKeySetAdapter) o;
+
+            if(this.size() != sesa.size())
+                return false;
+
+            HIterator thisIterator = this.iterator();
+            HIterator sesaIterator = sesa.iterator();
+
+            while(thisIterator.hasNext() && sesaIterator.hasNext()){
+                if(!thisIterator.next().equals(sesaIterator.next()))
+                    return false;
+            }
+            
+            return true;
         }
-    
+
         public int hashCode(){
             return table.hashCode();
         }
