@@ -7,6 +7,13 @@ import static org.junit.Assert.assertEquals;
 // Adapter package import
 import myAdapter.*;
 
+/**
+ * 
+ * @version 1.0
+ * @see TestSuiteSubValuesCollectionAdapter
+ * @author Giacomo Calabria
+ */
+
 public class TestSuiteMapAdapter {
     
     HMap map1 = null;
@@ -18,8 +25,7 @@ public class TestSuiteMapAdapter {
      * and starts its timer.
      */
     @BeforeClass
-    public static void beforeClassMethod()
-    {
+    public static void beforeClassMethod(){
         System.out.println("TestSuitemapAdapterAdapter suite started.");
         timeStart = System.currentTimeMillis();
     }
@@ -28,8 +34,7 @@ public class TestSuiteMapAdapter {
      * Before JUnit method. It initializes the map used in this suite.
      */
     @Before
-    public void beforeMethod()
-    {
+    public void beforeMethod(){
         map1 = new MapAdapter();    
         map2 = new MapAdapter();    
     }
@@ -41,8 +46,7 @@ public class TestSuiteMapAdapter {
      * the previous pointed objects, then removed by the Garbage Collector.
      */
     @After
-    public void afterMethod()
-    {
+    public void afterMethod(){
         map1 = null;
         map2 = null;
     }
@@ -52,9 +56,8 @@ public class TestSuiteMapAdapter {
      * and stops its timer. Prints milliseconds elapsed from the beginning.
      */
     @AfterClass
-    public static void afterClassMethod()
-    {
-        System.out.println("TestSuitemapAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
+    public static void afterClassMethod(){
+        System.out.println("TestSuiteMapAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
     // ****************************** SIZE METHOD *****************************
@@ -274,15 +277,11 @@ public class TestSuiteMapAdapter {
      * The reflective property of equal method is tested.</p>
      * <p><b>Test Case Design</b>: equals method should be reflective,
      * therefore x.equals(x) should always return true.</p>
-     * <p><b>Test Description</b>: The test invokes map
-    1.equals(map
-    1) when
+     * <p><b>Test Description</b>: The test invokes map1.equals(map1) when
      * map1 is empty, when it has 10 elements and when it has 1000 elements.</p>
      * <p><b>Pre-Condition</b>: Map is not null.</p>
-     * <p><b>Post-Condition</b>: map
-     has 1000 elements. </p>
-     * <p><b>Expected Results</b>: map
-     equals itself, therefore
+     * <p><b>Post-Condition</b>: map has 1000 elements. </p>
+     * <p><b>Expected Results</b>: map equals itself, therefore
      * reflective property is valid.</p>
      */
     @Test
@@ -304,18 +303,10 @@ public class TestSuiteMapAdapter {
      * The transitive property of equal method is tested.</p>
      * <p><b>Test Case Design</b>: equals method should be transitive,
      * therefore a.equals(b) and b.equals(c) {@literal =>} a.equals(c).</p>
-     * <p><b>Test Description</b>: The test invokes map
-    1.equals(map
-    2) and map
-    2.equals(map
-    3)
-     * and map
-    1.equals(map
-    3)</p>
-     * <p><b>Pre-Condition</b>: map
-    s contain {1 : 30}.</p>
-     * <p><b>Post-Condition</b>: map
-    s are unchanged. </p>
+     * <p><b>Test Description</b>: The test invokes map1.equals(map2) and map2.equals(map3)
+     * and map1.equals(map3)</p>
+     * <p><b>Pre-Condition</b>: maps contain {1 : 30}.</p>
+     * <p><b>Post-Condition</b>: maps are unchanged. </p>
      * <p><b>Expected Results</b>: Equals has transitive property.</p>
      */
     @Test
@@ -545,12 +536,26 @@ public class TestSuiteMapAdapter {
         assertEquals(null, map1.remove(44));
     }
 
+
+
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
         assertEquals(null, map1.remove(44));
         assertEquals(null, map1.remove("aa"));
     }
+    
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Removes all the elements through remove method
+     * to test its behaviour. Note that the limit case of removing the last element
+     * is tested too.</p>
+     * <p><b>Test Description</b>: Calls remove 450 times on an map containing
+     * 450 mappings, making it empty.</p>
+     * <p><b>Pre-Condition</b>: Map contains 450 mappings.</p>
+     * <p><b>Post-Condition</b>: Map is empty.</p>
+     * <p><b>Expected Results</b>: Map is empty, obviusly its size is 0.</p>
+     */
 
     @Test
     public void Remove_450ToEmpty(){
@@ -584,6 +589,16 @@ public class TestSuiteMapAdapter {
         map1.putAll(null);
     }
 
+    /**
+     * <p><b>Summary</b>: putAll method test case. </p>
+     * <p><b>Test Case Design</b>: putAll must behave correctly
+     * adding a collection of 100 elements, which is a common case for
+     * the putAll method.</p>
+     * <p><b>Test Description</b>: 100 elements are added in map2 and after map2 is putAll in map1 then the test checks the contained element and its size. </p>
+     * <p><b>Pre-Condition</b>: map1 is Empty, map2 contains 100 mappings. </p>
+     * <p><b>Post-Condition</b>: map1 and map2 contains 100 mappings. </p>
+     * <p><b>Expected Results</b>: map2 contanis 100 mappings. </p>
+     */
     @Test
     public void PutAll_An100ElementsMap(){
         for(int i = 0; i < 100; i++){
@@ -605,6 +620,16 @@ public class TestSuiteMapAdapter {
             assertEquals(true, map1.containsKey(i*i));
     }
 
+    /**
+     * <p><b>Summary</b>: putAll method test case. </p>
+     * <p><b>Test Case Design</b>: Tests the case of empty map being
+     * passed as argument, which is a limit case.</p>
+     * <p><b>Test Description</b>: The test cases calls putAll as empty map 
+     * as argument</p>
+     * <p><b>Pre-Condition</b>: Maps are empty</p>
+     * <p><b>Post-Condition</b>: Maps are empty</p>
+     * <p><b>Expected Results</b>: Maps are still empty</p>
+     */
     @Test
     public void PutAll_EmptyMapInEmptyMap(){
         assertEquals(true, map1.isEmpty());
@@ -616,6 +641,17 @@ public class TestSuiteMapAdapter {
         assertEquals(true, map1.isEmpty());
         assertEquals(true, map2.isEmpty());
     }
+    
+    /**
+     * <p><b>Summary</b>: putAll method test case. </p>
+     * <p><b>Test Case Design</b>: Tests the case of same empty map being
+     * passed as argument, which is a limit case.</p>
+     * <p><b>Test Description</b>: The test cases calls putAll as same empty map
+     * as argument</p>
+     * <p><b>Pre-Condition</b>: Map is empty</p>
+     * <p><b>Post-Condition</b>: Map is empty</p>
+     * <p><b>Expected Results</b>: Map is still empty</p>
+     */
 
     @Test 
     public void PutAll_SameEmptyMap(){
@@ -623,7 +659,18 @@ public class TestSuiteMapAdapter {
         map1.putAll(map1);
         assertEquals(true, map1.isEmpty());
     }
+    
 
+    /**
+     * <p><b>Summary</b>:putAll method test case. The test adds two times the same map to the map, then checks if the elements were stored correctly.</p>
+     * <p><b>Test Case Design</b>: putAll must behave correctly
+     * adding two times the same things. </p>
+     * <p><b>Test Description</b>: invokes two times the same method with the same
+     * map passed as argument</p>
+     * <p><b>Pre-Condition</b>: map1 is empty, map2 contains 100 mappings. </p>
+     * <p><b>Post-Condition</b>: both maps contains 100 mappings</p>
+     * <p><b>Expected Results</b>: map1 contains 100 mappings </p>
+     */
     @Test 
     public void PutAll_2TimesPut(){
         for(int i = 0; i < 100; i++)
@@ -649,6 +696,17 @@ public class TestSuiteMapAdapter {
             assertEquals(true, map1.containsValue(i+16));
         }
     }
+
+    /**
+     * <p><b>Summary</b>:putAll method test case. The test adds two different maps to the same map, then checks if the elements were stored correctly.</p>
+     * <p><b>Test Case Design</b>: putAll must behave correctly
+     * adding two different maps. </p>
+     * <p><b>Test Description</b>: invokes two time the same method with the two different
+     *  maps passed as argument</p>
+     * <p><b>Pre-Condition</b>: map1 is empty, map2 and map3 contains 100-10 mappings. </p>
+     * <p><b>Post-Condition</b>: map1 is not empty, map2 and map3 contains 100-10 mappings.</p>
+     * <p><b>Expected Results</b>: map1 contains elements from both maps </p>
+     */
 
     @Test
     public void PutAll_2Maps(){
@@ -689,6 +747,19 @@ public class TestSuiteMapAdapter {
 
     // ******************* HASHCODE METHOD ************************************
 
+    /**
+     * <p><b>Summary</b>: hashCode test case.
+     * Tests the behaviour of hashCode method with different
+     * configurations.</p>
+     * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
+     * so they must have the same elements each time, therefore they are equals.
+     * If they are equals they must have the same hashCode.</p>
+     * <p><b>Test Description</b>: Different configurations have been tested:
+     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
+     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     */
     @Test
     public void HashCode_Prop(){
         // Empty map case
@@ -713,5 +784,7 @@ public class TestSuiteMapAdapter {
         assertEquals("maps should be equal.", true, map1.equals(map2));
         assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
     }
+
+    
 
 }

@@ -630,6 +630,10 @@ public class MapAdapter implements HMap{
         }
     
         public Object[] toArray(Object[] arrayTarget) {
+            if(arrayTarget == null)
+                throw new NullPointerException();
+            if (arrayTarget.length < size())
+                throw new IllegalArgumentException();
             int i = 0;
             for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
                 Object key = e.nextElement();
@@ -639,8 +643,8 @@ public class MapAdapter implements HMap{
             return arrayTarget;
         }
     
-        public boolean add(Object obj) {
-            return false;
+        public boolean add(Object obj) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         /**
@@ -657,8 +661,13 @@ public class MapAdapter implements HMap{
         public boolean remove(Object obj){
             if(obj == null)
                 throw new NullPointerException();
-            if(table.remove(obj) == null)
-                return true;
+            for (Enumeration keys = table.keys(); keys.hasMoreElements();){
+                Object key = keys.nextElement();
+                if (table.get(key).equals(obj)){
+                    table.remove(key);
+                    return true;
+                }
+            }
             return false;
         }
     
@@ -672,8 +681,8 @@ public class MapAdapter implements HMap{
             return true;
         }
     
-        public boolean addAll(HCollection coll) {
-            return false;
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         public boolean removeAll(HCollection coll) {
