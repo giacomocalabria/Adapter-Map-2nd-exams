@@ -706,56 +706,56 @@ public class TestSuiteSubKeyEntrySetAdapter {
     public void Backed_ClearPut(){
         HSet coll = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, coll.isEmpty());
         coll.clear();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
         
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, coll.isEmpty());
         map1.clear();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
     }
 
     @Test
     public void Backed_putAllRemove(){
         HSet coll = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
         for(int i = 0; i < 1000; i ++){
             map2.put(i,i);
         }
         map1.putAll(map2);
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, coll.isEmpty());
         
         HIterator iter = coll.iterator();
         while(iter.hasNext())
             coll.remove(iter.next());
         
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
         
         map1.putAll(map2);
 
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, coll.isEmpty());
 
         for(int i = 0; i < 1000; i ++){
             map1.remove(i);
         }
 
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, coll.isEmpty());
     }
 
     @Test
@@ -775,27 +775,58 @@ public class TestSuiteSubKeyEntrySetAdapter {
     }
 
     @Test
-    public void Backed_IteratorRemove(){
-        HSet coll = map1.keySet();
+    public void Backed_KeyIteratorRemove(){
+
+        // SET
+        HSet key = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, key.isEmpty());
 
         assertEquals("Map should be not empty.", 1000, map1.size());
-        assertEquals("Collection should be not empty.", 1000, coll.size());
+        assertEquals("set should be not empty.", 1000, key.size());
         
-        HIterator iter = coll.iterator();
-        if(iter.hasNext())
-            coll.remove(iter.next());
+        HIterator iter = key.iterator();
+        while(iter.hasNext()){
+            iter.next();
             iter.remove();
+        }
+
+        assertEquals("Map should be empty.", 0, map1.size());
+        assertEquals("set should be empty.", 0, key.size());
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
+    }
+
+    @Test
+    public void Backed_EntryIteratorRemove(){
+        HSet entry = map1.entrySet();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("set should be empty.", true, entry.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("set should be not empty.", false, entry.isEmpty());
+
+        assertEquals("Map should be not empty.", 1000, map1.size());
+        assertEquals("set should be not empty.", 1000, entry.size());
         
+        HIterator iter = entry.iterator();
+        while(iter.hasNext()){
+            iter.next();
+            iter.remove();     
+        }
         
-        assertEquals("Map should be not empty.", 998, map1.size());
-        assertEquals("Collection should be not empty.", 998, coll.size());
+        assertEquals("set should be empty.", 0, entry.size());
+        assertEquals("Map should be empty.", 0, map1.size());
+        
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("set should be empty.", true, entry.isEmpty());
     }
 
     @Test
@@ -826,7 +857,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test (expected = NoSuchElementException.class)
     public void Iterator_HasNext_Emtpy(){
         HIterator iter = map1.keySet().iterator();
-        assertEquals("Empty collection iterator should not have next.", false, iter.hasNext());
+        assertEquals("Empty set iterator should not have next.", false, iter.hasNext());
         iter.next();
     }
 

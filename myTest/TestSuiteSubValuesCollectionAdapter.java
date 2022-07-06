@@ -599,13 +599,15 @@ public class TestSuiteSubValuesCollectionAdapter {
         assertEquals("Collection should be not empty.", 1000, coll.size());
         
         HIterator iter = coll.iterator();
-        if(iter.hasNext())
-            coll.remove(iter.next());
+        while(iter.hasNext()){
+            iter.next();
             iter.remove();
-        
-        
-        assertEquals("Map should be not empty.", 998, map1.size());
-        assertEquals("Collection should be not empty.", 998, coll.size());
+        }
+        assertEquals("Map should be not empty.", 0, map1.size());
+        assertEquals("Collection should be not empty.", 0, coll.size());
+
+        assertEquals("Map should be not empty.", true, map1.isEmpty());
+        assertEquals("Collection should be not empty.", true, coll.isEmpty());
     }
 
     @Test

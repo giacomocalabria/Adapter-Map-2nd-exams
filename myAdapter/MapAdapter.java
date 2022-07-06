@@ -1392,11 +1392,16 @@ public class MapAdapter implements HMap{
         Enumeration e;
         Enumeration k;
 
+        Hashtable table;
+
         boolean next = false;
 
+        Object keyToBeRemoved = null;
+
         public SubValuesCollectionAdapterIterator(Hashtable table){
-            e = table.elements();
-            k = table.keys();
+            this.table = table;
+            e = this.table.elements();
+            k = this.table.keys();
         }
 
 
@@ -1418,7 +1423,7 @@ public class MapAdapter implements HMap{
          * @throws NoSuchElementException if the iteration has no more elements
          */
         public Object next() {
-            k.nextElement();
+            keyToBeRemoved = k.nextElement();
             next = true;
             return e.nextElement();
         }
@@ -1435,16 +1440,11 @@ public class MapAdapter implements HMap{
          *
          */
         public void remove() {
-            if(!hasNext()){
-                throw new IllegalStateException();
-            }
             if(!next){
                 throw new IllegalStateException();
             }
             next = false;
-            e.nextElement();
-            Object key = k.nextElement();
-            table.remove(key);
+            table.remove(keyToBeRemoved);
         }
     }
 
@@ -1454,10 +1454,11 @@ public class MapAdapter implements HMap{
 
         boolean next = false;
 
+        Object keyToBeRemoved = null;
+
         public SubKeySetAdapterIterator(Hashtable table){
             e = table.keys();
         }
-
 
         /**
          * Returns {@code true} if the iteration has more elements.
@@ -1478,7 +1479,8 @@ public class MapAdapter implements HMap{
          */
         public Object next() {
             next = true;
-            return e.nextElement();
+            keyToBeRemoved = e.nextElement();
+            return keyToBeRemoved;
         }
 
         /**
@@ -1493,28 +1495,22 @@ public class MapAdapter implements HMap{
          *
          */
         public void remove() {
-            if(!hasNext()){
-                throw new IllegalStateException();
-            }
             if(!next){
                 throw new IllegalStateException();
             }
+            table.remove(keyToBeRemoved);
             next = false;
-            Object tmp = e.nextElement();
-
-            table.remove(tmp);
         }
     }
 
     private class SubEntrySetAdapterIterator implements HIterator{
-        
-        Enumeration e;
         Enumeration k;
 
         boolean next = false;
 
+        Object keyToBeRemoved = null;
+
         public SubEntrySetAdapterIterator(Hashtable table){
-            e = table.elements();
             k = table.keys();
         }
 
@@ -1527,7 +1523,7 @@ public class MapAdapter implements HMap{
          * @return {@code true} if the iteration has more elements
          */
         public boolean hasNext() {
-            return e.hasMoreElements() && k.hasMoreElements();
+            return k.hasMoreElements();
         }
 
         /**
@@ -1538,13 +1534,12 @@ public class MapAdapter implements HMap{
          */
         public Object next() {
             Object key = k.nextElement();
-            Object value = e.nextElement();
-
-            HEntry em = new MapEntryAdapter(key);
-            em.setValue(value);
-
             next = true;
 
+            HEntry em = new MapEntryAdapter(key);
+            em.setValue(table.get(key));
+
+            keyToBeRemoved = key;
             return em;
         }
 
@@ -1560,17 +1555,11 @@ public class MapAdapter implements HMap{
          *
          */
         public void remove() {
-            if(!hasNext()){
-                throw new IllegalStateException();
-            }
             if(!next){
                 throw new IllegalStateException();
             }
             next = false;
-            e.nextElement();
-            Object key = k.nextElement();
-
-            table.remove(key);
+            table.remove(keyToBeRemoved);
         }
     }
 
