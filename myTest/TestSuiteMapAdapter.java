@@ -3,6 +3,8 @@ package myTest;
 // JUnit imports
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 // Adapter package import
 import myAdapter.*;
@@ -785,6 +787,173 @@ public class TestSuiteMapAdapter {
         assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
     }
 
+    // **************************** TEST MAP CONSEGNA ****************************
+    
+    @Test
+    public void Propagation_Map_KeySet(){
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
+
+        int sm0, sm1, sm2, ss0, ss1, ss2;
+
+        HSet ks = map1.keySet();
+        sm0 = map1.size();
+		ss0 = ks.size();
+        map1.remove(args[0]);
+        sm1 = map1.size();
+		ss1 = ks.size();
+        map1.put(args[0], args[0]);
+		sm2 = map1.size();
+		ss2 = ks.size();
+
+        assertTrue("La mappa non propaga le modifiche a KeySet", sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
+    }
+
+    @Test
+    public void Backing_Map_KeySet(){
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
+
+        int sm0, sm1, sm2, ss0, ss1, ss2;
+
+        HSet s1 = map1.keySet();
+		sm0 = map1.size();
+		ss0 = s1.size();
+
+        HIterator iter = s1.iterator();
+        int count = s1.size() + 2;
+        
+        while(iter.hasNext()&&count-->=0){
+            iter.next();
+        }
+        s1.remove(args[0]);
+
+        sm1 = map1.size();
+        ss1 = s1.size();
+        iter = s1.iterator();
+        count = s1.size()+2;
+        while(iter.hasNext()&&count-->=0){
+            iter.next();
+        }
+        
+        map1.put("carrozza", "carrozza");
+        
+        iter = s1.iterator();
+        count = s1.size()+2;
+        while(iter.hasNext()&&count-->=0){
+            iter.next();
+        }
+
+        sm2 = map1.size();
+        ss2 = s1.size();
+
+        s1.remove("carrozza");
+
+        if(sm2 == map1.size() || ss2 == s1.size() || s1.size() != map1.size()){
+            System.out.println("Removal from key set not working");
+            System.out.println("Before removal " + sm2 + " " + ss2 + " after removal " + map1.size() + " " + s1.size());
+
+        }
+        else
+        {
+            //System.out.println("Removal from key set is ok");
+
+            if(sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1)
+            {
+                System.out.println("\n*** keyset propaga modifiche a map ***\n");
+            }
+            else
+            {
+                System.out.println(sm0 + " " + sm1 + " " + sm2 + " " + ss0 + " " + ss1 + " " + ss2);
+            }
+        }
+
+        assertFalse("Removal from key set not working",sm2 == map1.size() || ss2 == s1.size() || s1.size() != map1.size());
+        assertTrue("KeySet non propaga modifiche a map", sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
+    }
+
+    @Test
+    public void Emptying_KeySet_Iterator(){
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
+
+        HSet s1 = map1.keySet();
+        HIterator iter = s1.iterator();
+        int count = s1.size() + 2;
+        while(iter.hasNext() && count-- >= 0){
+            iter.next();
+            iter.remove();
+        }
+        assertTrue("keyset iterator removal does not work",map1.size() == s1.size() && map1.size() == 0);
+    }
+
+    @Test
+    public void Reset_Map(){
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
+        map1.clear();
+        map1.put(args[0], args[0]);
+        for(int i=0;i<args.length;i++){
+            map1.put(args[i], args[i]);
+        }
+
+        assertFalse("Map.put not working", map1.size() != args.length);
+    }
+
+    @Test
+    public void Test_ValuesMethod(){
+        int sm0, sm1, sm2, ss0, ss1, ss2;
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+
+        HCollection c = map1.values();
+
+        sm0 = map1.size();
+        ss0 = c.size();
+
+        HIterator iter = c.iterator();
+        int count = c.size() +2;
+        while(iter.hasNext() && count-- >= 0)
+            iter.next();
+        c.remove(args[0]);
+
+        sm1 = map1.size();
+        ss1 = c.size();
+
+        iter = c.iterator();
+        count = c.size()+2;
+        while(iter.hasNext()&&count-->= 0)
+            iter.next();
+
+        sm2 = map1.size();
+        ss2 = c.size();
+
+        assertTrue("values NON propaga modifiche a map ",sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
+    }
+
+    @Test
+    public void Emptying_Values_Iterator(){
+        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        for(int i=0;i<args.length;i++){
+			map1.put(args[i], args[i]);
+		}
+
+        HCollection c = map1.values();
+        HIterator iter = c.iterator();
+        int count = c.size() + 2;
+        while(iter.hasNext() && count-- >= 0){
+            iter.next();
+            iter.remove();
+        }
+        assertTrue("keyset iterator removal does not work",map1.size() == c.size() && map1.size() == 0);
+    }
     
 
 }
