@@ -406,8 +406,8 @@ public class MapAdapter implements HMap{
             return arrayTarget;
         }
     
-        public boolean add(Object obj) {
-            return false;
+        public boolean add(Object obj) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         public boolean remove(Object obj){
@@ -434,8 +434,8 @@ public class MapAdapter implements HMap{
             return true;
         }
     
-        public boolean addAll(HCollection coll) {
-            return false;
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         public boolean removeAll(HCollection coll) {
@@ -651,9 +651,6 @@ public class MapAdapter implements HMap{
         public boolean contains(Object obj){
             if(obj == null)
                 throw new NullPointerException();
-            if(! (obj instanceof HEntry)){
-                return false;
-            }
             
             return table.containsKey(obj);
         }
@@ -681,8 +678,8 @@ public class MapAdapter implements HMap{
             return arrayTarget;
         }
     
-        public boolean add(Object obj) {
-            return false;
+        public boolean add(Object obj) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         public boolean remove(Object obj){
@@ -709,8 +706,8 @@ public class MapAdapter implements HMap{
             return true;
         }
     
-        public boolean addAll(HCollection coll) {
-            return false;
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
         }
     
         public boolean removeAll(HCollection coll) {
@@ -769,6 +766,8 @@ public class MapAdapter implements HMap{
         Enumeration e;
         Enumeration k;
 
+        boolean next = false;
+
         public SubValuesCollectionAdapterIterator(Hashtable table){
             e = table.elements();
             k = table.keys();
@@ -794,6 +793,7 @@ public class MapAdapter implements HMap{
          */
         public Object next() {
             k.nextElement();
+            next = true;
             return e.nextElement();
         }
 
@@ -812,6 +812,10 @@ public class MapAdapter implements HMap{
             if(!hasNext()){
                 throw new IllegalStateException();
             }
+            if(!next){
+                throw new IllegalStateException();
+            }
+            next = false;
             e.nextElement();
             Object key = k.nextElement();
             table.remove(key);
@@ -828,6 +832,8 @@ public class MapAdapter implements HMap{
     private class SubKeySetAdapterIterator implements HIterator{
         
         Enumeration e;
+
+        boolean next = false;
 
         public SubKeySetAdapterIterator(Hashtable table){
             e = table.keys();
@@ -852,6 +858,7 @@ public class MapAdapter implements HMap{
          * @throws NoSuchElementException if the iteration has no more elements
          */
         public Object next() {
+            next = true;
             return e.nextElement();
         }
 
@@ -870,6 +877,10 @@ public class MapAdapter implements HMap{
             if(!hasNext()){
                 throw new IllegalStateException();
             }
+            if(!next){
+                throw new IllegalStateException();
+            }
+            next = false;
             Object tmp = e.nextElement();
 
             table.remove(tmp);
@@ -880,6 +891,8 @@ public class MapAdapter implements HMap{
         
         Enumeration e;
         Enumeration k;
+
+        boolean next = false;
 
         public SubEntrySetAdapterIterator(Hashtable table){
             e = table.elements();
@@ -911,6 +924,8 @@ public class MapAdapter implements HMap{
             HEntry em = new MapEntryAdapter(key);
             em.setValue(value);
 
+            next = true;
+
             return em;
         }
 
@@ -929,7 +944,10 @@ public class MapAdapter implements HMap{
             if(!hasNext()){
                 throw new IllegalStateException();
             }
-
+            if(!next){
+                throw new IllegalStateException();
+            }
+            next = false;
             e.nextElement();
             Object key = k.nextElement();
 

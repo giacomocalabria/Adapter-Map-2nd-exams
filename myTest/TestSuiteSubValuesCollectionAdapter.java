@@ -594,13 +594,18 @@ public class TestSuiteSubValuesCollectionAdapter {
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
         assertEquals("Collection should be not empty.", false, coll.isEmpty());
+
+        assertEquals("Map should be not empty.", 1000, map1.size());
+        assertEquals("Collection should be not empty.", 1000, coll.size());
         
         HIterator iter = coll.iterator();
-        while(iter.hasNext())
+        if(iter.hasNext())
+            coll.remove(iter.next());
             iter.remove();
         
-        assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        
+        assertEquals("Map should be not empty.", 998, map1.size());
+        assertEquals("Collection should be not empty.", 998, coll.size());
     }
 
     @Test

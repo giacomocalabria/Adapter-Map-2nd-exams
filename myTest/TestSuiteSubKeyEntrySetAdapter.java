@@ -118,16 +118,25 @@ public class TestSuiteSubKeyEntrySetAdapter {
         HSet key = map1.keySet();
         HSet entry = map1.entrySet();
         assertEquals("The map contains key 'ci' even if it is empty.", false, key.contains("ci"));
-        assertEquals("The map contains key 'ci' even if it is empty.", false, entry.contains(new Object()));
+        HMap.HEntry em = new MapEntryAdapter(156);
+        em.setValue(11);
+        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
     }
 
     @Test
     public void Contains_1(){
-        HCollection coll = map1.values();
-        assertEquals("The map contains key 'ci' even if it is empty.", false, coll.contains("ci"));
-        map1.put("mio","ci");
-        coll = map1.values();
-        assertEquals("The map does not contains key 'ci' even if it should.", true, coll.contains("ci"));
+        HMap.HEntry em = new MapEntryAdapter(15);
+        em.setValue(15);
+
+        HSet key = map1.keySet();
+        HSet entry = map1.entrySet();
+        assertEquals("The map contains key 15 even if it is empty.", false, key.contains(15));
+        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
+        
+        map1.put(15,15);
+
+        assertEquals("The map does not contains key 15 even if it should.", true, key.contains(15));
+        assertEquals("The map contains entry em even if it is empty.", true, entry.contains(em));
     }
 
     /**
@@ -156,24 +165,663 @@ public class TestSuiteSubKeyEntrySetAdapter {
         for (int i = 50; i < 100; i++)
             map1.put(i,i);
         
-        HCollection coll = map1.values();
+        HSet key = map1.keySet();
+        HSet entry = map1.entrySet();
         for (int i = 25; i < 50; i++)
         {
-            assertEquals("The list should NOT include " + i, false, coll.contains(i));
+            HMap.HEntry em = new MapEntryAdapter(i);
+            em.setValue(i);
+            assertEquals("The list should NOT include " + i, false, key.contains(i));
+            assertEquals("The list should NOT include " + i, false, entry.contains(em));
         }
         for (int i = 50; i < 100; i++)
         {
-            assertEquals("The list should include " + i, true, coll.contains(i));
+            HMap.HEntry em = new MapEntryAdapter(i);
+            em.setValue(i);
+            assertEquals("The list should include " + i, true, key.contains(i));
+            assertEquals("The list should include " + i, true, entry.contains(em));
         }
         for (int i = 100; i < 125; i++)
         {
-            assertEquals("The list should NOT include " + i, false, coll.contains(i));
+            HMap.HEntry em = new MapEntryAdapter(i);
+            em.setValue(i);
+            assertEquals("The list should NOT include " + i, false, key.contains(i));
+            assertEquals("The list should NOT include " + i, false, entry.contains(em));
         }
     }
 
     @Test(expected = NullPointerException.class)
-    public void Contains_Null_NPException(){
+    public void Contains_Key_Null_NPException(){
+        HSet key = map1.keySet();
+        key.contains(null);
+    }
+    @Test(expected = NullPointerException.class)
+    public void Contains_Entry_Null_NPException(){
+        HSet entry = map1.entrySet();
+        entry.contains(null);
+    }
+
+    //****************************** EQUALS METHOD ****************************
+
+    @Test
+    public void Equals_1(){
+        map1.put(1,1);
+        map2.put(1,1);
+        HSet key1 = map1.keySet();
+        HSet entry1 = map1.entrySet();
+        HSet key2 = map2.keySet();
+        HSet entry2 = map2.entrySet();
+
+        assertTrue(key1.equals(key2));
+        assertTrue(entry1.equals(entry2));
+
+        assertFalse(key1.equals(entry2));
+        assertFalse(entry1.equals(key2));
+    }
+
+    @Test
+    public void Equals_Empty_True(){
+        HSet key1 = map1.keySet();
+        HSet entry1 = map1.entrySet();
+        HSet key2 = map2.keySet();
+        HSet entry2 = map2.entrySet();
+        assertTrue(entry1.equals(entry2));
+        assertTrue(entry2.equals(entry1));
+        assertTrue(key1.equals(key2));
+        assertTrue(key2.equals(key1));
+    }
+
+    @Test
+    public void Equals_Reflective(){
+        HSet key1 = map1.keySet();
+        HSet entry1 = map1.entrySet();
+
+        assertTrue(key1.equals(key1));    // Set is empty
+        assertTrue(entry1.equals(entry1));    // Set is empty
+        
+        for(int i = 0; i < 10; i++){
+            map1.put(i,i);
+        }
+        
+        assertTrue(key1.equals(key1));    // Set is not empty, should return true anyways
+        assertTrue(entry1.equals(entry1));    // Set is not empty, should return true anyways
+        
+        for(int i = 0; i < 1000; i++){
+            map1.put(i,i);
+        }
+        
+        assertTrue(key1.equals(key1));    // Set is empty
+        assertTrue(entry1.equals(entry1));    // Set is empty
+    }
+
+    @Test
+    public void Equals_Transitive(){
+        HMap map3 = new MapAdapter();
+        for(int i = 0; i < 30; i++){
+            map1.put(i, i);
+            map2.put(i, i);
+            map3.put(i, i);
+        }
+        HSet key1 = map1.keySet();
+        HSet entry1 = map1.entrySet();
+        HSet key2 = map2.keySet();
+        HSet entry2 = map2.entrySet();
+        HSet key3 = map3.keySet();
+        HSet entry3 = map3.entrySet();
+
+        assertTrue(entry1.equals(entry2));
+        assertTrue(entry2.equals(entry3));
+        assertTrue("Transitive property is not met.", entry1.equals(entry3));
+        assertTrue(key1.equals(key2));
+        assertTrue(key2.equals(key3));
+        assertTrue("Transitive property is not met.", key1.equals(key3));
+    }
+
+    
+    //********************** CLEAR METHOD **************************************
+
+    /**
+     * <p><b>Summary</b>: clear method test case.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on an already empty
+     * list, which is a limit case.</p>
+     * <p><b>Test Description</b>: Calls clear on the list, then it should be
+     * equal to another empty list.</p>
+     * <p><b>Pre-Condition</b>: List is empty.</p>
+     * <p><b>Post-Condition</b>: List is still empty.</p>
+     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     */
+    @Test
+    public void Clear_Empty(){
+        HSet key = map1.keySet();
+        HSet entry = map1.entrySet();
+        key.clear();
+        assertEquals("List should be empty.", true, key.isEmpty());
+        entry.clear();
+        assertEquals("List should be empty.", true, entry.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: clear method test case.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on a list containing 0.</p>
+     * <p><b>Test Description</b>: Calls clear on the list, then it should be
+     * equal to another empty list.</p>
+     * <p><b>Pre-Condition</b>: List contains 0.</p>
+     * <p><b>Post-Condition</b>: List is empty.</p>
+     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     */
+    @Test
+    public void Clear_1Element(){
+        map1.put(1,1);
+        HSet key = map1.keySet();
+        HSet entry = map1.entrySet();
+        key.clear();
+        assertEquals("List should be empty.", true, key.isEmpty());
+        entry.clear();
+        assertEquals("List should be empty.", true, entry.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: clear method test case.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on a list containing {0:1000}.</p>
+     * <p><b>Test Description</b>: Calls clear on the list, then it should be
+     * equal to another empty list.</p>
+     * <p><b>Pre-Condition</b>: List contains {0:1000}.</p>
+     * <p><b>Post-Condition</b>: List is empty.</p>
+     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     */
+    @Test
+    public void Clear_0To1000(){
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        HSet key = map1.keySet();
+        HSet entry = map1.entrySet();
+        key.clear();
+        assertEquals("List should be empty.", true, key.isEmpty());
+        entry.clear();
+        assertEquals("List should be empty.", true, entry.isEmpty());
+    }
+
+    // ******************* HASHCODE METHOD ************************************
+
+    /**
+     * <p><b>Summary</b>: hashCode test case.
+     * Tests the behaviour of hashCode method with different
+     * configurations.</p>
+     * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
+     * so they must have the same elements each time, therefore they are equals.
+     * If they are equals they must have the same hashCode.</p>
+     * <p><b>Test Description</b>: Different configurations have been tested:
+     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
+     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     */
+    @Test
+    public void HashCode_Prop_Key(){
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        // Empty map case
+        assertEquals("maps should be equal.", true, key1.equals(key2));
+        assertEquals("Hash codes should be equal.", key1.hashCode(), key2.hashCode());
+
+        // One element case
+        map1.put(1,1);
+        map2.put(1,1);
+        key1 = map1.keySet();
+        key2 = map2.keySet();
+        assertEquals("maps should be equal.", true, key1.equals(key2));
+        assertEquals("Hash codes should be equal.", key1.hashCode(), key2.hashCode());
+
+        map1.put("ciao",164);
+        map2.put("ciao",164);
+        key1 = map1.keySet();
+        key2 = map2.keySet();
+        assertEquals("maps should be equal.", true, key1.equals(key2));
+        assertEquals("Hash codes should be equal.", key1.hashCode(), key2.hashCode());
+
+        for(int i = 0; i < 10; i++){
+            map1.put("ciao" + i,i + 164);
+            map2.put("ciao" + i,i + 164);
+        }
+        key1 = map1.keySet();
+        key2 = map2.keySet();
+        assertEquals("maps should be equal.", true, key1.equals(key2));
+        assertEquals("Hash codes should be equal.", key1.hashCode(), key2.hashCode());
+    }
+    /**
+     * <p><b>Summary</b>: hashCode test case.
+     * Tests the behaviour of hashCode method with different
+     * configurations.</p>
+     * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
+     * so they must have the same elements each time, therefore they are equals.
+     * If they are equals they must have the same hashCode.</p>
+     * <p><b>Test Description</b>: Different configurations have been tested:
+     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
+     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     */
+    @Test
+    public void HashCode_Prop_entrySet(){
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map2.entrySet();
+        // Empty map case
+        assertEquals("maps should be equal.", true, entry1.equals(entry2));
+        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
+
+        // One element case
+        map1.put(1,1);
+        map2.put(1,1);
+        assertEquals("maps should be equal.", true, entry1.equals(entry2));
+        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
+
+        map1.put("ciao",164);
+        map2.put("ciao",164);
+        assertEquals("maps should be equal.", true, entry1.equals(entry2));
+        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
+
+        for(int i = 0; i < 10; i++){
+            map1.put("ciao" + i,i + 164);
+            map2.put("ciao" + i,i + 164);
+        }
+        assertEquals("maps should be equal.", true, entry1.equals(entry2));
+        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
+    }
+
+    //************************ ADD & ADDALL METHOD **********************************
+
+    @Test (expected = UnsupportedOperationException.class)
+    public void Add_key(){
+        HSet key1 = map1.keySet();
+        key1.add(15);
+    }
+    
+    @Test (expected = UnsupportedOperationException.class)
+    public void AddAll_key(){
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        key1.addAll(key2);
+    }
+
+    @Test (expected = UnsupportedOperationException.class)
+    public void Add_entry(){
+        HSet entry1 = map1.entrySet();
+        entry1.add(15);
+    }
+    
+    @Test (expected = UnsupportedOperationException.class)
+    public void AddAll_entry(){
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map1.entrySet();
+        entry1.addAll(entry2);
+    }
+
+    //***************************** REMOVE METHOD **********************************
+
+    @Test (expected = NullPointerException.class)
+    public void Remove_EmptyNullKey_NPException(){
+        HCollection coll1 = map1.values();
+        coll1.remove(null);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void Remove_NullKey_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        coll1.remove(null);
+    }
+
+    @Test
+    public void Remove_Empty(){
+        HCollection coll1 = map1.values();
+        assertFalse(coll1.remove(156));
+    }
+
+    @Test
+    public void Remove_ReturnOldValue(){
+        map1.put(44, 987);
+        HCollection coll1 = map1.values();
+        assertTrue(coll1.remove(987));
+        assertFalse(coll1.remove(987));
+    }
+
+    @Test
+    public void Remove_NotPresent(){
+        map1.put("ciao","bello");
+        HCollection coll1 = map1.values();
+        assertFalse(coll1.remove(44));
+        assertFalse(coll1.remove("aa"));
+    }
+
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Removes all the elements through remove method
+     * to test its behaviour. Note that the limit case of removing the last element
+     * is tested too.</p>
+     * <p><b>Test Description</b>: Calls remove 450 times on an map containing
+     * 450 mappings, making it empty.</p>
+     * <p><b>Pre-Condition</b>: Map contains 450 mappings.</p>
+     * <p><b>Post-Condition</b>: Map is empty.</p>
+     * <p><b>Expected Results</b>: Map is empty, obviusly its size is 0.</p>
+     */
+
+    @Test
+    public void Remove_450ToEmpty(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        for(int i = 0; i < 450; i++){
+            assertTrue(coll1.remove((i+654)*i));
+        }
+        assertEquals("Size should be 0", 0, coll1.size());
+        assertEquals("map should be empty.", true, coll1.isEmpty());
+    }
+
+    //************************* TOARRAY METHOD *********************************
+
+    /**
+     * <p><b>Summary</b>: toArray method test case. 
+     * The test case asserts that an empty list
+     * should return an empty array on a toArray call.
+     * The list is not modified
+     * since its creation.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of
+     * a toArray call returning an empty array. From the 
+     * Sommerville: "Test with sequences of zero lenght."</p>
+     * <p><b>Test Description</b>: Test based on the trivial but possible
+     * state of an empty list.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * <p><b>Expected Results</b>: The toArray method returns an empty
+     * array and therefore its lenght is 0.</p>
+     */
+    @Test
+    public void ToArray_Empty_EmptyArray(){
+        HCollection coll1 = map1.values();
+        Object[] arr = coll1.toArray();
+        assertEquals("Empty list did not return empty array.", arr.length, 0);
+    }
+
+    /**
+     * <p><b>Summary</b>: toArray method test case.
+     * The test case asserts that, after many insertion, an array returned from a
+     * toArray call must match the expected list.</p>
+     * <p><b>Test Case Design</b>: The test inserts five element and then
+     * checks if the list elements matches the inserted elements.
+     * From the Sommerville: "Use sequences of different sizes in different tests.". Small
+     * size tested here.</p>
+     * <p><b>Test Description</b>: Inserts five 1 to the map. Then assertArrayEquals
+     * is called.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list contains {1,1,1,1,1}.</p>
+     * <p><b>Expected Results</b>: list1.toArray() returns
+     * [1, 1, 1, 1, 1].</p>
+     */
+    @Test
+    public void ToArray_11111_True(){
+        for(int i = 0; i < 5; i++)
+            map1.put(i,1);
+        HCollection coll1 = map1.values();
+        Integer[] arr = {1,1,1,1,1};
+        assertArrayEquals("Arrays do not match.", arr , coll1.toArray());
+    }
+
+    /**
+     * <p><b>Summary</b>: toArray test case.
+     * The test adds one element to the list and then call
+     * toArray method.</p>
+     * <p><b>Test Case Design</b>: Test focuses on toArray behaviour when
+     * it has only one element, which is a limit case. From the Sommerville: "Test software
+     * with sequences which have only a single value."</p>
+     * <p><b>Test Description</b>: Adds one to the list, calls toArray method
+     * and checks the array's first element and its size.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list has one element {1654}.</p>
+     * <p><b>Expected Results</b>: The element is stored correctly in the
+     * array returned from the method (the array is [1]) and its size is 1.</p>
+     */
+    @Test
+    public void ToArray_ArrayDest_1(){
+        Object[] arr = new Object[1];
+        map1.put(1,1654);
+        HCollection coll1 = map1.values();
+        coll1.toArray(arr);
+        assertEquals("The array size should be 1.", 1, arr.length);
+        assertEquals("The element should be 1654.", 1654, arr[0]);
+    }
+
+    /**
+     * <p><b>Summary</b>: toArray(HCollection) method test case.</p>
+     * <p><b>Test Case Design</b>: The test checks the method behaviour when the
+     * argument is null, which a special case.</p>
+     * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
+     * <p><b>Pre-Condition</b>: The map is empty</p>
+     * <p><b>Post-Condition</b>: The map is still empty.</p>
+     * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
+     */
+
+    @Test (expected = NullPointerException.class)
+    public void ToArrat_DestNull_NPException(){
+        HCollection coll1 = map1.values();
+        coll1.toArray(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: toArray(HCollection) method test case.
+     * The test adds element from 0 (included) to 10 (excluded) to the list and checks the array.</p>
+     * <p><b>Test Case Design</b>: The test checks the method behaviour when the
+     * argument size is not enough for containing the list's elements, which a
+     * special case.</p>
+     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the list. arr contains the result
+     * of toArray method, but exception is being thrown.</p>
+     * <p><b>Pre-Condition</b>: The list is empty, arr is empty.</p>
+     * <p><b>Post-Condition</b>: The list has 10 elements, arr is still empty.</p>
+     * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
+     */
+
+    @Test (expected = IllegalArgumentException.class)
+    public void ToArray_DestSmaller(){
+        map1.put(1,1);
+        map1.put(2,3);
+        Object[] arr = new Object[1];
+        HCollection coll1 = map1.values();
+        coll1.toArray(arr);
+    }
+
+    // ************************** BACKED FEATURE *************************
+
+    @Test
+    public void Backed_ClearPut(){
         HCollection coll = map1.values();
-        coll.contains(null);
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        coll.clear();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        map1.clear();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+    }
+
+    @Test
+    public void Backed_putAllRemove(){
+        HCollection coll = map1.values();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map2.put(i,i);
+        }
+        map1.putAll(map2);
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+        
+        HIterator iter = coll.iterator();
+        while(iter.hasNext())
+            coll.remove(iter.next());
+        
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        
+        map1.putAll(map2);
+
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+
+        for(int i = 0; i < 1000; i ++){
+            map1.remove(i);
+        }
+
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+    }
+
+    @Test
+    public void Backed_PutRemove(){
+        HCollection coll = map1.values();
+        assertFalse(coll.contains(156));
+        map1.put(15,156);
+        assertTrue(coll.contains(156));
+        map1.remove(15);
+        assertFalse(coll.contains(156));
+        map1.put(17,44);
+        assertTrue(map1.containsValue(44));
+        assertTrue(coll.contains(44));
+        coll.remove(44);
+        assertFalse(map1.containsValue(44));
+        assertFalse(coll.contains(44));
+    }
+
+    @Test
+    public void Backed_IteratorRemove(){
+        HCollection coll = map1.values();
+        assertEquals("Map should be empty.", true, map1.isEmpty());
+        assertEquals("Collection should be empty.", true, coll.isEmpty());
+        for(int i = 0; i < 1000; i ++){
+            map1.put(i,i);
+        }
+        assertEquals("Map should be not empty.", false, map1.isEmpty());
+        assertEquals("Collection should be not empty.", false, coll.isEmpty());
+
+        assertEquals("Map should be not empty.", 1000, map1.size());
+        assertEquals("Collection should be not empty.", 1000, coll.size());
+        
+        HIterator iter = coll.iterator();
+        if(iter.hasNext())
+            coll.remove(iter.next());
+            iter.remove();
+        
+        
+        assertEquals("Map should be not empty.", 998, map1.size());
+        assertEquals("Collection should be not empty.", 998, coll.size());
+    }
+
+    @Test
+    public void Backed_removeAll(){
+
+    }
+
+    @Test
+    public void Backed_retainAll(){
+
+    }
+
+    //****************************** ITERATOR METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of
+     * an iterator returned from an empty list
+     * calling hasNext and next. From the Sommerville:
+     * "Choose inputs that force the system to generate all error messages".</p>
+     * <p><b>Test Description</b>: an iterator is returned from empty
+     * list. iterator.hasNext() should be false, while
+     * next() should throw NoSuchElementException.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * <p><b>Expected Results</b>: hasNext returns false, NSEE is thrown.</p>
+     */
+    @Test (expected = NoSuchElementException.class)
+    public void Iterator_HasNext_Emtpy(){
+        HIterator iter = map1.values().iterator();
+        assertEquals("Empty collection iterator should not have next.", false, iter.hasNext());
+        iter.next();
+    }
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.
+     * List contains 1 element and the test iterate through
+     * it.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of 1
+     * element in the list. Therefore hasNext should return
+     * true while next() should return the only number
+     * in the list.</p>
+     * <p><b>Test Description</b>: The number 1 is added, and an iterator
+     * iterates through the list. After returning the first elements,
+     * it has no more next elements.</p>
+     * <p><b>Pre-Condition</b>: List contains 1, iterator has next.</p>
+     * <p><b>Post-Condition</b>: List contains 1, iterator has not next.</p>
+     * <p><b>Expected Results</b>: The first hasNext call returns true,
+     * the second returns false.</p>
+     */
+    @Test
+    public void Iterator_HasNext_Begin1_True()
+    {
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should have next.", true, iter.hasNext());
+        iter.next();
+        assertEquals("Should not have next.", false, iter.hasNext());
+    }
+
+    @Test
+    public void Iterator_Next_1(){
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should have 1 as next.", 1, iter.next());
+        assertEquals("Should not have next.", false, iter.hasNext());
+    }
+
+    @Test (expected = IllegalStateException.class)
+    public void Iterator_Remove_Empty_HISE(){
+        HIterator iter = map1.values().iterator();
+        assertEquals("Should not have next.", false, iter.hasNext());
+        iter.remove();
+    }
+
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Test should throw an exception.</p>
+     * <p><b>Test Case Design</b>: Tests if for a list a remove method
+     * throws HIllegalStateException, as no prev or next has been 
+     * called, or remove or add have been called after the last call to
+     * next or previous</p>
+     * <p><b>Test Description</b>: remove is invoked by an iterator instance.</p>
+     * <p><b>Pre-Condition</b>: List has 1 element.</p>
+     * <p><b>Post-Condition</b>: List still has 1 element.</p>
+     * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
+     */
+    @Test (expected = IllegalStateException.class)
+    public void Remove_OneElement_HISE(){
+        map1.put(1,1);
+        HIterator iter = map1.values().iterator();
+        iter.remove(); /* Exception throw as no prev or next has been
+                            called, or remove or add have been called after
+                            the last call to
+                            next or previous*/
     }
 }
