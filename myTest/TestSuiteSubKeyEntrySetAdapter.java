@@ -461,8 +461,8 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test (expected = NullPointerException.class)
     public void Remove_EmptyNullKey_NPException(){
-        HCollection coll1 = map1.values();
-        coll1.remove(null);
+        HSet key1 = map1.keySet();
+        key1.remove(null);
     }
 
     @Test (expected = NullPointerException.class)
@@ -470,30 +470,46 @@ public class TestSuiteSubKeyEntrySetAdapter {
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HCollection coll1 = map1.values();
-        coll1.remove(null);
+        HSet key1 = map1.keySet();
+        key1.remove(null);
     }
+
+    @Test (expected = NullPointerException.class)
+    public void Remove_EmptyNullEntry_NPException(){
+        HSet key1 = map1.keySet();
+        key1.remove(null);
+    }
+
+    @Test (expected = NullPointerException.class)
+    public void Remove_NullEntry_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        key1.remove(null);
+    }
+
 
     @Test
     public void Remove_Empty(){
-        HCollection coll1 = map1.values();
-        assertFalse(coll1.remove(156));
+        HSet key1 = map1.keySet();
+        assertFalse(key1.remove(156));
     }
 
     @Test
     public void Remove_ReturnOldValue(){
         map1.put(44, 987);
-        HCollection coll1 = map1.values();
-        assertTrue(coll1.remove(987));
-        assertFalse(coll1.remove(987));
+        HSet key1 = map1.keySet();
+        assertTrue(key1.remove(987));
+        assertFalse(key1.remove(987));
     }
 
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
-        HCollection coll1 = map1.values();
-        assertFalse(coll1.remove(44));
-        assertFalse(coll1.remove("aa"));
+        HSet key1 = map1.keySet();
+        assertFalse(key1.remove(44));
+        assertFalse(key1.remove("aa"));
     }
 
     /**
@@ -513,12 +529,12 @@ public class TestSuiteSubKeyEntrySetAdapter {
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HCollection coll1 = map1.values();
+        HSet key1 = map1.keySet();
         for(int i = 0; i < 450; i++){
-            assertTrue(coll1.remove((i+654)*i));
+            assertTrue(key1.remove((i+654)*i));
         }
-        assertEquals("Size should be 0", 0, coll1.size());
-        assertEquals("map should be empty.", true, coll1.isEmpty());
+        assertEquals("Size should be 0", 0, key1.size());
+        assertEquals("map should be empty.", true, key1.isEmpty());
     }
 
     //************************* TOARRAY METHOD *********************************
@@ -541,8 +557,8 @@ public class TestSuiteSubKeyEntrySetAdapter {
      */
     @Test
     public void ToArray_Empty_EmptyArray(){
-        HCollection coll1 = map1.values();
-        Object[] arr = coll1.toArray();
+        HSet key1 = map1.keySet();
+        Object[] arr = key1.toArray();
         assertEquals("Empty list did not return empty array.", arr.length, 0);
     }
 
@@ -565,9 +581,9 @@ public class TestSuiteSubKeyEntrySetAdapter {
     public void ToArray_11111_True(){
         for(int i = 0; i < 5; i++)
             map1.put(i,1);
-        HCollection coll1 = map1.values();
+        HSet key1 = map1.keySet();
         Integer[] arr = {1,1,1,1,1};
-        assertArrayEquals("Arrays do not match.", arr , coll1.toArray());
+        assertArrayEquals("Arrays do not match.", arr , key1.toArray());
     }
 
     /**
@@ -588,14 +604,14 @@ public class TestSuiteSubKeyEntrySetAdapter {
     public void ToArray_ArrayDest_1(){
         Object[] arr = new Object[1];
         map1.put(1,1654);
-        HCollection coll1 = map1.values();
-        coll1.toArray(arr);
+        HSet key1 = map1.keySet();
+        key1.toArray(arr);
         assertEquals("The array size should be 1.", 1, arr.length);
         assertEquals("The element should be 1654.", 1654, arr[0]);
     }
 
     /**
-     * <p><b>Summary</b>: toArray(HCollection) method test case.</p>
+     * <p><b>Summary</b>: toArray(HSet) method test case.</p>
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument is null, which a special case.</p>
      * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
@@ -606,12 +622,12 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test (expected = NullPointerException.class)
     public void ToArrat_DestNull_NPException(){
-        HCollection coll1 = map1.values();
-        coll1.toArray(null);
+        HSet key1 = map1.keySet();
+        key1.toArray(null);
     }
 
     /**
-     * <p><b>Summary</b>: toArray(HCollection) method test case.
+     * <p><b>Summary</b>: toArray(HSet) method test case.
      * The test adds element from 0 (included) to 10 (excluded) to the list and checks the array.</p>
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument size is not enough for containing the list's elements, which a
@@ -628,15 +644,15 @@ public class TestSuiteSubKeyEntrySetAdapter {
         map1.put(1,1);
         map1.put(2,3);
         Object[] arr = new Object[1];
-        HCollection coll1 = map1.values();
-        coll1.toArray(arr);
+        HSet key1 = map1.keySet();
+        key1.toArray(arr);
     }
 
     // ************************** BACKED FEATURE *************************
 
     @Test
     public void Backed_ClearPut(){
-        HCollection coll = map1.values();
+        HSet coll = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
         assertEquals("Collection should be empty.", true, coll.isEmpty());
         for(int i = 0; i < 1000; i ++){
@@ -660,7 +676,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test
     public void Backed_putAllRemove(){
-        HCollection coll = map1.values();
+        HSet coll = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
         assertEquals("Collection should be empty.", true, coll.isEmpty());
         for(int i = 0; i < 1000; i ++){
@@ -692,7 +708,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test
     public void Backed_PutRemove(){
-        HCollection coll = map1.values();
+        HSet coll = map1.keySet();
         assertFalse(coll.contains(156));
         map1.put(15,156);
         assertTrue(coll.contains(156));
@@ -708,7 +724,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
     @Test
     public void Backed_IteratorRemove(){
-        HCollection coll = map1.values();
+        HSet coll = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
         assertEquals("Collection should be empty.", true, coll.isEmpty());
         for(int i = 0; i < 1000; i ++){
@@ -757,7 +773,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
      */
     @Test (expected = NoSuchElementException.class)
     public void Iterator_HasNext_Emtpy(){
-        HIterator iter = map1.values().iterator();
+        HIterator iter = map1.keySet().iterator();
         assertEquals("Empty collection iterator should not have next.", false, iter.hasNext());
         iter.next();
     }
@@ -782,7 +798,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
     public void Iterator_HasNext_Begin1_True()
     {
         map1.put(1,1);
-        HIterator iter = map1.values().iterator();
+        HIterator iter = map1.keySet().iterator();
         assertEquals("Should have next.", true, iter.hasNext());
         iter.next();
         assertEquals("Should not have next.", false, iter.hasNext());
@@ -791,14 +807,14 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test
     public void Iterator_Next_1(){
         map1.put(1,1);
-        HIterator iter = map1.values().iterator();
+        HIterator iter = map1.keySet().iterator();
         assertEquals("Should have 1 as next.", 1, iter.next());
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 
     @Test (expected = IllegalStateException.class)
     public void Iterator_Remove_Empty_HISE(){
-        HIterator iter = map1.values().iterator();
+        HIterator iter = map1.keySet().iterator();
         assertEquals("Should not have next.", false, iter.hasNext());
         iter.remove();
     }
@@ -818,7 +834,7 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test (expected = IllegalStateException.class)
     public void Remove_OneElement_HISE(){
         map1.put(1,1);
-        HIterator iter = map1.values().iterator();
+        HIterator iter = map1.keySet().iterator();
         iter.remove(); /* Exception throw as no prev or next has been
                             called, or remove or add have been called after
                             the last call to
