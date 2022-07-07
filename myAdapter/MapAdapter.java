@@ -736,6 +736,66 @@ public class MapAdapter implements HMap{
             res += "]";
             return res;
         }
+
+        private class SubEntrySetAdapterIterator implements HIterator{
+            Enumeration k;
+    
+            boolean next = false;
+    
+            Object keyToBeRemoved = null;
+    
+            public SubEntrySetAdapterIterator(Hashtable table){
+                k = table.keys();
+            }
+    
+    
+            /**
+             * Returns {@code true} if the iteration has more elements.
+             * (In other words, returns {@code true} if {@link #next} would
+             * return an element rather than throwing an exception.)
+             *
+             * @return {@code true} if the iteration has more elements
+             */
+            public boolean hasNext() {
+                return k.hasMoreElements();
+            }
+    
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration
+             * @throws NoSuchElementException if the iteration has no more elements
+             */
+            public Object next() {
+                Object key = k.nextElement();
+                next = true;
+    
+                HEntry em = new MapEntryAdapter(key);
+                em.setValue(table.get(key));
+    
+                keyToBeRemoved = key;
+                return em;
+            }
+    
+            /**
+             * Removes from the underlying collection the last element returned
+             * by this iterator (optional operation).  This method can be called
+             * only once per call to {@link #next}.
+             * <p>
+             * The behavior of an iterator is unspecified if the underlying collection
+             * is modified while the iteration is in progress in any way other than by
+             * calling this method, unless an overriding class has specified a
+             * concurrent modification policy.
+             *
+             */
+            public void remove() {
+                if(!next){
+                    throw new IllegalStateException();
+                }
+                next = false;
+                table.remove(keyToBeRemoved);
+            }
+        }
     }
 
     private class SubValuesCollectionAdapter implements HCollection{
@@ -1071,6 +1131,67 @@ public class MapAdapter implements HMap{
          */
         public int hashCode(){
             return table.hashCode();
+        }
+
+        private class SubValuesCollectionAdapterIterator implements HIterator{
+        
+            Enumeration e;
+            Enumeration k;
+    
+            Hashtable table;
+    
+            boolean next = false;
+    
+            Object keyToBeRemoved = null;
+    
+            public SubValuesCollectionAdapterIterator(Hashtable table){
+                this.table = table;
+                e = this.table.elements();
+                k = this.table.keys();
+            }
+    
+    
+            /**
+             * Returns {@code true} if the iteration has more elements.
+             * (In other words, returns {@code true} if {@link #next} would
+             * return an element rather than throwing an exception.)
+             *
+             * @return {@code true} if the iteration has more elements
+             */
+            public boolean hasNext() {
+                return e.hasMoreElements() && k.hasMoreElements();
+            }
+    
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration
+             * @throws NoSuchElementException if the iteration has no more elements
+             */
+            public Object next() {
+                keyToBeRemoved = k.nextElement();
+                next = true;
+                return e.nextElement();
+            }
+    
+            /**
+             * Removes from the underlying collection the last element returned
+             * by this iterator (optional operation).  This method can be called
+             * only once per call to {@link #next}.
+             * <p>
+             * The behavior of an iterator is unspecified if the underlying collection
+             * is modified while the iteration is in progress in any way other than by
+             * calling this method, unless an overriding class has specified a
+             * concurrent modification policy.
+             *
+             */
+            public void remove() {
+                if(!next){
+                    throw new IllegalStateException();
+                }
+                next = false;
+                table.remove(keyToBeRemoved);
+            }
         }
     }
 
@@ -1417,182 +1538,62 @@ public class MapAdapter implements HMap{
         public int hashCode(){
             return table.hashCode();
         }
-    }
 
-    private class SubValuesCollectionAdapterIterator implements HIterator{
+        private class SubKeySetAdapterIterator implements HIterator{
         
-        Enumeration e;
-        Enumeration k;
-
-        Hashtable table;
-
-        boolean next = false;
-
-        Object keyToBeRemoved = null;
-
-        public SubValuesCollectionAdapterIterator(Hashtable table){
-            this.table = table;
-            e = this.table.elements();
-            k = this.table.keys();
-        }
-
-
-        /**
-         * Returns {@code true} if the iteration has more elements.
-         * (In other words, returns {@code true} if {@link #next} would
-         * return an element rather than throwing an exception.)
-         *
-         * @return {@code true} if the iteration has more elements
-         */
-        public boolean hasNext() {
-            return e.hasMoreElements() && k.hasMoreElements();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         *
-         * @return the next element in the iteration
-         * @throws NoSuchElementException if the iteration has no more elements
-         */
-        public Object next() {
-            keyToBeRemoved = k.nextElement();
-            next = true;
-            return e.nextElement();
-        }
-
-        /**
-         * Removes from the underlying collection the last element returned
-         * by this iterator (optional operation).  This method can be called
-         * only once per call to {@link #next}.
-         * <p>
-         * The behavior of an iterator is unspecified if the underlying collection
-         * is modified while the iteration is in progress in any way other than by
-         * calling this method, unless an overriding class has specified a
-         * concurrent modification policy.
-         *
-         */
-        public void remove() {
-            if(!next){
-                throw new IllegalStateException();
+            Enumeration e;
+    
+            boolean next = false;
+    
+            Object keyToBeRemoved = null;
+    
+            public SubKeySetAdapterIterator(Hashtable table){
+                e = table.keys();
             }
-            next = false;
-            table.remove(keyToBeRemoved);
+    
+            /**
+             * Returns {@code true} if the iteration has more elements.
+             * (In other words, returns {@code true} if {@link #next} would
+             * return an element rather than throwing an exception.)
+             *
+             * @return {@code true} if the iteration has more elements
+             */
+            public boolean hasNext() {
+                return e.hasMoreElements();
+            }
+    
+            /**
+             * Returns the next element in the iteration.
+             *
+             * @return the next element in the iteration
+             * @throws NoSuchElementException if the iteration has no more elements
+             */
+            public Object next() {
+                next = true;
+                keyToBeRemoved = e.nextElement();
+                return keyToBeRemoved;
+            }
+    
+            /**
+             * Removes from the underlying collection the last element returned
+             * by this iterator (optional operation).  This method can be called
+             * only once per call to {@link #next}.
+             * <p>
+             * The behavior of an iterator is unspecified if the underlying collection
+             * is modified while the iteration is in progress in any way other than by
+             * calling this method, unless an overriding class has specified a
+             * concurrent modification policy.
+             *
+             */
+            public void remove() {
+                if(!next){
+                    throw new IllegalStateException();
+                }
+                table.remove(keyToBeRemoved);
+                next = false;
+            }
         }
     }
 
-    private class SubKeySetAdapterIterator implements HIterator{
-        
-        Enumeration e;
-
-        boolean next = false;
-
-        Object keyToBeRemoved = null;
-
-        public SubKeySetAdapterIterator(Hashtable table){
-            e = table.keys();
-        }
-
-        /**
-         * Returns {@code true} if the iteration has more elements.
-         * (In other words, returns {@code true} if {@link #next} would
-         * return an element rather than throwing an exception.)
-         *
-         * @return {@code true} if the iteration has more elements
-         */
-        public boolean hasNext() {
-            return e.hasMoreElements();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         *
-         * @return the next element in the iteration
-         * @throws NoSuchElementException if the iteration has no more elements
-         */
-        public Object next() {
-            next = true;
-            keyToBeRemoved = e.nextElement();
-            return keyToBeRemoved;
-        }
-
-        /**
-         * Removes from the underlying collection the last element returned
-         * by this iterator (optional operation).  This method can be called
-         * only once per call to {@link #next}.
-         * <p>
-         * The behavior of an iterator is unspecified if the underlying collection
-         * is modified while the iteration is in progress in any way other than by
-         * calling this method, unless an overriding class has specified a
-         * concurrent modification policy.
-         *
-         */
-        public void remove() {
-            if(!next){
-                throw new IllegalStateException();
-            }
-            table.remove(keyToBeRemoved);
-            next = false;
-        }
-    }
-
-    private class SubEntrySetAdapterIterator implements HIterator{
-        Enumeration k;
-
-        boolean next = false;
-
-        Object keyToBeRemoved = null;
-
-        public SubEntrySetAdapterIterator(Hashtable table){
-            k = table.keys();
-        }
-
-
-        /**
-         * Returns {@code true} if the iteration has more elements.
-         * (In other words, returns {@code true} if {@link #next} would
-         * return an element rather than throwing an exception.)
-         *
-         * @return {@code true} if the iteration has more elements
-         */
-        public boolean hasNext() {
-            return k.hasMoreElements();
-        }
-
-        /**
-         * Returns the next element in the iteration.
-         *
-         * @return the next element in the iteration
-         * @throws NoSuchElementException if the iteration has no more elements
-         */
-        public Object next() {
-            Object key = k.nextElement();
-            next = true;
-
-            HEntry em = new MapEntryAdapter(key);
-            em.setValue(table.get(key));
-
-            keyToBeRemoved = key;
-            return em;
-        }
-
-        /**
-         * Removes from the underlying collection the last element returned
-         * by this iterator (optional operation).  This method can be called
-         * only once per call to {@link #next}.
-         * <p>
-         * The behavior of an iterator is unspecified if the underlying collection
-         * is modified while the iteration is in progress in any way other than by
-         * calling this method, unless an overriding class has specified a
-         * concurrent modification policy.
-         *
-         */
-        public void remove() {
-            if(!next){
-                throw new IllegalStateException();
-            }
-            next = false;
-            table.remove(keyToBeRemoved);
-        }
-    }
 
 }
