@@ -12,7 +12,7 @@ import myAdapter.*;
 /**
  * 
  * @version 1.0
- * @see TestSuiteSubValuesCollectionAdapter
+ * @see TestSuiteValuesCollection
  * @author Giacomo Calabria
  */
 
@@ -21,6 +21,7 @@ public class TestSuiteMapAdapter {
     HMap map1 = null;
     HMap map2 = null;
 
+    String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
     static long timeStart = 0;
     /**
      * BeforeClass JUnit static method. Announces the the test begin
@@ -401,17 +402,18 @@ public class TestSuiteMapAdapter {
      * <p><b>Summary</b>: clear method test case.</p>
      * <p><b>Test Case Design</b>: Invokes clear method on an already empty
      * map, which is a limit case.</p>
-     * <p><b>Test Description</b>: Calls clear on the map, then it should be
+     * <p><b>Test Description</b>: map is empty. Calls clear on the map, then it should be
      * equal to another empty map.</p>
      * <p><b>Pre-Condition</b>: Map is empty.</p>
      * <p><b>Post-Condition</b>: Map is still empty.</p>
-     * <p><b>Expected Results</b>: Map is equal to another empty map.</p>
+     * <p><b>Expected Results</b>: Map is equal to another empty map. isEmpty return true and size is 0. </p>
      */
     @Test
     public void Clear_Empty(){
         map1.clear();
-        assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("Map should be empty.", true, map1.equals(map2));
+        assertTrue("Map should be empty.", map1.isEmpty());
+        assertTrue("Map should be empty.", map1.equals(map2));
+        assertEquals("Size should be 0", 0,map1.size());
     }
 
     /**
@@ -885,7 +887,7 @@ public class TestSuiteMapAdapter {
     
     @Test
     public void Propagation_Map_KeySet(){
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}
@@ -907,7 +909,7 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Backing_Map_KeySet(){
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}
@@ -953,7 +955,7 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Emptying_KeySet_ViaIterator(){
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}
@@ -970,7 +972,7 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Reset_Map(){
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}
@@ -986,7 +988,7 @@ public class TestSuiteMapAdapter {
     @Test
     public void Test_ValuesMethod(){
         int sm0, sm1, sm2, ss0, ss1, ss2;
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}
@@ -1018,7 +1020,7 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Emptying_Values_Iterator(){
-        String[] args = {"pippo", "pluto", "qui", "ciccio", "gambatek"};
+        
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
 		}

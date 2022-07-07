@@ -42,7 +42,7 @@ public class TestRunner
 
         System.out.println("TestRunner started. Starting test executions.\n");
         
-        testResults = JUnitCore.runClasses(TestSuiteMapAdapter.class, TestSuiteSubKeySetAdapter.class, TestSuiteSubValuesCollectionAdapter.class, TestSuiteSubEntrySetAdapter.class);
+        testResults = JUnitCore.runClasses(TestSuiteMapAdapter.class, TestSuiteKeySet.class, TestSuiteValuesCollection.class, TestSuiteEntrySet.class);
 
         System.out.println("\nTestRunner ended. All the tests have been completed.");
 

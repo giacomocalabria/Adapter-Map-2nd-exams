@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 // Adapter package import
 import myAdapter.*;
 
-public class TestSuiteSubKeySetAdapter {
+public class TestSuiteKeySet {
     HMap map1 = null;
     HMap map2 = null;
 

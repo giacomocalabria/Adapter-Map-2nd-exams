@@ -216,7 +216,7 @@ public class MapAdapter implements HMap{
      * @return a set view of the keys contained in this map
      */
     public HSet keySet(){
-        return new SubKeySetAdapter(table);
+        return new KeySet(table);
     }
 
     /**
@@ -235,7 +235,7 @@ public class MapAdapter implements HMap{
      * @return a collection view of the values contained in this map
      */
     public HCollection values(){
-        return new SubValuesCollectionAdapter(table);
+        return new ValuesCollection(table);
     }
 
     /**
@@ -255,7 +255,7 @@ public class MapAdapter implements HMap{
      * @return a set view of the mappings contained in this map
      */
     public HSet entrySet(){
-        return new SubEntrySetAdapter(table);
+        return new EntrySet(table);
     }
 
     // COMPARISION AND HASHING
@@ -311,7 +311,7 @@ public class MapAdapter implements HMap{
     }
 
     /**
-     *  SubEntrySetAdapter is a private class used in order to give to Map's entrySet() method
+     *  EntrySet is a private class used in order to give to Map's entrySet() method
      *  a {@link HSet} view. 
      * 
      *  @version 1.0
@@ -320,10 +320,10 @@ public class MapAdapter implements HMap{
      *  @see {@link HMap.entrySet()}
      */
 
-    private class SubEntrySetAdapter implements HSet{
+    private class EntrySet implements HSet{
         private Hashtable table;
 
-        public SubEntrySetAdapter(Hashtable table){
+        public EntrySet(Hashtable table){
             this.table = table;
         }
 
@@ -385,7 +385,7 @@ public class MapAdapter implements HMap{
          * @return an {@code HIterator} over the elements in this set
          */
         public HIterator iterator() {
-            return new SubEntrySetAdapterIterator(table);
+            return new EntrySetIterator(table);
         }
         
         /**
@@ -653,10 +653,10 @@ public class MapAdapter implements HMap{
          * @see List#equals(Object)
          */
         public boolean equals(Object o){
-            if(! (o instanceof SubEntrySetAdapter)){
+            if(! (o instanceof EntrySet)){
                 return false;
             }
-            SubEntrySetAdapter sesa = (SubEntrySetAdapter) o;
+            EntrySet sesa = (EntrySet) o;
 
             if(this.size() != sesa.size())
                 return false;
@@ -704,14 +704,14 @@ public class MapAdapter implements HMap{
             return str;
         }
 
-        private class SubEntrySetAdapterIterator implements HIterator{
+        private class EntrySetIterator implements HIterator{
             Enumeration k;
     
             boolean next = false;
     
             Object keyToBeRemoved = null;
     
-            public SubEntrySetAdapterIterator(Hashtable table){
+            public EntrySetIterator(Hashtable table){
                 k = table.keys();
             }
     
@@ -766,7 +766,7 @@ public class MapAdapter implements HMap{
     }
 
     /**
-     *  SubValuesCollectionAdapter is a private class used in order to give to Map's values() 
+     *  ValuesCollection is a private class used in order to give to Map's values() 
      *  method a {@link HCollection} view. 
      * 
      *  @version 1.0
@@ -775,10 +775,10 @@ public class MapAdapter implements HMap{
      *  @see {@link HMap.values()}
      */
 
-    private class SubValuesCollectionAdapter implements HCollection{
+    private class ValuesCollection implements HCollection{
         private Hashtable table;
 
-        public SubValuesCollectionAdapter(Hashtable table){
+        public ValuesCollection(Hashtable table){
             this.table = table;
         }
 
@@ -828,7 +828,7 @@ public class MapAdapter implements HMap{
          * @return an {@code HIterator} over the elements in this collection
          */
         public HIterator iterator() {
-            return new SubValuesCollectionAdapterIterator(table);
+            return new ValuesCollectionIterator(table);
         }
     
         /**
@@ -1084,10 +1084,10 @@ public class MapAdapter implements HMap{
          * @see List#equals(Object)
          */
         public boolean equals(Object o){
-            if(! (o instanceof SubValuesCollectionAdapter)){
+            if(! (o instanceof ValuesCollection)){
                 return false;
             }
-            SubValuesCollectionAdapter sesa = (SubValuesCollectionAdapter) o;
+            ValuesCollection sesa = (ValuesCollection) o;
 
             if(this.size() != sesa.size())
                 return false;
@@ -1135,7 +1135,7 @@ public class MapAdapter implements HMap{
             return str;
         }
 
-        private class SubValuesCollectionAdapterIterator implements HIterator{
+        private class ValuesCollectionIterator implements HIterator{
         
             Enumeration e;
             Enumeration k;
@@ -1144,7 +1144,7 @@ public class MapAdapter implements HMap{
     
             Object keyToBeRemoved = null;
     
-            public SubValuesCollectionAdapterIterator(Hashtable table){
+            public ValuesCollectionIterator(Hashtable table){
                 e = table.elements();
                 k = table.keys();
             }
@@ -1195,7 +1195,7 @@ public class MapAdapter implements HMap{
     }
 
     /**
-     *  SubKeySetAdapter is a private class used in order to give to Map's keySet() method
+     *  KeySet is a private class used in order to give to Map's keySet() method
      *  a {@link HSet} view. 
      * 
      *  @version 1.0
@@ -1204,10 +1204,10 @@ public class MapAdapter implements HMap{
      *  @see {@link HMap.keySet()}
      */
 
-    private class SubKeySetAdapter implements HSet{
+    private class KeySet implements HSet{
         private Hashtable table;
 
-        public SubKeySetAdapter(Hashtable table){
+        public KeySet(Hashtable table){
             this.table = table;
         }
 
@@ -1260,7 +1260,7 @@ public class MapAdapter implements HMap{
          */
     
         public HIterator iterator() {
-            return new SubKeySetAdapterIterator(table);
+            return new KeySetIterator(table);
         }
 
         /**
@@ -1517,10 +1517,10 @@ public class MapAdapter implements HMap{
          */
     
         public boolean equals(Object o){
-            if(! (o instanceof SubKeySetAdapter)){
+            if(! (o instanceof KeySet)){
                 return false;
             }
-            SubKeySetAdapter sesa = (SubKeySetAdapter) o;
+            KeySet sesa = (KeySet) o;
 
             if(this.size() != sesa.size())
                 return false;
@@ -1568,7 +1568,7 @@ public class MapAdapter implements HMap{
             return str;
         }
 
-        private class SubKeySetAdapterIterator implements HIterator{
+        private class KeySetIterator implements HIterator{
         
             Enumeration e;
     
@@ -1576,7 +1576,7 @@ public class MapAdapter implements HMap{
     
             Object keyToBeRemoved = null;
     
-            public SubKeySetAdapterIterator(Hashtable table){
+            public KeySetIterator(Hashtable table){
                 e = table.keys();
             }
     

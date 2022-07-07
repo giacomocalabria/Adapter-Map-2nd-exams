@@ -123,14 +123,14 @@ public class MapEntryAdapter implements HMap.HEntry{
      *  key.toString() + "=" + value.toString()
      *  </pre></blockquote>
      * 
-     *  If value is null is not represented value.toString()
+     *  If value is null is not represented value.toString() but only key.toString()
      *  @return  a string representation of the object. 
      */
 
     @Override
     public String toString(){
         if(value == null)
-            return key.toString() + "=";
+            return key.toString();
         return key.toString() + "=" + value.toString();
     }
 }
