@@ -346,8 +346,8 @@ public class MapAdapter implements HMap{
     }
 
     /**
-     *  SubEntruSetAdapter is a private class used in order to give to Map's entrySet() method
-     *  a {@link HSet} interface. 
+     *  SubEntrySetAdapter is a private class used in order to give to Map's entrySet() method
+     *  a {@link HSet} view. 
      * 
      *  @version 1.0
      *  @author Giacomo Calabria
@@ -798,6 +798,16 @@ public class MapAdapter implements HMap{
         }
     }
 
+    /**
+     *  SubValuesCollectionAdapter is a private class used in order to give to Map's values() 
+     *  method a {@link HCollection} view. 
+     * 
+     *  @version 1.0
+     *  @author Giacomo Calabria
+     *  @see {@link HCollection}
+     *  @see {@link HMap.values()}
+     */
+
     private class SubValuesCollectionAdapter implements HCollection{
         private Hashtable table;
 
@@ -1194,6 +1204,16 @@ public class MapAdapter implements HMap{
             }
         }
     }
+
+    /**
+     *  SubKeySetAdapter is a private class used in order to give to Map's keySet() method
+     *  a {@link HSet} view. 
+     * 
+     *  @version 1.0
+     *  @author Giacomo Calabria
+     *  @see {@link HSet}
+     *  @see {@link HMap.keySet()}
+     */
 
     private class SubKeySetAdapter implements HSet{
         private Hashtable table;
