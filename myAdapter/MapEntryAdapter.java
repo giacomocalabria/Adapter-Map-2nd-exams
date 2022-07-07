@@ -15,7 +15,12 @@ package myAdapter;
 public class MapEntryAdapter implements HMap.HEntry{
 
     private Object key;
-    private Object value;
+    private Object value = null;
+
+    /**
+     * Constructor with only key and value is default null
+     * @param akey
+     */
 
     public MapEntryAdapter(Object akey){
         this.key = akey;
