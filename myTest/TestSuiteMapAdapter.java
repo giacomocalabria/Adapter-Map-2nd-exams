@@ -374,17 +374,13 @@ public class TestSuiteMapAdapter {
      * Test aim is to push the map
      size to 10000 and check
      * if the elements are stored correctly.</p>
-     * <p><b>Test Case Design</b>: Test the map
-     with a very large size.
+     * <p><b>Test Case Design</b>: Test the map with a very large size.
      * From the Sommerville: "Use sequences of different sizes in
      * different tests."</p>
      * <p><b>Test Description</b>: The test pushes 10000 elements to the
-     * map
-     and then checks every one of them with the get method.</p>
-     * <p><b>Pre-Condition</b>: The map
-     is Empty.</p>
-     * <p><b>Post-Condition</b>: The map
-     contains {0:10000}</p>
+     * map and then checks every one of them with the get method.</p>
+     * <p><b>Pre-Condition</b>: The map is Empty.</p>
+     * <p><b>Post-Condition</b>: The map contains {0:10000}</p>
      * <p><b>Expected Results</b>: Every one of the 10000 elements matches,
      * therefore get returns each element in {0:10000}.</p>
      */
@@ -539,8 +535,6 @@ public class TestSuiteMapAdapter {
         assertEquals(987, map1.remove(44));
         assertEquals(null, map1.remove(44));
     }
-
-
 
     @Test
     public void Remove_NotPresent(){

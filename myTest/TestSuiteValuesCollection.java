@@ -713,8 +713,7 @@ public class TestSuiteValuesCollection {
      * the second returns false.</p>
      */
     @Test
-    public void Iterator_HasNext_Begin1_True()
-    {
+    public void Iterator_HasNext_Begin1_True(){
         map1.put(1,1);
         HIterator iter = map1.values().iterator();
         assertEquals("Should have next.", true, iter.hasNext());
