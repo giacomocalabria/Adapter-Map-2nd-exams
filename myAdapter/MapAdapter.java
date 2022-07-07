@@ -1413,8 +1413,6 @@ public class MapAdapter implements HMap{
             return true;
         }
 
-        
-
         /**
          * Removes all of this set's elements that are also contained in the
          * specified collection (optional operation).  After this call returns,

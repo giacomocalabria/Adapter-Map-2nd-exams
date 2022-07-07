@@ -14,9 +14,9 @@ import java.util.NoSuchElementException;
 import myAdapter.*;
 
 /**
- * <strong> Class TestSuiteCollectionAdapter </strong>
+ * <strong> Class TestSuiteValuesCollection </strong>
  * <p>
- * <br><br><strong>Summary</strong>: The TestSuiteCollectionAdapter class check
+ * <br><br><strong>Summary</strong>: The TestSuiteCollection class check
  * with its test that the CollectionAdapter's Methods, defined in HCollection interface, works properly.
  * 
  * <br><br><strong>Test Suite Design</strong>: This class contains different test cases 
@@ -41,7 +41,7 @@ public class TestSuiteValuesCollection {
      */
     @BeforeClass
     public static void beforeClassMethod(){
-        System.out.println("TestSuitemapAdapterAdapter suite started.");
+        System.out.println("TestSuiteValuesCollection suite started.");
         timeStart = System.currentTimeMillis();
     }
 
@@ -72,7 +72,7 @@ public class TestSuiteValuesCollection {
      */
     @AfterClass
     public static void afterClassMethod(){
-        System.out.println("TestSuitemapAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
+        System.out.println("TestSuiteValuesCollection suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
     //***************************** SIZE METHOD *******************************
