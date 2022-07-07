@@ -13,6 +13,7 @@ import java.util.Enumeration;
  *  @version 1.0
  *  @author Giacomo Calabria
  *  @see {@link HMap}
+ *  @see {@link Hashtable}
  */
 
 public class MapAdapter implements HMap{

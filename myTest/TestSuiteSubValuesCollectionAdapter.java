@@ -13,6 +13,22 @@ import java.util.NoSuchElementException;
 // Adapter package import
 import myAdapter.*;
 
+/**
+ * <strong> Class TestSuiteCollectionAdapter </strong>
+ * <p>
+ * <br><br><strong>Summary</strong>: The TestSuiteCollectionAdapter class check
+ * with its test that the CollectionAdapter's Methods, defined in HCollection interface, works properly.
+ * 
+ * <br><br><strong>Test Suite Design</strong>: This class contains different test cases 
+ * for each method of the HCollection interface.
+ * 
+ * Test cases include inspection test, modification test and iterator test. 
+ * 
+ * Each method is tested apart from others.
+ * 
+ * @author Giacomo Calabria
+ */
+
 public class TestSuiteSubValuesCollectionAdapter {
     
     HMap map1 = null;
@@ -743,6 +759,144 @@ public class TestSuiteSubValuesCollectionAdapter {
                             next or previous*/
     }
 
+    //***************** TEST COLLECTION CONSEGNA ******************************
+
+    @Test
+	/**
+	 * @safe.precondition head con almeno un elemento
+	 * @safe.postcondition temp che e' un array contenete gli elementi di head
+	 * @safe.summary verifico che temp contenga gli elementi di head
+	 */
+	public void to_array() {
+        map1.put("Collection Adapter","Collection Adapter");
+        HCollection head = map1.values();
+		Object[] temp = head.toArray();
+		boolean size = (temp.length == 1);
+		boolean content = (temp[0].equals("Collection Adapter"));
+		assertTrue(size && content);
+	}
     
+    /**
+	 * @safe.precondition head con almeno un elemento, a array di destinazione
+	 * @safe.postcondition a contiene gli elementi di head
+	 * @safe.summary verifico che head contenga gli elementi di head, facendo il confronto con il suo contenuto
+	 */
+    @Test
+    public void to_array_a(){
+        map1.put("Collection Adapter","Collection Adapter");
+        HCollection head = map1.values();
+        Object[] a = new Object[10];
+		a = head.toArray(a);
+		boolean content = (a[0].equals("Collection Adapter"));
+		assertTrue(content);
+    }
+
+    @Test
+	/**
+	 * @safe.precondition ct con almeno un elemento
+	 * @safe.postcondition ct senza l'elemento o
+	 * @safe.summary test remove(Object o), rimuovo da ct l'elemento o e verifico che la dimensione di ct sia cambiata
+	 */
+	public void remove_o(){
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+		Object o = "Collection Adapter";
+		boolean ris = ct.remove(o);
+		assertTrue(ris);
+	}
+
+    @Test
+	/**
+	 * @safe.precondition ct con almeno un elemento
+	 * @safe.postcondition ct senza gli elementi di Collection c
+	 * @safe.summary test removeAll(Collection c), rimuovo da ct tutti gli elementi di c
+	 */
+	public void remove_all_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.removeAll(param);
+		assertTrue(ris);
+	}
+	
+	@Test
+	/**
+	 * @safe.precondition ct con almeno un elemento
+	 * @safe.postcondition ct intersecato a Collection c
+	 * @safe.summary modifica ct facendogli contenere alla fine solo gli elementi presenti anche in c
+	 */
+	public void retain_all_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.retainAll(param);
+		assertTrue(ris);
+	}
+
+    @Test
+	/**
+	 * @safe.precondition ct contiene tutti gli elementi presenti nella Collection c
+	 * @safe.postcondition ris e' true
+	 * @safe.summary test metodo containsAll(Collection c) e verifico che gli elementi di c siano presenti in ct
+	 */
+	public void containsAll_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.containsAll(param);
+		assertTrue(ris);
+	}
+	
+	@Test
+	/**
+	 * @safe.precondition due oggetti uguali
+	 * @safe.postcondition ris vale true
+	 * @safe.summary test metodo equals(Object o) e controllo se sono uguali
+	 */
+	public void equals_o() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(1,"Collection Adapter");
+		map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection temp = map2.values();
+		
+		boolean ris = ct.equals(temp);
+		assertTrue(ris);
+	}
 
 }

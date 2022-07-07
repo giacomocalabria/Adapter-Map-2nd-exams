@@ -787,6 +787,23 @@ public class TestSuiteMapAdapter {
         assertEquals("Hash codes should be equal.", map1.hashCode(), map2.hashCode());
     }
 
+    // **************************** HCOLLECTION METHODS ******************************************
+
+    @Test
+    public void Values(){
+        assertTrue(map1.values() instanceof HCollection);
+    }
+
+    @Test
+    public void KeySet(){
+        assertTrue(map1.keySet() instanceof HSet);
+    }
+
+    @Test
+    public void EntrySet(){
+        assertTrue(map1.entrySet() instanceof HSet);
+    }
+
     // **************************** TEST MAP CONSEGNA ****************************
     
     @Test
