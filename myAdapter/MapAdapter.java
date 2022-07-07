@@ -402,7 +402,7 @@ public class MapAdapter implements HMap{
 
             HEntry em = (HEntry) obj;
 
-            if(!table.containsKey(em.getKey()) && table.contains(em.getValue()))
+            if(!(table.containsKey(em.getKey()) && table.contains(em.getValue())))
                 return false;
             
             if(!table.get(em.getKey()).equals(em.getValue()))
