@@ -21,6 +21,11 @@ public class MapEntryAdapter implements HMap.HEntry{
         this.key = akey;
     }
 
+    public MapEntryAdapter(Object akey, Object avalue){
+        this.value = avalue;
+        this.key = akey;
+    }
+
     /**
      * Returns the value corresponding to this entry.  If the mapping
      * has been removed from the backing map (by the iterator's
