@@ -402,7 +402,13 @@ public class MapAdapter implements HMap{
 
             HEntry em = (HEntry) obj;
 
-            return (table.contains(em.getValue()) && table.containsKey(em.getKey()));
+            if(!table.containsKey(em.getKey()) && table.contains(em.getValue()))
+                return false;
+            
+            if(!table.get(em.getKey()).equals(em.getValue()))
+                return false;
+            
+            return true;
         }
     
         /**
@@ -436,14 +442,13 @@ public class MapAdapter implements HMap{
         public Object[] toArray() {
             Object[] arr = new Object[size()];
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;i++){
                 Object key = e.nextElement();
 
                 MapEntryAdapter me = new MapEntryAdapter(key);
                 me.setValue(table.get(key));
 
                 arr[i] = me;
-                i++;
             }
             return arr;
         }
@@ -493,28 +498,41 @@ public class MapAdapter implements HMap{
          * @return an array containing all of the elements in this collection
          *
          * @throws NullPointerException if the specified array is null.
+         * @throws IllegalArgumentException if the specified array's lenght
+         *          is less then this set lenght
          */
         public Object[] toArray(Object[] arrayTarget) {
             if(arrayTarget == null)
                 throw new NullPointerException();
+            if (arrayTarget.length < this.size())
+                throw new IllegalArgumentException();
+            
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ; i++){
                 Object key = e.nextElement();
 
                 MapEntryAdapter me = new MapEntryAdapter(key);
                 me.setValue(table.get(key));
 
                 arrayTarget[i] = me;
-                i++;
             }
             return arrayTarget;
         }
 
         /**
          * This method is unsupported for entrySet()
+         * @throws UnsupportedOperationException as the operation is not supported
          */
     
         public boolean add(Object obj) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
+        }
+
+        /**
+         * This method is unsupported for entrySet()
+         * @throws UnsupportedOperationException as the operation is not supported
+         */
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
     
@@ -556,6 +574,9 @@ public class MapAdapter implements HMap{
          * @see    #contains(Object)
          */
         public boolean containsAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
+
             HIterator i = coll.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
@@ -563,12 +584,6 @@ public class MapAdapter implements HMap{
                     return false;
             }
             return true;
-        }
-        /**
-         * This method is unsupported for entrySet()
-         */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
-            throw new UnsupportedOperationException();
         }
     
         /**
@@ -589,11 +604,13 @@ public class MapAdapter implements HMap{
             if(coll == null)
                 throw new NullPointerException();
             HIterator i = coll.iterator();
-            boolean hasRemAll = false;
+            boolean hasRemOne = false;
             while(i.hasNext()){
-                //hasRemAll = table.remove(i.next());
+                Object el = i.next();
+                if(remove(el))
+                    hasRemOne = true;
             }
-            return hasRemAll;
+            return hasRemOne;
         }
         /**
          * Retains only the elements in this collection that are contained in the
@@ -612,21 +629,22 @@ public class MapAdapter implements HMap{
         public boolean retainAll(HCollection coll) {
             if(coll == null)
                 throw new NullPointerException();
-            boolean hasRetAll = false;
+
+            boolean hasRetOne = false;
             HIterator i = this.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
                 if(! coll.contains(tmp)){
-                    i.remove();
-                    hasRetAll = true;
+                    i.remove(); //remove(tmp);
+                    hasRetOne = true;
                 }
             }
-            return hasRetAll;
+            return hasRetOne;
         }
     
         /**
-         * Removes all of the elements from this collection (optional operation).
-         * The collection will be empty after this method returns.
+         * Removes all of the elements from this set.
+         * The set will be empty after this method returns.
          *
          */
         public void clear(){
@@ -634,7 +652,7 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Compares the specified object with this collection for equality. <p>
+         * Compares the specified object with this set for equality. <p>
          *
          * While the {@code Collection} interface adds no stipulations to the
          * general contract for the {@code Object.equals}, programmers who
@@ -703,6 +721,20 @@ public class MapAdapter implements HMap{
          */
         public int hashCode(){
             return table.hashCode();
+        }
+
+        @Override
+        public String toString(){
+            String res = "[";
+            HIterator it = this.iterator();
+            while (it.hasNext()){
+                Object element = it.next();
+                res += element;
+                if (it.hasNext())
+                    res += ", ";
+            }
+            res += "]";
+            return res;
         }
     }
 
