@@ -327,34 +327,34 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns the number of elements in this collection.  If this collection
-         * contains more than {@code Integer.MAX_VALUE} elements, returns
+         * Returns the number of elements in this set (its cardinality).  If this
+         * set contains more than {@code Integer.MAX_VALUE} elements, returns
          * {@code Integer.MAX_VALUE}.
          *
-         * @return the number of elements in this collection
+         * @return the number of elements in this set (its cardinality)
          */
         public int size() {
             return table.size();
         }
 
         /**
-         * Returns {@code true} if this collection contains no elements.
+         * Returns {@code true} if this set contains no elements.
          *
-         * @return {@code true} if this collection contains no elements
+         * @return {@code true} if this set contains no elements
          */
         public boolean isEmpty() {
             return table.isEmpty();
         }
     
         /**
-         * Returns {@code true} if this collection contains the specified element.
-         * More formally, returns {@code true} if and only if this collection
-         * contains at least one element {@code e} such that
+         * Returns {@code true} if this set contains the specified element.
+         * More formally, returns {@code true} if and only if this set
+         * contains an element {@code e} such that
          * {@code Objects.equals(o, e)}.
          *
-         * @param o element whose presence in this collection is to be tested
-         * @return {@code true} if this collection contains the specified
-         *         element
+         * @param o element whose presence in this set is to be tested
+         * @return {@code true} if this set contains the specified element
+         * @throws NullPointerException if the specified element is null
          */
         public boolean contains(Object obj){
             if(obj == null)
@@ -376,32 +376,32 @@ public class MapAdapter implements HMap{
         }
     
         /**
-         * Returns an iterator over the elements in this collection.  There are no
+         * Returns an iterator over the elements in this set.  There are no
          * guarantees concerning the order in which the elements are returned
-         * (unless this collection is an instance of some class that provides a
+         * (unless this set is an instance of some class that provides a
          * guarantee).
          *
-         * @return an {@code Iterator} over the elements in this collection
+         * @return an {@code HIterator} over the elements in this set
          */
         public HIterator iterator() {
             return new SubEntrySetAdapterIterator(table);
         }
         
         /**
-         * Returns an array containing all of the elements in this collection. If the
-         * collection makes any guarantees as to what order its elements are returned by
+         * Returns an array containing all of the elements in this set. If the
+         * set makes any guarantees as to what order its elements are returned by
          * its iterator, this method must return the elements in the same order.
          * <p>
          *
          * The returned array will be "safe" in that no references to it are maintained
-         * by this collection. (In other words, this method must allocate a new array
-         * even if this collection is backed by an array). The caller is thus free to
+         * by this set. (In other words, this method must allocate a new array
+         * even if this set is backed by an array). The caller is thus free to
          * modify the returned array.
          * <p>
          *
-         * This method acts as bridge between array-based and collection-based APIs.
+         * This method acts as bridge between array-based and set-based APIs.
          *
-         * @return an array containing all of the elements in this collection
+         * @return an array containing all of the elements in this set
          */
         public Object[] toArray() {
             Object[] arr = new Object[size()];
@@ -418,9 +418,9 @@ public class MapAdapter implements HMap{
         }
     
         /**
-         * Returns an array containing all of the elements in this collection; the
+         * Returns an array containing all of the elements in this set; the
          * runtime type of the returned array is that of the specified array. If the
-         * collection fits in the specified array, it is returned therein. Otherwise, a
+         * set fits in the specified array, it is returned therein. Otherwise, a
          * new array is allocated with the runtime type of the specified array and the
          * size of this collection.
          * <p>
@@ -499,17 +499,18 @@ public class MapAdapter implements HMap{
         public boolean addAll(HCollection coll) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
+
     
         /**
          * Removes a single instance of the specified element from this
-         * collection, if it is present (optional operation).  More formally,
+         * set, if it is present (optional operation).  More formally,
          * removes an element {@code e} such that
          * {@code Objects.equals(o, e)}, if
-         * this collection contains one or more such elements.  Returns
-         * {@code true} if this collection contained the specified element (or
-         * equivalently, if this collection changed as a result of the call).
+         * this set contains one or more such elements.  Returns
+         * {@code true} if this set contained the specified element (or
+         * equivalently, if this set changed as a result of the call).
          *
-         * @param o element to be removed from this collection, if present
+         * @param o element to be removed from this set, if present
          * @return {@code true} if an element was removed as a result of this call
          * @throws NullPointerException if the specified object is {@code null}
          */
@@ -522,17 +523,18 @@ public class MapAdapter implements HMap{
             }
 
             HEntry em = (HEntry) obj;
+
             if (table.remove(em.getKey()) == null)
                 return false;
             return true;
         }
     
         /**
-         * Returns {@code true} if this collection contains all of the elements
+         * Returns {@code true} if this set contains all of the elements
          * in the specified collection.
          *
-         * @param  c collection to be checked for containment in this collection
-         * @return {@code true} if this collection contains all of the elements
+         * @param  c collection to be checked for containment in this set
+         * @return {@code true} if this set contains all of the elements
          *         in the specified collection
          * @throws NullPointerException if the specified collection is null.
          * @see    #contains(Object)
@@ -551,13 +553,13 @@ public class MapAdapter implements HMap{
         }
     
         /**
-         * Removes all of this collection's elements that are also contained in the
+         * Removes all of this set's elements that are also contained in the
          * specified collection (optional operation).  After this call returns,
-         * this collection will contain no elements in common with the specified
+         * this set will contain no elements in common with the specified
          * collection.
          *
-         * @param c collection containing elements to be removed from this collection
-         * @return {@code true} if this collection changed as a result of the
+         * @param c collection containing elements to be removed from this set
+         * @return {@code true} if this set changed as a result of the
          *         call
          *
          * @throws NullPointerException if the specified collection is null.
@@ -567,6 +569,7 @@ public class MapAdapter implements HMap{
         public boolean removeAll(HCollection coll) {
             if(coll == null)
                 throw new NullPointerException();
+
             HIterator i = coll.iterator();
             boolean hasRemOne = false;
             while(i.hasNext()){
@@ -577,13 +580,13 @@ public class MapAdapter implements HMap{
             return hasRemOne;
         }
         /**
-         * Retains only the elements in this collection that are contained in the
+         * Retains only the elements in this set that are contained in the
          * specified collection (optional operation).  In other words, removes from
-         * this collection all of its elements that are not contained in the
+         * this set all of its elements that are not contained in the
          * specified collection.
          *
-         * @param c collection containing elements to be retained in this collection
-         * @return {@code true} if this collection changed as a result of the call
+         * @param c collection containing elements to be retained in this set
+         * @return {@code true} if this set changed as a result of the call
          *
          * @throws NullPointerException if the specified collection is null.
          * @see #remove(Object)
@@ -634,15 +637,15 @@ public class MapAdapter implements HMap{
          * only if {@code b.equals(a)}).  The contracts for {@code List.equals}
          * and {@code Set.equals} state that lists are only equal to other lists,
          * and sets to other sets.  Thus, a custom {@code equals} method for a
-         * collection class that implements neither the {@code List} nor
-         * {@code Set} interface must return {@code false} when this collection
+         * set class that implements neither the {@code List} nor
+         * {@code Set} interface must return {@code false} when this set
          * is compared to any list or set.  (By the same logic, it is not possible
          * to write a class that correctly implements both the {@code Set} and
          * {@code List} interfaces.)
          *
-         * @param o object to be compared for equality with this collection
+         * @param o object to be compared for equality with this set
          * @return {@code true} if the specified object is equal to this
-         * collection
+         * set
          *
          * @see Object#equals(Object)
          * @see Set#equals(Object)
@@ -669,8 +672,8 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns the hash code value for this collection.  While the
-         * {@code Collection} interface adds no stipulations to the general
+         * Returns the hash code value for this cset.  While the
+         * {@code HSet} interface adds no stipulations to the general
          * contract for the {@code Object.hashCode} method, programmers should
          * take note that any class that overrides the {@code Object.equals}
          * method must also override the {@code Object.hashCode} method in order
@@ -678,7 +681,7 @@ public class MapAdapter implements HMap{
          * In particular, {@code c1.equals(c2)} implies that
          * {@code c1.hashCode()==c2.hashCode()}.
          *
-         * @return the hash code value for this collection
+         * @return the hash code value for this set
          *
          * @see Object#hashCode()
          * @see Object#equals(Object)
@@ -689,16 +692,15 @@ public class MapAdapter implements HMap{
 
         @Override
         public String toString(){
-            String res = "[";
-            HIterator it = this.iterator();
-            while (it.hasNext()){
-                Object element = it.next();
-                res += element;
-                if (it.hasNext())
-                    res += ", ";
+            String str = "[";
+            HIterator iter = iterator();
+            while (iter.hasNext()){
+                str += iter.next();
+                if (iter.hasNext())
+                    str += ", ";
             }
-            res += "]";
-            return res;
+            str += "]";
+            return str;
         }
 
         private class SubEntrySetAdapterIterator implements HIterator{
@@ -742,11 +744,11 @@ public class MapAdapter implements HMap{
             }
     
             /**
-             * Removes from the underlying collection the last element returned
+             * Removes from the underlying set the last element returned
              * by this iterator (optional operation).  This method can be called
              * only once per call to {@link #next}.
              * <p>
-             * The behavior of an iterator is unspecified if the underlying collection
+             * The behavior of an iterator is unspecified if the underlying set
              * is modified while the iteration is in progress in any way other than by
              * calling this method, unless an overriding class has specified a
              * concurrent modification policy.
@@ -822,7 +824,7 @@ public class MapAdapter implements HMap{
          * (unless this collection is an instance of some class that provides a
          * guarantee).
          *
-         * @return an {@code Iterator} over the elements in this collection
+         * @return an {@code HIterator} over the elements in this collection
          */
         public HIterator iterator() {
             return new SubValuesCollectionAdapterIterator(table);
@@ -847,10 +849,8 @@ public class MapAdapter implements HMap{
         public Object[] toArray() {
             Object[] arr = new Object[size()];
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object key = e.nextElement();
-                arr[i] = table.get(key);
-                i++;
+            for (Enumeration e = table.elements() ; e.hasMoreElements() ; i++){
+                arr[i] = e.nextElement();
             }
             return arr;
         }
@@ -900,27 +900,36 @@ public class MapAdapter implements HMap{
          * @return an array containing all of the elements in this collection
          *
          * @throws NullPointerException if the specified array is null.
+         * @throws IllegalArgumentException if the specified array's lenght
+         *          is less then this collection lenght
          */
         public Object[] toArray(Object[] arrayTarget) {
             if(arrayTarget == null)
                 throw new NullPointerException();
             if (arrayTarget.length < size())
                 throw new IllegalArgumentException();
+
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-                Object key = e.nextElement();
-                arrayTarget[i] = table.get(key);
-                i++;
+            for (Enumeration e = table.elements() ; e.hasMoreElements() ; i++){
+                arrayTarget[i] = e.nextElement();
             }
             return arrayTarget;
         }
 
         /**
          * This method is unsupported
-         * @throws UnsupportedOperationException
+         * @throws UnsupportedOperationException as the operation is not supported
          */
     
         public boolean add(Object obj) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
+        }
+        
+        /**
+         * This method is unsupported
+         * @throws UnsupportedOperationException as the operation is not supported
+         */
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
     
@@ -939,6 +948,7 @@ public class MapAdapter implements HMap{
         public boolean remove(Object obj){
             if(obj == null)
                 throw new NullPointerException();
+
             for (Enumeration keys = table.keys(); keys.hasMoreElements();){
                 Object key = keys.nextElement();
                 if (table.get(key).equals(obj)){
@@ -960,6 +970,9 @@ public class MapAdapter implements HMap{
          * @see    #contains(Object)
          */
         public boolean containsAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
+
             HIterator i = coll.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
@@ -968,13 +981,7 @@ public class MapAdapter implements HMap{
             }
             return true;
         }
-        /**
-         * This method is unsupported
-         * @throws UnsupportedOperationException
-         */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
-            throw new UnsupportedOperationException();
-        }
+        
   
         /**
          * Removes all of this collection's elements that are also contained in the
@@ -991,13 +998,17 @@ public class MapAdapter implements HMap{
          * @see #contains(Object)
          */
         public boolean removeAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
+
             HIterator i = coll.iterator();
-            boolean hasRemAll = false;
+            boolean hasRemOne = false;
             while(i.hasNext()){
-                if(table.remove(((HEntry) i.next()).getKey()) != null)
-                    hasRemAll = true;
+                Object el = i.next();
+                if(remove(el))
+                    hasRemOne = true;
             }
-            return hasRemAll;
+            return hasRemOne;                    
         }
     
         /**
@@ -1014,20 +1025,23 @@ public class MapAdapter implements HMap{
          * @see #contains(Object)
          */
         public boolean retainAll(HCollection coll) {
-            boolean hasRetAll = false;
+            if(coll == null)
+                throw new NullPointerException();
+
+            boolean hasRetOne = false;
             HIterator i = this.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
                 if(! coll.contains(tmp)){
-                    i.remove();
-                    hasRetAll = true;
+                    i.remove(); //remove(tmp);
+                    hasRetOne = true;
                 }
             }
-            return hasRetAll;
+            return hasRetOne;
         }
     
         /**
-         * Removes all of the elements from this collection (optional operation).
+         * Removes all of the elements from this collection.
          * The collection will be empty after this method returns.
          *
          */
@@ -1090,7 +1104,7 @@ public class MapAdapter implements HMap{
 
         /**
          * Returns the hash code value for this collection.  While the
-         * {@code Collection} interface adds no stipulations to the general
+         * {@code HCollection} interface adds no stipulations to the general
          * contract for the {@code Object.hashCode} method, programmers should
          * take note that any class that overrides the {@code Object.equals}
          * method must also override the {@code Object.hashCode} method in order
@@ -1107,21 +1121,31 @@ public class MapAdapter implements HMap{
             return table.hashCode();
         }
 
+        @Override
+        public String toString(){
+            String str = "[";
+            HIterator iter = iterator();
+            while (iter.hasNext()){
+                str += iter.next();
+                if (iter.hasNext())
+                    str += ", ";
+            }
+            str += "]";
+            return str;
+        }
+
         private class SubValuesCollectionAdapterIterator implements HIterator{
         
             Enumeration e;
             Enumeration k;
-    
-            Hashtable table;
-    
+        
             boolean next = false;
     
             Object keyToBeRemoved = null;
     
             public SubValuesCollectionAdapterIterator(Hashtable table){
-                this.table = table;
-                e = this.table.elements();
-                k = this.table.keys();
+                e = table.elements();
+                k = table.keys();
             }
     
     
@@ -1187,11 +1211,11 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns the number of elements in this collection.  If this collection
-         * contains more than {@code Integer.MAX_VALUE} elements, returns
+         * Returns the number of elements in this set (its cardinality).  If this
+         * set contains more than {@code Integer.MAX_VALUE} elements, returns
          * {@code Integer.MAX_VALUE}.
          *
-         * @return the number of elements in this collection
+         * @return the number of elements in this set (its cardinality)
          */
 
         public int size() {
@@ -1199,23 +1223,23 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns {@code true} if this collection contains no elements.
+         * Returns {@code true} if this set contains no elements.
          *
-         * @return {@code true} if this collection contains no elements
+         * @return {@code true} if this set contains no elements
          */
         public boolean isEmpty() {
             return table.isEmpty();
         }
 
         /**
-         * Returns {@code true} if this collection contains the specified element.
-         * More formally, returns {@code true} if and only if this collection
-         * contains at least one element {@code e} such that
+         * Returns {@code true} if this set contains the specified element.
+         * More formally, returns {@code true} if and only if this set
+         * contains an element {@code e} such that
          * {@code Objects.equals(o, e)}.
          *
-         * @param o element whose presence in this collection is to be tested
-         * @return {@code true} if this collection contains the specified
-         *         element
+         * @param o element whose presence in this set is to be tested
+         * @return {@code true} if this set contains the specified element
+         * @throws NullPointerException if the specified element is null
          */
     
         public boolean contains(Object obj){
@@ -1226,12 +1250,12 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns an iterator over the elements in this collection.  There are no
+         * Returns an iterator over the elements in this set.  There are no
          * guarantees concerning the order in which the elements are returned
-         * (unless this collection is an instance of some class that provides a
+         * (unless this set is an instance of some class that provides a
          * guarantee).
          *
-         * @return an {@code Iterator} over the elements in this collection
+         * @return an {@code HIterator} over the elements in this set
          */
     
         public HIterator iterator() {
@@ -1239,47 +1263,46 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns an array containing all of the elements in this collection. If the
-         * collection makes any guarantees as to what order its elements are returned by
+         * Returns an array containing all of the elements in this set. If the
+         * set makes any guarantees as to what order its elements are returned by
          * its iterator, this method must return the elements in the same order.
          * <p>
          *
          * The returned array will be "safe" in that no references to it are maintained
-         * by this collection. (In other words, this method must allocate a new array
-         * even if this collection is backed by an array). The caller is thus free to
+         * by this set. (In other words, this method must allocate a new array
+         * even if this set is backed by an array). The caller is thus free to
          * modify the returned array.
          * <p>
          *
-         * This method acts as bridge between array-based and collection-based APIs.
+         * This method acts as bridge between array-based and set-based APIs.
          *
-         * @return an array containing all of the elements in this collection
+         * @return an array containing all of the elements in this set
          */
     
         public Object[] toArray() {
             Object[] arr = new Object[size()];
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ;i++){
                 arr[i] = e.nextElement();
-                i++;
             }
             return arr;
         }
 
         /**
-         * Returns an array containing all of the elements in this collection; the
+         * Returns an array containing all of the elements in this set; the
          * runtime type of the returned array is that of the specified array. If the
-         * collection fits in the specified array, it is returned therein. Otherwise, a
+         * set fits in the specified array, it is returned therein. Otherwise, a
          * new array is allocated with the runtime type of the specified array and the
-         * size of this collection.
+         * size of this set.
          * <p>
          *
-         * If this collection fits in the specified array with room to spare (i.e., the
-         * array has more elements than this collection), the element in the array
+         * If this set fits in the specified array with room to spare (i.e., the
+         * array has more elements than this set), the element in the array
          * immediately following the end of the collection is set to null. This
          * is useful in determining the length of this collection <i>only</i> if the
          * caller knows that this collection does not contain any null
          * elements.)
-         * <p>
+         * <p>  
          *
          * If this collection makes any guarantees as to what order its elements are
          * returned by its iterator, this method must return the elements in the same
@@ -1310,7 +1333,8 @@ public class MapAdapter implements HMap{
          * @return an array containing all of the elements in this collection
          *
          * @throws NullPointerException if the specified array is null.
-         * @throws IllegalArgumentException if the specified array is smaller
+         * @throws IllegalArgumentException if the specified array's lenght
+         *          is less then this set lenght
          */
     
         public Object[] toArray(Object[] arrayTarget) {
@@ -1318,34 +1342,41 @@ public class MapAdapter implements HMap{
                 throw new NullPointerException();
             if (arrayTarget.length < size())
                 throw new IllegalArgumentException();
-                //arrayTarget = new Object[size()];
+                
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
+            for (Enumeration e = table.keys() ; e.hasMoreElements() ; i++){
                 arrayTarget[i] = e.nextElement();
-                i++;
             }
             return arrayTarget;
         }
 
         /**
          * This method is unsupported
-         * @throws UnsupportedOperationException
+         * @throws UnsupportedOperationException as the operation is not supported
          */
     
         public boolean add(Object obj) throws UnsupportedOperationException{
             throw new UnsupportedOperationException();
         }
+        
+        /**
+         * This method is unsupported
+         * @throws UnsupportedOperationException as the operation is not supported
+         */
+        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+            throw new UnsupportedOperationException();
+        }
     
         /**
          * Removes a single instance of the specified element from this
-         * collection, if it is present (optional operation).  More formally,
+         * set, if it is present (optional operation).  More formally,
          * removes an element {@code e} such that
          * {@code Objects.equals(o, e)}, if
-         * this collection contains one or more such elements.  Returns
-         * {@code true} if this collection contained the specified element (or
-         * equivalently, if this collection changed as a result of the call).
+         * this set contains one or more such elements.  Returns
+         * {@code true} if this set contained the specified element (or
+         * equivalently, if this set changed as a result of the call).
          *
-         * @param o element to be removed from this collection, if present
+         * @param o element to be removed from this set, if present
          * @return {@code true} if an element was removed as a result of this call
          * @throws NullPointerException if the specified object is null.
          */
@@ -1355,21 +1386,23 @@ public class MapAdapter implements HMap{
 
             if (table.remove(obj) == null)
                 return false;
-
             return true;
         }
 
         /**
-         * Returns {@code true} if this collection contains all of the elements
+         * Returns {@code true} if this set contains all of the elements
          * in the specified collection.
          *
-         * @param  c collection to be checked for containment in this collection
-         * @return {@code true} if this collection contains all of the elements
+         * @param  c collection to be checked for containment in this set
+         * @return {@code true} if this set contains all of the elements
          *         in the specified collection
          * @throws NullPointerException if the specified collection is null.
          * @see    #contains(Object)
          */
         public boolean containsAll(HCollection coll) {
+            if(coll == null)
+                throw new NullPointerException();
+
             HIterator i = coll.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
@@ -1379,22 +1412,16 @@ public class MapAdapter implements HMap{
             return true;
         }
 
-        /**
-         * This method is unsupported
-         * @throws UnsupportedOperationException
-         */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
-            throw new UnsupportedOperationException();
-        }
+        
 
         /**
-         * Removes all of this collection's elements that are also contained in the
+         * Removes all of this set's elements that are also contained in the
          * specified collection (optional operation).  After this call returns,
-         * this collection will contain no elements in common with the specified
+         * this set will contain no elements in common with the specified
          * collection.
          *
-         * @param c collection containing elements to be removed from this collection
-         * @return {@code true} if this collection changed as a result of the
+         * @param c collection containing elements to be removed from this set
+         * @return {@code true} if this set changed as a result of the
          *         call
          *
          * @throws NullPointerException if the specified collection is null.
@@ -1404,22 +1431,25 @@ public class MapAdapter implements HMap{
         public boolean removeAll(HCollection coll){
             if(coll == null)
                 throw new NullPointerException();
+
             HIterator i = coll.iterator();
-            boolean hasRemAll = false;
+            boolean hasRemOne = false;
             while(i.hasNext()){
-                //hasRemAll = tabletable.removeElement(i.next());
+                Object el = i.next();
+                if(remove(el))
+                    hasRemOne = true;
             }
-            return hasRemAll;
+            return hasRemOne;
         }
 
         /**
-         * Retains only the elements in this collection that are contained in the
+         * Retains only the elements in this set that are contained in the
          * specified collection (optional operation).  In other words, removes from
-         * this collection all of its elements that are not contained in the
+         * this set all of its elements that are not contained in the
          * specified collection.
          *
-         * @param c collection containing elements to be retained in this collection
-         * @return {@code true} if this collection changed as a result of the call
+         * @param c collection containing elements to be retained in this set
+         * @return {@code true} if this set changed as a result of the call
          *
          * @throws NullPointerException if the specified collection is null.
          * @see #remove(Object)
@@ -1429,21 +1459,22 @@ public class MapAdapter implements HMap{
         public boolean retainAll(HCollection coll) {
             if(coll == null)
                 throw new NullPointerException();
-            boolean hasRetAll = false;
+
+            boolean hasRetOne = false;
             HIterator i = this.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
                 if(! coll.contains(tmp)){
-                    i.remove();
-                    hasRetAll = true;
+                    i.remove(); //remove(tmp);
+                    hasRetOne = true;
                 }
             }
-            return hasRetAll;
+            return hasRetOne;
         }
 
         /**
-         * Removes all of the elements from this collection (optional operation).
-         * The collection will be empty after this method returns.
+         * Removes all of the elements from this set.
+         * The set will be empty after this method returns.
          *
          */
         public void clear(){
@@ -1451,7 +1482,7 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Compares the specified object with this collection for equality. <p>
+         * Compares the specified object with this set for equality. <p>
          *
          * While the {@code Collection} interface adds no stipulations to the
          * general contract for the {@code Object.equals}, programmers who
@@ -1475,9 +1506,9 @@ public class MapAdapter implements HMap{
          * to write a class that correctly implements both the {@code Set} and
          * {@code List} interfaces.)
          *
-         * @param o object to be compared for equality with this collection
+         * @param o object to be compared for equality with this set
          * @return {@code true} if the specified object is equal to this
-         * collection
+         * set
          *
          * @see Object#equals(Object)
          * @see Set#equals(Object)
@@ -1505,8 +1536,8 @@ public class MapAdapter implements HMap{
         }
 
         /**
-         * Returns the hash code value for this collection.  While the
-         * {@code Collection} interface adds no stipulations to the general
+         * Returns the hash code value for this set.  While the
+         * {@code HSet} interface adds no stipulations to the general
          * contract for the {@code Object.hashCode} method, programmers should
          * take note that any class that overrides the {@code Object.equals}
          * method must also override the {@code Object.hashCode} method in order
@@ -1514,13 +1545,26 @@ public class MapAdapter implements HMap{
          * In particular, {@code c1.equals(c2)} implies that
          * {@code c1.hashCode()==c2.hashCode()}.
          *
-         * @return the hash code value for this collection
+         * @return the hash code value for this set
          *
          * @see Object#hashCode()
          * @see Object#equals(Object)
          */
         public int hashCode(){
             return table.hashCode();
+        }
+
+        @Override
+        public String toString(){
+            String str = "[";
+            HIterator iter = iterator();
+            while (iter.hasNext()){
+                str += iter.next();
+                if (iter.hasNext())
+                    str += ", ";
+            }
+            str += "]";
+            return str;
         }
 
         private class SubKeySetAdapterIterator implements HIterator{
@@ -1559,11 +1603,11 @@ public class MapAdapter implements HMap{
             }
     
             /**
-             * Removes from the underlying collection the last element returned
+             * Removes from the underlying set the last element returned
              * by this iterator (optional operation).  This method can be called
              * only once per call to {@link #next}.
              * <p>
-             * The behavior of an iterator is unspecified if the underlying collection
+             * The behavior of an iterator is unspecified if the underlying set
              * is modified while the iteration is in progress in any way other than by
              * calling this method, unless an overriding class has specified a
              * concurrent modification policy.
