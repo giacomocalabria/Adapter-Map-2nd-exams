@@ -52,9 +52,9 @@ public class MapEntryAdapter implements HMap.HEntry{
      * @return old value corresponding to the entry
      */
 
-    public Object setValue(Object newValue){
+    public Object setValue(Object value){
         Object oldValue = getValue();
-        this.value = newValue;
+        this.value = value;
         return oldValue;
     }
 
@@ -79,8 +79,13 @@ public class MapEntryAdapter implements HMap.HEntry{
     public boolean equals(Object o){
         if( !(o instanceof MapEntryAdapter))
             return false;
+
         MapEntryAdapter e = (MapEntryAdapter) o;
-        return(this.key.equals(e.key) && this.value.equals(e.value));
+        
+        return (this.getKey()==null ?
+                e.getKey()==null : this.getKey().equals(e.getKey()))  &&
+                (this.getValue()==null ?
+                e.getValue()==null : this.getValue().equals(e.getValue()));
     }
 
     /**
@@ -100,6 +105,11 @@ public class MapEntryAdapter implements HMap.HEntry{
      * @see #equals(Object)
      */
     public int hashCode(){
-        return (new String(key.toString() + ":" + value.toString())).hashCode();
+        return (getKey()==null ? 0 : getKey().hashCode()) ^ (getValue()==null ? 0 : getValue().hashCode());
+    }
+
+    @Override
+    public String toString(){
+        return key.toString() + "=" + value.toString();
     }
 }
