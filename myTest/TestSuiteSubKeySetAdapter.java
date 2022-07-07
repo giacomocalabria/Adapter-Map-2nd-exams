@@ -104,27 +104,15 @@ public class TestSuiteSubKeySetAdapter {
     @Test
     public void Contains_EmptyColl(){
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
         assertEquals("The map contains key 'ci' even if it is empty.", false, key.contains("ci"));
-        HMap.HEntry em = new MapEntryAdapter(156);
-        em.setValue(11);
-        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
     }
 
     @Test
     public void Contains_1(){
-        HMap.HEntry em = new MapEntryAdapter(15);
-        em.setValue(15);
-
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
         assertEquals("The map contains key 15 even if it is empty.", false, key.contains(15));
-        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
-        
         map1.put(15,15);
-
         assertEquals("The map does not contains key 15 even if it should.", true, key.contains(15));
-        assertEquals("The map contains entry em even if it is empty.", true, entry.contains(em));
     }
 
     /**
@@ -154,27 +142,14 @@ public class TestSuiteSubKeySetAdapter {
             map1.put(i,i);
         
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
-        for (int i = 25; i < 50; i++)
-        {
-            HMap.HEntry em = new MapEntryAdapter(i);
-            em.setValue(i);
+        for (int i = 25; i < 50; i++){
             assertEquals("The list should NOT include " + i, false, key.contains(i));
-            assertEquals("The list should NOT include " + i, false, entry.contains(em));
         }
-        for (int i = 50; i < 100; i++)
-        {
-            HMap.HEntry em = new MapEntryAdapter(i);
-            em.setValue(i);
+        for (int i = 50; i < 100; i++){
             assertEquals("The list should include " + i, true, key.contains(i));
-            assertEquals("The list should include " + i, true, entry.contains(em));
         }
-        for (int i = 100; i < 125; i++)
-        {
-            HMap.HEntry em = new MapEntryAdapter(i);
-            em.setValue(i);
+        for (int i = 100; i < 125; i++){
             assertEquals("The list should NOT include " + i, false, key.contains(i));
-            assertEquals("The list should NOT include " + i, false, entry.contains(em));
         }
     }
 
@@ -182,11 +157,6 @@ public class TestSuiteSubKeySetAdapter {
     public void Contains_Key_Null_NPException(){
         HSet key = map1.keySet();
         key.contains(null);
-    }
-    @Test(expected = NullPointerException.class)
-    public void Contains_Entry_Null_NPException(){
-        HSet entry = map1.entrySet();
-        entry.contains(null);
     }
 
     //****************************** EQUALS METHOD ****************************
@@ -196,25 +166,15 @@ public class TestSuiteSubKeySetAdapter {
         map1.put(1,1);
         map2.put(1,1);
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.entrySet();
         HSet key2 = map2.keySet();
-        HSet entry2 = map2.entrySet();
 
         assertTrue(key1.equals(key2));
-        assertTrue(entry1.equals(entry2));
-
-        assertFalse(key1.equals(entry2));
-        assertFalse(entry1.equals(key2));
     }
 
     @Test
     public void Equals_Empty_True(){
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.entrySet();
         HSet key2 = map2.keySet();
-        HSet entry2 = map2.entrySet();
-        assertTrue(entry1.equals(entry2));
-        assertTrue(entry2.equals(entry1));
         assertTrue(key1.equals(key2));
         assertTrue(key2.equals(key1));
     }
@@ -222,24 +182,20 @@ public class TestSuiteSubKeySetAdapter {
     @Test
     public void Equals_Reflective(){
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.entrySet();
 
         assertTrue(key1.equals(key1));    // Set is empty
-        assertTrue(entry1.equals(entry1));    // Set is empty
         
         for(int i = 0; i < 10; i++){
             map1.put(i,i);
         }
         
         assertTrue(key1.equals(key1));    // Set is not empty, should return true anyways
-        assertTrue(entry1.equals(entry1));    // Set is not empty, should return true anyways
         
         for(int i = 0; i < 1000; i++){
             map1.put(i,i);
         }
         
         assertTrue(key1.equals(key1));    // Set is empty
-        assertTrue(entry1.equals(entry1));    // Set is empty
     }
 
     @Test
@@ -251,15 +207,9 @@ public class TestSuiteSubKeySetAdapter {
             map3.put(i, i);
         }
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.entrySet();
         HSet key2 = map2.keySet();
-        HSet entry2 = map2.entrySet();
         HSet key3 = map3.keySet();
-        HSet entry3 = map3.entrySet();
 
-        assertTrue(entry1.equals(entry2));
-        assertTrue(entry2.equals(entry3));
-        assertTrue("Transitive property is not met.", entry1.equals(entry3));
         assertTrue(key1.equals(key2));
         assertTrue(key2.equals(key3));
         assertTrue("Transitive property is not met.", key1.equals(key3));
@@ -281,11 +231,8 @@ public class TestSuiteSubKeySetAdapter {
     @Test
     public void Clear_Empty(){
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
         key.clear();
         assertEquals("List should be empty.", true, key.isEmpty());
-        entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
     }
 
     /**
@@ -301,11 +248,8 @@ public class TestSuiteSubKeySetAdapter {
     public void Clear_1Element(){
         map1.put(1,1);
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
         key.clear();
         assertEquals("List should be empty.", true, key.isEmpty());
-        entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
     }
 
     /**
@@ -323,11 +267,8 @@ public class TestSuiteSubKeySetAdapter {
             map1.put(i,i);
         }
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
         key.clear();
         assertEquals("List should be empty.", true, key.isEmpty());
-        entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
     }
 
     // ******************* HASHCODE METHOD ************************************
@@ -377,45 +318,6 @@ public class TestSuiteSubKeySetAdapter {
         assertEquals("maps should be equal.", true, key1.equals(key2));
         assertEquals("Hash codes should be equal.", key1.hashCode(), key2.hashCode());
     }
-    /**
-     * <p><b>Summary</b>: hashCode test case.
-     * Tests the behaviour of hashCode method with different
-     * configurations.</p>
-     * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
-     * so they must have the same elements each time, therefore they are equals.
-     * If they are equals they must have the same hashCode.</p>
-     * <p><b>Test Description</b>: Different configurations have been tested:
-     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
-     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
-     */
-    @Test
-    public void HashCode_Prop_entrySet(){
-        HSet entry1 = map1.entrySet();
-        HSet entry2 = map2.entrySet();
-        // Empty map case
-        assertEquals("maps should be equal.", true, entry1.equals(entry2));
-        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
-
-        // One element case
-        map1.put(1,1);
-        map2.put(1,1);
-        assertEquals("maps should be equal.", true, entry1.equals(entry2));
-        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
-
-        map1.put("ciao",164);
-        map2.put("ciao",164);
-        assertEquals("maps should be equal.", true, entry1.equals(entry2));
-        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
-
-        for(int i = 0; i < 10; i++){
-            map1.put("ciao" + i,i + 164);
-            map2.put("ciao" + i,i + 164);
-        }
-        assertEquals("maps should be equal.", true, entry1.equals(entry2));
-        assertEquals("Hash codes should be equal.", entry1.hashCode(), entry2.hashCode());
-    }
 
     //************************ ADD & ADDALL METHOD **********************************
 
@@ -430,19 +332,6 @@ public class TestSuiteSubKeySetAdapter {
         HSet key1 = map1.keySet();
         HSet key2 = map2.keySet();
         key1.addAll(key2);
-    }
-
-    @Test (expected = UnsupportedOperationException.class)
-    public void Add_entry(){
-        HSet entry1 = map1.entrySet();
-        entry1.add(15);
-    }
-    
-    @Test (expected = UnsupportedOperationException.class)
-    public void AddAll_entry(){
-        HSet entry1 = map1.entrySet();
-        HSet entry2 = map1.entrySet();
-        entry1.addAll(entry2);
     }
 
     //***************************** REMOVE METHOD **********************************
@@ -462,32 +351,10 @@ public class TestSuiteSubKeySetAdapter {
         key1.remove(null);
     }
 
-    @Test (expected = NullPointerException.class)
-    public void Remove_EmptyNullEntry_NPException(){
-        HSet key1 = map1.keySet();
-        key1.remove(null);
-    }
-
-    @Test (expected = NullPointerException.class)
-    public void Remove_NullEntry_NPException(){
-        for(int i = 0; i < 450; i++){
-            map1.put(i*i*i,(i+654)*i);
-        }
-        HSet key1 = map1.keySet();
-        key1.remove(null);
-    }
-
-
     @Test
     public void Remove_Empty(){
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.entrySet();
-        HMap.HEntry em = new MapEntryAdapter(456);
-        em.setValue(654);
-        
         assertFalse(key1.remove(156));
-
-        assertFalse(entry1.remove(em));
     }
 
     @Test
@@ -496,24 +363,13 @@ public class TestSuiteSubKeySetAdapter {
         HSet key1 = map1.keySet();
         assertTrue(key1.remove(44));
         assertFalse(key1.remove(44));
-        
-        map1.put(44, 987);
-        HMap.HEntry em = new MapEntryAdapter(44);
-        em.setValue(987);
-        HSet entry1 = map1.entrySet();
-        assertTrue(entry1.remove(em));
-        assertFalse(entry1.remove(em));
     }
 
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
         HSet key1 = map1.keySet();
-        HSet entry1 = map1.keySet();
-        HMap.HEntry em = new MapEntryAdapter(44);
-        em.setValue(987);
         assertFalse(key1.remove(44));
-        assertFalse(entry1.remove(em));
     }
 
     /**
@@ -539,17 +395,6 @@ public class TestSuiteSubKeySetAdapter {
         }
         assertEquals("Size should be 0", 0, key1.size());
         assertEquals("map should be empty.", true, key1.isEmpty());
-        for(int i = 0; i < 450; i++){
-            map1.put(i*i*i,(i+654)*i);
-        }
-        HSet entry1 = map1.entrySet();
-        for(int i = 0; i < 450; i++){
-            HMap.HEntry em = new MapEntryAdapter(i*i*i);
-            em.setValue((i+654)*i);
-            assertTrue(entry1.remove(em));
-        }
-        assertEquals("Size should be 0", 0, entry1.size());
-        assertEquals("map should be empty.", true, entry1.isEmpty());
     }
 
     //************************* TOARRAY METHOD *********************************
@@ -575,9 +420,6 @@ public class TestSuiteSubKeySetAdapter {
         HSet key1 = map1.keySet();
         Object[] arr = key1.toArray();
         assertEquals("Empty list did not return empty array.", arr.length, 0);
-        HSet entry1 = map2.entrySet();
-        Object[] arr2 = entry1.toArray();
-        assertEquals("Empty list did not return empty array.", arr2.length, 0);
     }
 
     /**
