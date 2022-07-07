@@ -7,8 +7,11 @@ import java.util.Enumeration;
  *  the version of Java Micro Edition CLDC 1.1. The last one has
  *  fewer methods than the standard Java's one.
  * 
+ *  <p> Note that in Hashtable class of CLDC 1.1 null keys or values
+ *  are forbidden.
+ * 
  *  @author Giacomo Calabria
- *  @see java.util.Hashtable
+ *  @see {@link java.util.Hashtable}
  */
 
 public class Hashtable{
@@ -206,6 +209,5 @@ public class Hashtable{
     public int hashCode(){
         return table.hashCode();
     }
-
-    
+ 
 }
