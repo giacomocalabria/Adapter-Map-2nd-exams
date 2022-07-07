@@ -4,6 +4,8 @@ package myTest;
 import org.junit.*;
 import static org.junit.Assert.assertEquals;
 
+import java.util.NoSuchElementException;
+
 // Adapter package import
 import myAdapter.*;
 
@@ -11,6 +13,7 @@ public class TestSuiteCollectionAdapter {
     
     HCollection coll1 = null;
     HCollection coll2 = null;
+    HIterator iterator = null;
 
     static long timeStart = 0;
     /**
@@ -20,7 +23,7 @@ public class TestSuiteCollectionAdapter {
     @BeforeClass
     public static void beforeClassMethod()
     {
-        System.out.println("TestSuiteListAdapterAdapter suite started.");
+        System.out.println("TestSuiteCollectionAdapter suite started.");
         timeStart = System.currentTimeMillis();
     }
 
@@ -45,6 +48,7 @@ public class TestSuiteCollectionAdapter {
     {
         coll1 = null;
         coll2 = null;
+        iterator = null;
     }
 
     /**
@@ -54,7 +58,7 @@ public class TestSuiteCollectionAdapter {
     @AfterClass
     public static void afterClassMethod()
     {
-        System.out.println("TestSuiteListAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
+        System.out.println("TestSuiteCollectionAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
     // ****************************** SIZE METHOD *****************************
@@ -263,5 +267,57 @@ public class TestSuiteCollectionAdapter {
         coll1.clear();
         assertEquals("List should be empty.", true, coll1.equals(coll2));
         assertEquals("List should be empty.", true, coll1.isEmpty());
+    }
+
+
+
+    //************************ ITERATOR METHODS ********************************
+
+    //***************************** HASNEXT METHOD ******************************
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of
+     * an iterator returned from an empty list
+     * calling hasNext and next. From the Sommerville:
+     * "Choose inputs that force the system to generate all error messages".</p>
+     * <p><b>Test Description</b>: an iterator is returned from empty
+     * list. iterator.hasNext() should be false, while
+     * next() should throw NoSuchElementException.</p>
+     * <p><b>Pre-Condition</b>: The list is empty.</p>
+     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * <p><b>Expected Results</b>: hasNext returns false, NSEE is thrown.</p>
+     */
+    @Test (expected = NoSuchElementException.class)
+    public void HasNext_Empty_False(){
+        iterator = coll1.iterator();
+        assertEquals("Empty list iterator should not have next.", false, iterator.hasNext());
+        iterator.next();
+    }
+
+    /**
+     * <p><b>Summary</b>: hasNext and next methods test case.
+     * List contains 1 element and the test iterate through
+     * it.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of 1
+     * element in the list. Therefore hasNext should return
+     * true while next() should return the only number
+     * in the list.</p>
+     * <p><b>Test Description</b>: The number 1 is added, and an iterator
+     * iterates through the list. After returning the first elements,
+     * it has no more next elements.</p>
+     * <p><b>Pre-Condition</b>: List contains 1, iterator has next.</p>
+     * <p><b>Post-Condition</b>: List contains 1, iterator has not next.</p>
+     * <p><b>Expected Results</b>: The first hasNext call returns true,
+     * the second returns false.</p>
+     */
+    @Test
+    public void HasNext_Begin1_True()
+    {
+        coll1.add(1);
+        iterator = coll1.iterator();
+        assertEquals("Should have next.", true, iterator.hasNext());
+        iterator.next();
+        assertEquals("Should not have next.", false, iterator.hasNext());
     }
 }
