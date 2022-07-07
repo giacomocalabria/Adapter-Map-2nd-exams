@@ -21,14 +21,10 @@ public class MapAdapter implements HMap{
     // MapAdapter is a Object Adapter
     private Hashtable table;
 
-    // Counts the number of modifications
-    protected int modificationCount;
-
     /**
      * Default constructor with no arguments.
      */
     public MapAdapter(){
-        modificationCount = 0;
         table = new Hashtable(); 
     }
 
@@ -133,7 +129,6 @@ public class MapAdapter implements HMap{
      *         (this map does not permit null key).
      */
     public Object put(Object key, Object value) throws NullPointerException{
-        modificationCount ++;
         return table.put(key, value);
     }
 
@@ -163,11 +158,7 @@ public class MapAdapter implements HMap{
      */
     public Object remove(Object key)  throws NullPointerException{
         Object value = table.remove(key); //null if not removed, valid otherwise
-
-        if(value == null)
-            return null;
-
-        modificationCount ++; // If this was modified increments modidification count
+            
         return value;
     }
 
@@ -190,15 +181,14 @@ public class MapAdapter implements HMap{
         if (t == null)
             throw new NullPointerException();
         
-        //if (t.isEmpty()) return;
+        if (t.isEmpty()) return;
 
         HSet ks = t.entrySet();
         HIterator i = ks.iterator();
         while(i.hasNext()){
             HEntry me = (HEntry) i.next();
 			table.put(me.getKey(),me.getValue());
-		} 
-        modificationCount ++;
+		}
     }
 
     /**
@@ -206,7 +196,6 @@ public class MapAdapter implements HMap{
      * The map will be empty after this call returns.
      */
     public void clear(){
-        modificationCount ++;
         table.clear();
     }
 
@@ -226,16 +215,6 @@ public class MapAdapter implements HMap{
      * @return a set view of the keys contained in this map
      */
     public HSet keySet(){
-        /*HSet ks = new SetAdapter();
-
-        for (Enumeration e = table.keys() ; e.hasMoreElements() ;) {
-            HEntry me = (HEntry) e.nextElement();
-			Object key = me.getKey();
-			ks.add(key);
-        }
-
-        return ks;*/
-
         return new SubKeySetAdapter(table);
     }
 
@@ -255,12 +234,6 @@ public class MapAdapter implements HMap{
      * @return a collection view of the values contained in this map
      */
     public HCollection values(){
-        /*HCollection vc = new CollectionAdapter();
-        for (Enumeration e = table.elements() ; e.hasMoreElements() ;) {
-            vc.add(((HEntry) e.nextElement()).getValue());;
-        }
-        return vc;*/
-
         return new SubValuesCollectionAdapter(table);
     }
 
@@ -281,15 +254,6 @@ public class MapAdapter implements HMap{
      * @return a set view of the mappings contained in this map
      */
     public HSet entrySet(){
-        /*HSet es = new SetAdapter();
-        for (Enumeration e = table.keys() ; e.hasMoreElements() ;){
-            Object tmp = e.nextElement();
-            MapEntryAdapter me = new MapEntryAdapter(tmp);
-            me.setValue(table.get(tmp));
-            es.add(me);
-        }
-        return es;*/
-
         return new SubEntrySetAdapter(table);
     }
 
