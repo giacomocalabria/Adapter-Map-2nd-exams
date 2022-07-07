@@ -804,6 +804,83 @@ public class TestSuiteMapAdapter {
         assertTrue(map1.entrySet() instanceof HSet);
     }
 
+    // ************************************ ENTRY CLASS ******************************
+
+    @Test
+    public void Get_ValueEmpty(){
+        MapEntryAdapter me = new MapEntryAdapter(15);
+        assertEquals(null, me.getValue());
+    }
+
+    @Test
+    public void Get_Value(){
+        MapEntryAdapter me = new MapEntryAdapter(15);
+        me.setValue(164);
+        assertEquals(164, me.getValue());
+    }
+
+    @Test
+    public void Get_Key(){
+        MapEntryAdapter me = new MapEntryAdapter(999);
+        assertEquals(999, me.getKey());
+    }
+
+    @Test
+    public void SetValue_Return(){
+        MapEntryAdapter me = new MapEntryAdapter(15);
+        me.setValue(164);
+        assertEquals(164, me.getValue());
+        Object ret = me.setValue("ciao");
+        assertEquals(164, ret);
+        assertEquals("ciao", me.getValue());
+    }
+
+    @Test
+    public void Equals_Empty(){
+        MapEntryAdapter me1 = new MapEntryAdapter(15);
+        MapEntryAdapter me2 = new MapEntryAdapter(15);
+        assertTrue(me1.equals(me2));
+    }
+
+    @Test
+    public void Equals_Val1(){
+        MapEntryAdapter me1 = new MapEntryAdapter(15);
+        MapEntryAdapter me2 = new MapEntryAdapter(15);
+        me1.setValue("cii");
+        me2.setValue("cii");
+        assertTrue(me1.equals(me2));
+    }
+
+    /**
+     * <p><b>Summary</b>: hashCode test case.
+     * Tests the behaviour of hashCode method with different
+     * configurations.</p>
+     * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
+     * so they must have the same elements each time, therefore they are equals.
+     * If they are equals they must have the same hashCode.</p>
+     * <p><b>Test Description</b>: Different configurations have been tested:
+     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
+     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     */
+    @Test
+    public void HashCode_Entry(){
+        MapEntryAdapter me1 = new MapEntryAdapter(15);
+        MapEntryAdapter me2 = new MapEntryAdapter(15);
+        // Empty map case
+        assertEquals("Entry should be equal.", true, me1.equals(me2));
+        assertEquals("Hash codes should be equal.", me1.hashCode(), me2.hashCode());
+    }
+
+    @Test
+    public void ToString_Entry(){
+        MapEntryAdapter me1 = new MapEntryAdapter(15);
+        MapEntryAdapter me2 = new MapEntryAdapter(15);
+        assertEquals("Entry should be equal.", true, me1.equals(me2));
+        assertEquals("toString string should be equal.", me1.toString(), me2.toString());
+    }
+
     // **************************** TEST MAP CONSEGNA ****************************
     
     @Test

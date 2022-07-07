@@ -108,8 +108,29 @@ public class MapEntryAdapter implements HMap.HEntry{
         return (getKey()==null ? 0 : getKey().hashCode()) ^ (getValue()==null ? 0 : getValue().hashCode());
     }
 
+    /** 
+     *  Returns a string representation of the object.
+     *
+     *  @implSpec
+     *  The {@code toString} method for class {@code MapEntryAdapter}
+     *  returns a string consisting of the toString result of the key,
+     *  the equals-sign charachter `{@code =}'  and the toString result
+     *  of the value. 
+     *  <p> In other words, this method returns a string equal to the
+     *  value of:
+     *  <blockquote>
+     *  <pre>
+     *  key.toString() + "=" + value.toString()
+     *  </pre></blockquote>
+     * 
+     *  If value is null is not represented value.toString()
+     *  @return  a string representation of the object. 
+     */
+
     @Override
     public String toString(){
+        if(value == null)
+            return key.toString() + "=";
         return key.toString() + "=" + value.toString();
     }
 }
