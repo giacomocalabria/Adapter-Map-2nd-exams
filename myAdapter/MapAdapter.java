@@ -691,6 +691,20 @@ public class MapAdapter implements HMap{
             return table.hashCode();
         }
 
+        /** 
+         *  Returns a string representation of this set.
+         *
+         *  @implSpec
+         *  The {@code toString} method for class {@code EntrySet}
+         *  returns a string consists of a list of the set's elements in the
+         *  order they are returned by its iterator, enclosed in square
+         *  brackets ({@code "[]"}).  
+         *  Adjacent elements are separated by the characters {@code ", "} (comma and space).  
+         *  Elements are converted to strings as by {@link String#valueOf(Object)}.
+         *
+         * @return a string representation of this set.
+         */
+
         @Override
         public String toString(){
             String str = "[";
@@ -1552,6 +1566,21 @@ public class MapAdapter implements HMap{
         public int hashCode(){
             return table.hashCode();
         }
+        
+
+        /** 
+         *  Returns a string representation of this set.
+         *
+         *  @implSpec
+         *  The {@code toString} method for class {@code KeySet}
+         *  returns a string consists of a list of the set's elements in the
+         *  order they are returned by its iterator, enclosed in square
+         *  brackets ({@code "[]"}).  
+         *  Adjacent elements are separated by the characters {@code ", "} (comma and space).  
+         *  Elements are converted to strings as by {@link String#valueOf(Object)}.
+         *
+         * @return a string representation of this set.
+         */
 
         @Override
         public String toString(){
@@ -1603,14 +1632,15 @@ public class MapAdapter implements HMap{
     
             /**
              * Removes from the underlying set the last element returned
-             * by this iterator (optional operation).  This method can be called
-             * only once per call to {@link #next}.
+             * by this iterator. This method can be called
+             * only once per call to {@link #next()} method.
              * <p>
              * The behavior of an iterator is unspecified if the underlying set
              * is modified while the iteration is in progress in any way other than by
              * calling this method, unless an overriding class has specified a
              * concurrent modification policy.
-             *
+             * 
+             * @throws IllegalStateException if this method is not called before {@link #next()} method
              */
             public void remove() {
                 if(!next){
