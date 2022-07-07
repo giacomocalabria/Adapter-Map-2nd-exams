@@ -61,17 +61,55 @@ public class TestSuiteSubValuesCollectionAdapter {
 
     //***************************** SIZE METHOD *******************************
 
+    /**
+     * <p><b>Summary</b>: size method test case. 
+     * The test case asserts that an empty map should have an empty values collection
+     * witch should have a size of zero and isEmpty call returning true. 
+     * The map and the collection is not modified since its creation.</p>
+     * 
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 0 size (empty). From the 
+     * Sommerville: "Test with sequences of zero lenght." Test based on the trivial but possible
+     * state of an empty map and collection.</p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map
+     * and on the values collection.</p>
+     * <p><b>Pre-Condition</b>: The map and the values collection is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the values collection is still empty.</p>
+     * <p><b>Expected Results</b>: The size method returns 0 and the isEmpty method returns true.</p>
+     */
     @Test
     public void Size_Empty(){
+        assertEquals("Empty map does not have size of zero.", 0, map1.size());
+        assertEquals("isEmpty did not returned true.", true, map1.isEmpty());
         HCollection coll = map1.values();
         assertEquals("Empty collection does not have size of zero.", 0, coll.size());
         assertEquals("isEmpty did not returned true.", true, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: size method test case. 
+     * The test case asserts that a map with one element should have an relative values
+     * collection with one element wich should have size of 1 and isEmpty call returning false. The map is modified before the asserts.</p>
+     * 
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 1 size and not being empty. From the
+     * Sommerville: "Test software with sequences which have only a single value"</p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map and on the 
+     * values collection.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map contains entry 1:159 .</p>
+     * <p><b>Expected Results</b>: The size method returns 1 and the isEmpty method returns false.</p>
+     */
+
     @Test
     public void Size_1Element(){
 
         map1.put(1, 159);
+        assertEquals("Empty map does not have size of zero.", 1, map1.size());
+        assertEquals("isEmpty did not returned true.", false, map1.isEmpty());
+        
         HCollection coll = map1.values();
         assertEquals("Empty map does not have size of one.", 1, coll.size());
         assertEquals("isEmpty did not returned false.", false, coll.isEmpty());

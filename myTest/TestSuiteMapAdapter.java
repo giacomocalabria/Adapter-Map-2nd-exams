@@ -158,7 +158,7 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Contains_EmptyMapValue(){
-        assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsValue("ci"));
+        assertEquals("The map contains value 'ci' even if it is empty.", false, map1.containsValue("ci"));
     }
 
     @Test
