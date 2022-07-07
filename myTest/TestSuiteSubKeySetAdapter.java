@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 // Adapter package import
 import myAdapter.*;
 
-public class TestSuiteSubKeyEntrySetAdapter {
+public class TestSuiteSubKeySetAdapter {
     HMap map1 = null;
     HMap map2 = null;
 
@@ -63,9 +63,6 @@ public class TestSuiteSubKeyEntrySetAdapter {
     @Test
     public void Size_Empty(){
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 0, entry.size());
-        assertEquals("isEmpty did not returned false.", true, entry.isEmpty());
         assertEquals("Empty map does not have size of one.", 0, key.size());
         assertEquals("isEmpty did not returned false.", true, key.isEmpty());
     }
@@ -75,9 +72,6 @@ public class TestSuiteSubKeyEntrySetAdapter {
 
         map1.put(1, 159);
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 1, entry.size());
-        assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
         assertEquals("Empty map does not have size of one.", 1, key.size());
         assertEquals("isEmpty did not returned false.", false, key.isEmpty());
     }
@@ -90,9 +84,6 @@ public class TestSuiteSubKeyEntrySetAdapter {
         }
 
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 5, entry.size());
-        assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
         assertEquals("Empty map does not have size of one.", 5, key.size());
         assertEquals("isEmpty did not returned false.", false, key.isEmpty());
     }
@@ -104,9 +95,6 @@ public class TestSuiteSubKeyEntrySetAdapter {
             map1.put(i, (i+15)*(i+2));
         }
         HSet key = map1.keySet();
-        HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 160, entry.size());
-        assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
         assertEquals("Empty map does not have size of one.", 160, key.size());
         assertEquals("isEmpty did not returned false.", false, key.isEmpty());
     }
