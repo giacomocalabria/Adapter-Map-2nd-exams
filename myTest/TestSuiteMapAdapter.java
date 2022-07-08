@@ -10,6 +10,8 @@ import static org.junit.Assert.assertTrue;
 import myAdapter.*;
 
 /**
+ * <p><b>Summary</b>:</p>
+ * <p><b>Test Suite Design</b>:</p>
  * 
  * @version 1.0
  * @see TestSuiteValuesCollection
@@ -1309,19 +1311,44 @@ public class TestSuiteMapAdapter {
 
 
     // ************************************ ENTRY CLASS ******************************
-
+    
+    /**
+     * <p><b>Summary</b>: getValue method test case. </p>
+     * <p><b>Test Case Design</b>: Test getValue method on an entry containing 15=164</p>
+     * <p><b>Test Description</b>: getValue is invoked on an entry</p>
+     * <p><b>Pre-Condition</b>: entry me contains 15=164 </p>
+     * <p><b>Post-Condition</b>:  entry me still contains 15=164 </p>
+     * <p><b>Expected Results</b>: getValue return 164</p>
+     */
     @Test
     public void Get_Value(){
         MapEntryAdapter me = new MapEntryAdapter(15,164);
         assertEquals(164, me.getValue());
     }
 
+    /**
+     * <p><b>Summary</b>: getKey method test case. </p>
+     * <p><b>Test Case Design</b>: Test getKey method on an entry containing 999="ciao"</p>
+     * <p><b>Test Description</b>: getKey is invoked on an entry</p>
+     * <p><b>Pre-Condition</b>: entry me contains 999="ciao" </p>
+     * <p><b>Post-Condition</b>:  entry me still contains 999="ciao" </p>
+     * <p><b>Expected Results</b>: getKey return 999</p>
+     */
     @Test
     public void Get_Key(){
         MapEntryAdapter me = new MapEntryAdapter(999,"ciao");
         assertEquals(999, me.getKey());
     }
     
+    /**
+     * <p><b>Summary</b>: setValue method test case. </p>
+     * <p><b>Test Case Design</b>: Test setValue method on an entry containing 15=164</p>
+     * <p><b>Test Description</b>: setValue is invoked on an entry with the new value "ciao"
+     *  it also check that setValue return the old value</p>
+     * <p><b>Pre-Condition</b>: entry me contains 15=164 </p>
+     * <p><b>Post-Condition</b>:  entry me contains 15="ciao" </p>
+     * <p><b>Expected Results</b>: setValue work correctly</p>
+     */
     @Test
     public void SetValue_Return(){
         MapEntryAdapter me = new MapEntryAdapter(15,164);
@@ -1330,13 +1357,30 @@ public class TestSuiteMapAdapter {
         assertEquals("ciao", me.getValue());
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case. </p>
+     * <p><b>Test Case Design</b>: Test equals method between two entry containing 15 as key</p>
+     * <p><b>Test Description</b>: equals method is invoked</p>
+     * <p><b>Pre-Condition</b>: entry me1 and me2 contains key 15 </p>
+     * <p><b>Post-Condition</b>:  entry me1 and me2 still contains key 15 </p>
+     * <p><b>Expected Results</b>: the two entres should be equal</p>
+     */
     @Test
     public void Equals_Empty(){
         MapEntryAdapter me1 = new MapEntryAdapter(15);
         MapEntryAdapter me2 = new MapEntryAdapter(15);
         assertTrue(me1.equals(me2));
+        assertTrue(me2.equals(me1));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case. </p>
+     * <p><b>Test Case Design</b>: Test equals methon between two entry containing 15 as key</p>
+     * <p><b>Test Description</b>: equals method is invoked</p>
+     * <p><b>Pre-Condition</b>: entry me1 and me2 contains key 15 </p>
+     * <p><b>Post-Condition</b>:  entry me1 and me2 still contains key 15 </p>
+     * <p><b>Expected Results</b>: the two entres should be equal</p>
+     */
     @Test
     public void Equals_Val1(){
         MapEntryAdapter me1 = new MapEntryAdapter(15,"cii");
