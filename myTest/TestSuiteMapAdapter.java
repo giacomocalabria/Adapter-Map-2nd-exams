@@ -167,7 +167,7 @@ public class TestSuiteMapAdapter {
      * <p><b>Expected Results</b>: The keySet iterator works properly and empty the map</p>
      */
     @Test
-    public void Emptying_KeySet_ViaIterator(){
+    public void Emptying_KeySet_Iterator(){
         
         for(int i=0;i<args.length;i++){
 			map1.put(args[i], args[i]);
@@ -183,7 +183,16 @@ public class TestSuiteMapAdapter {
         assertTrue("keyset iterator removal does not work",map1.size() == s1.size() && map1.size() == 0);
     }
 
-    
+    /**
+     * <p><b>Summary</b>: Test the clear and put method. </p>
+     * <p><b>Test Case Design</b>: Test that clear and put methods works properly</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then its cleared and after 
+     * is refilled with the initialization mappings and one more element wich is a duplicate</p>
+     * <p><b>Pre-Condition</b>:The map contains args elements. </p>
+     * <p><b>Post-Condition</b>: The map contains args elements</p>
+     * <p><b>Expected Results</b>: The map is unchanged and map put works properly as it not permit duplicate
+     * elements.</p>
+     */
     @Test
     public void Reset_Map(){
         
@@ -199,6 +208,17 @@ public class TestSuiteMapAdapter {
         assertFalse("Map.put not working", map1.size() != args.length);
     }
 
+    /**
+     * <p><b>Summary</b>:Test the propagation of changes from the map to the values.
+     * It is tested with adding and removing mappings from the map. </p>
+     * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
+     * of the element in the values and vice-versa</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
+     * the map and after re added to the map.</p>
+     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
+     * <p><b>Post-Condition</b>: The map contains args elements.</p>
+     * <p><b>Expected Results</b>: The map correctly propagates the changes to valuest</p>
+     */
     @Test
     public void Test_ValuesMethod(){
         int sm0, sm1, sm2, ss0, ss1, ss2;
@@ -232,6 +252,16 @@ public class TestSuiteMapAdapter {
         assertTrue("values NON propaga modifiche a map ",sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
     }
 
+    /**
+     * <p><b>Summary</b>:Test the propagation of changes from the map to the values with the iterator. </p>
+     * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
+     * of the element in the values using its iterator</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then with the values iterator
+     * it removes all elements</p>
+     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
+     * <p><b>Post-Condition</b>: The map is empty.</p>
+     * <p><b>Expected Results</b>: The values iterator works properly and empty the map</p>
+     */
     @Test
     public void Emptying_Values_Iterator(){
         
