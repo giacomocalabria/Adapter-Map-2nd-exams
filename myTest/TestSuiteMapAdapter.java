@@ -10,11 +10,27 @@ import static org.junit.Assert.assertTrue;
 import myAdapter.*;
 
 /**
- * <p><b>Summary</b>:</p>
- * <p><b>Test Suite Design</b>:</p>
+ * <p><b>Summary</b>: The test suite TestSuiteMapAdapter provides test on map methods.
+ * It offer different type of test in different case scenario, in order to test their corret 
+ * behaviour. The first section of this test suite contains the test in the TestMap.java file
+ * assigned by the Professor, correctly translated in the JUnit format.
+ * After this first section there are several section for each methods (or group of feature) contains 
+ * the test cases ideated by me. 
+ * 
+ * The {@code entrySet()}, {@code keySet()} and {@code values()} method and its feature are
+ *  tested in different dedicated test suite. 
+ * </p>
+ * <p><b>Test Suite Design</b>: The test suite contains fine-grained test cases in order to
+ * easily individuate errors in HMap methods.
+ * 
+ * This suite include modification test, inspection set and an section dedicated to HEntry method test.
+ * In the test suite there are many test cases focusing on limit and special cases,
+ * invalid arguments and etc.</p>
  * 
  * @version 1.0
  * @see TestSuiteValuesCollection
+ * @see TestSuiteKeySet
+ * @see TestSuiteEntrySet
  * @author Giacomo Calabria
  */
 
