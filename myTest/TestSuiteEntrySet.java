@@ -24,7 +24,7 @@ public class TestSuiteEntrySet {
      */
     @BeforeClass
     public static void beforeClassMethod(){
-        System.out.println("TestSuitemapAdapterAdapter suite started.");
+        System.out.println("TestSuiteEntrySet suite started.");
         timeStart = System.currentTimeMillis();
     }
 
@@ -55,7 +55,7 @@ public class TestSuiteEntrySet {
      */
     @AfterClass
     public static void afterClassMethod(){
-        System.out.println("TestSuitemapAdapterAdapter suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
+        System.out.println("TestSuiteEntrySet suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
     //***************************** SIZE METHOD *******************************

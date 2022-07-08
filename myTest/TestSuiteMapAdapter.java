@@ -29,7 +29,7 @@ public class TestSuiteMapAdapter {
      */
     @BeforeClass
     public static void beforeClassMethod(){
-        System.out.println("TestSuitemapAdapterAdapter suite started.");
+        System.out.println("TestSuiteMapAdapter suite started.");
         timeStart = System.currentTimeMillis();
     }
 
