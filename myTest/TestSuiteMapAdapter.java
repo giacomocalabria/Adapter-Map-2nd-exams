@@ -65,6 +65,18 @@ public class TestSuiteMapAdapter {
 
     // **************************** TEST MAP ASSIGNED BY PROFESSOR ****************************
     
+    /**
+     * <p><b>Summary</b>:Test the propagation of changes from the map to the keySet.
+     * It is tested with adding and removing mappings from the map. </p>
+     * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
+     * of the element in the keySet and vice-versa</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
+     * the map and after re added to the map.</p>
+     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
+     * <p><b>Post-Condition</b>: The map contains args elements.</p>
+     * <p><b>Expected Results</b>: The map correctly propagates the changes to keySet</p>
+     */
+
     @Test
     public void Propagation_Map_KeySet(){
         
@@ -86,7 +98,18 @@ public class TestSuiteMapAdapter {
 
         assertTrue("La mappa non propaga le modifiche a KeySet", sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
     }
-
+    
+    /**
+     * <p><b>Summary</b>:Test the backing of changes from the map to the keySet.
+     * It is tested with adding and removing mappings from the keySet. </p>
+     * <p><b>Test Case Design</b>: Tests that the keySet correctly backed the changes
+     * of the element in the map and vice-versa</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
+     * the keySet and after re added to the map.</p>
+     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
+     * <p><b>Post-Condition</b>: The map contains args elements.</p>
+     * <p><b>Expected Results</b>: The keySet correctly backed the changes to map</p>
+     */
     @Test
     public void Backing_Map_KeySet(){
         
@@ -133,6 +156,16 @@ public class TestSuiteMapAdapter {
         assertTrue("KeySet non propaga modifiche a map", sm0 == ss0 && sm1 == ss1 && sm2 == ss2 && (sm0-sm1) == 1);
     }
 
+    /**
+     * <p><b>Summary</b>:Test the propagation of changes from the map to the keySet with the iterator. </p>
+     * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
+     * of the element in the keySet using its iterator</p>
+     * <p><b>Test Description</b>: The map is initialized with some mappings. Then with the keySet iterator
+     * it removes all elements</p>
+     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
+     * <p><b>Post-Condition</b>: The map is empty.</p>
+     * <p><b>Expected Results</b>: The keySet iterator works properly and empty the map</p>
+     */
     @Test
     public void Emptying_KeySet_ViaIterator(){
         
@@ -150,6 +183,7 @@ public class TestSuiteMapAdapter {
         assertTrue("keyset iterator removal does not work",map1.size() == s1.size() && map1.size() == 0);
     }
 
+    
     @Test
     public void Reset_Map(){
         
@@ -1213,37 +1247,56 @@ public class TestSuiteMapAdapter {
 
     //************************ TOSTRING METHOD *********************************
 
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on an empty
+	 * map.</p>
+     * <p><b>Test Description</b>: toString is invoked on a
+	 * empty map.</p>
+     * <p><b>Pre-Condition</b>: m is empty.</p>
+     * <p><b>Post-Condition</b>: m is empty.</p>
+     * <p><b>Expected Results</b>: m.toString returns {}</p>
+     */
+	@Test
+	public void ToString_Empty(){
+		assertEquals("{}", map1.toString());
+	}
 
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on a
+	 * map containing 1=Ciaoooo.</p>
+     * <p><b>Test Description</b>: toString is invoked on the map.</p>
+     * <p><b>Pre-Condition</b>: m contains 1=Ciaoooo.</p>
+     * <p><b>Post-Condition</b>: m contains 1=One.</p>
+     * <p><b>Expected Results</b>: m.toString returns {1=Ciaoooo}</p>
+     */
+	@Test
+	public void ToString_OneElement(){
+		map1.put(1, "Ciaoooo");
+		assertEquals("{1=Ciaoooo}", map1.toString());
+	}
 
 
     // ************************************ ENTRY CLASS ******************************
 
     @Test
-    public void Get_ValueEmpty(){
-        MapEntryAdapter me = new MapEntryAdapter(15);
-        assertEquals(null, me.getValue());
-    }
-
-    @Test
     public void Get_Value(){
-        MapEntryAdapter me = new MapEntryAdapter(15);
-        me.setValue(164);
+        MapEntryAdapter me = new MapEntryAdapter(15,164);
         assertEquals(164, me.getValue());
     }
 
     @Test
     public void Get_Key(){
-        MapEntryAdapter me = new MapEntryAdapter(999);
+        MapEntryAdapter me = new MapEntryAdapter(999,"ciao");
         assertEquals(999, me.getKey());
     }
-
+    
     @Test
     public void SetValue_Return(){
-        MapEntryAdapter me = new MapEntryAdapter(15);
-        me.setValue(164);
+        MapEntryAdapter me = new MapEntryAdapter(15,164);
         assertEquals(164, me.getValue());
-        Object ret = me.setValue("ciao");
-        assertEquals(164, ret);
+        assertEquals(164, me.setValue("ciao"));
         assertEquals("ciao", me.getValue());
     }
 
@@ -1256,10 +1309,8 @@ public class TestSuiteMapAdapter {
 
     @Test
     public void Equals_Val1(){
-        MapEntryAdapter me1 = new MapEntryAdapter(15);
-        MapEntryAdapter me2 = new MapEntryAdapter(15);
-        me1.setValue("cii");
-        me2.setValue("cii");
+        MapEntryAdapter me1 = new MapEntryAdapter(15,"cii");
+        MapEntryAdapter me2 = new MapEntryAdapter(15,"cii");
         assertTrue(me1.equals(me2));
     }
 
@@ -1303,3 +1354,19 @@ public class TestSuiteMapAdapter {
         assertEquals("15",me2.toString());
     }
 }
+
+
+    /**
+     * <p><b>Summary</b>:</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>:</p>
+     * <p><b>Post-Condition</b>:</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+
+    /**
+     * <p><b>Summary</b>:</p>
+     * <p><b>Test Suite Design</b>:</p>
+     * 
+     */

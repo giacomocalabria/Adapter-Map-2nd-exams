@@ -311,6 +311,21 @@ public class MapAdapter implements HMap{
     }
 
     /**
+     * Returns a string representation of this {@code HMap} object
+     * in the form of a set of entries, enclosed in braces and separated
+     * by the ASCII characters "<code> ,&nbsp;</code>" (comma and space). Each
+     * entry is rendered as the key, an equals sign {@code =}, and the
+     * associated element, where the {@code toString} method is used to
+     * convert the key and element to strings.
+     *
+     * @return  a string representation of this map
+     */
+    @Override
+    public String toString(){
+        return table.toString();
+    }
+
+    /**
      *  EntrySet is a private class used in order to give to Map's entrySet() method
      *  a {@link HSet} view. 
      * 
