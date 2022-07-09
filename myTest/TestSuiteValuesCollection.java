@@ -607,6 +607,404 @@ public class TestSuiteValuesCollection {
         assertEquals("collection should be empty.", true, coll1.isEmpty());
     }
 
+    //************************* REMOVEALL METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.
+     * Calling the removeAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a removeAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: removeAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RemoveAll_EmptyNull_NPException(){
+        HCollection coll1 = map1.values();
+        coll1.removeAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.
+     * Calling the removeAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a removeAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: removeAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Collection are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RemoveAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        coll1.removeAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called with
+     * empty collection as an argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the values collection and then calls removeAll with an empty collection. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and coll1 contains 45 elements.</p>
+     * <p><b>Post-Condition</b>: The maps and coll1 are unchaged.</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
+     * returns false, coll1 is unchanged.</p>
+     */
+    @Test
+    public void RemoveAll_EmptyCollArg(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection collE = map2.values();
+        assertTrue(collE.isEmpty());
+        assertFalse(coll1.isEmpty());
+        assertFalse("removeAll did not remove anything, therefore it should return false.", coll1.removeAll(collE));
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called in an
+     * empty collection with an nonempty collection as argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the values collection and then calls removeAll on an empty collection. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and coll1 contains 45 elements. collE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and coll1 are unchaged. collE is empty</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
+     * returns false, coll1 is unchanged. collE is still empty</p>
+     */
+    @Test
+    public void RemoveAll_EmptyColl(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection collE = map2.values();
+        assertTrue(collE.isEmpty());
+        assertFalse(coll1.isEmpty());
+        assertFalse(map1.isEmpty());
+        assertFalse("removeAll did not remove anything, therefore it should return false.", collE.removeAll(coll1));
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called between two collections. coll2 includes
+     * all elements of the coll1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the values collection and then calls removeAll with coll2 as argument. 
+     * Therefore the map1 should be changed and map2 should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and coll1 contains 100 elements. coll2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and coll1 are unchaged. coll2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and coll1 are changed, therefore removeAll
+     * returns true, coll2 is unchanged. </p>
+     */
+
+    @Test
+    public void RemoveAll_10to20Remove100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        assertEquals(10, coll2.size());
+        assertEquals(100, coll1.size());
+        assertTrue(coll1.removeAll(coll2));
+        assertEquals(10, coll2.size());
+        assertEquals(90, coll1.size());
+    }
+
+    //************************* RETAINALL METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.
+     * Calling the retainAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a retainAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: retainAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RetainAll_EmptyNull_NPException(){
+        HCollection coll1 = map1.values();
+        coll1.retainAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.
+     * Calling the retainAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a retainAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: retainAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Collection are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ReretainAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        coll1.retainAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called with
+     * empty collection as an argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the values collection and then calls retainAll with an empty collection. 
+     * Therefore the maps should be changed.</p>
+     * <p><b>Pre-Condition</b>: The map and coll1 contains 45 elements. collE is empty</p>
+     * <p><b>Post-Condition</b>: The map and coll1 are chaged. collE is still empty</p>
+     * <p><b>Expected Results</b>: The map and coll1 changed, therefore retainAll
+     * returns true, coll1 is changed.</p>
+     */
+    @Test
+    public void RetainAll_EmptyCollArg(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection collE = map2.values();
+        assertTrue(collE.isEmpty());
+        assertFalse(coll1.isEmpty());
+        assertTrue("retainAll did not retain anything, therefore it should return false.", coll1.retainAll(collE));
+        assertTrue(map1.isEmpty());
+        assertTrue(coll1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called in an
+     * empty collection with an nonempty collection as argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the values collection and then calls retainAll on an empty collection. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and coll1 contains 45 elements. collE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and coll1 are unchaged. collE is still empty</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore retainAll
+     * returns false, coll1 is unchanged.</p>
+     */
+    @Test
+    public void RetainAll_EmptyColl(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection collE = map2.values();
+        assertTrue(collE.isEmpty());
+        assertFalse(coll1.isEmpty());
+        assertFalse(map1.isEmpty());
+        assertFalse("retainAll did not retain anything, therefore it should return false.", collE.retainAll(coll1));
+        assertTrue(collE.isEmpty());
+        assertFalse(coll1.isEmpty());
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called between two collections. coll2 includes
+     * all elements of the coll1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the values collection and then calls retainAll with coll2 as argument. 
+     * Therefore the map1 should be changed and map2 should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and coll1 contains 100 elements.
+     * map2 and coll2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and coll1 are chaged. map2 and coll2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and coll1 are changed, therefore retainAll
+     * returns true, coll2 and map2 is unchanged. </p>
+     */
+    @Test
+    public void RetainAll_10to20Retain100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        
+        assertEquals(10, coll2.size());
+        assertEquals(100, coll1.size());
+        assertEquals(100,map1.size());
+        assertEquals(10,map2.size());
+        
+        assertTrue(coll1.retainAll(coll2));
+        
+        assertEquals(10, coll2.size());
+        assertEquals(10, coll1.size());
+        assertEquals(10,map1.size());
+        assertEquals(10,map2.size());
+    }
+
+    //************************** CONTAINSALL METHOD  *****************************
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * Calling the containsAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a containsAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: containsAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ContainsAll_EmptyNull_NPException(){
+        HCollection coll1 = map1.values();
+        coll1.containsAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * Calling the containsAll method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a containsAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: containsAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Collection are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ContainsAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        coll1.containsAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * The method tests if an empty collection contains the elements
+     * of another collection, which is obviusly false.</p>
+     * <p><b>Test Case Design</b>: The test case tests the limit case of
+     * checking an empty collection containing something.</p>
+     * <p><b>Test Description</b>: The coll2 contains 45 elements.
+     * The containsAll method obviously should return false for
+     * any coll's content as the collection is empty.</p>
+     * <p><b>Pre-Condition</b>: The coll1 is empty. The coll2 contains 45 elements</p>
+     * <p><b>Post-Condition</b>: The colle1 is still empty. The coll2 is unchanged</p>
+     * <p><b>Expected Results</b>: The containsAll method return false.</p>
+     */
+    @Test
+    public void ContainsAll_Empty_False(){
+        HCollection coll1 = map1.values();
+        for(int i = 0; i < 45; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll2 = map2.values();
+
+        assertEquals("The method should return false because the collection is empty.", false, coll1.containsAll(coll2)); 
+    }
+
+   /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * The method tests if an empty collection contains the elements
+     * of another collection.</p>
+     * <p><b>Test Case Design</b>: The test case tests the limit case of
+     * checking an empty collection containing an empty collection, which is true, 
+     * as the empty subset is the subset of every set, therefore even of the
+     * empty set. The tested case is a limit case of containsAll.</p>
+     * <p><b>Test Description</b>: The collection is empty.
+     * The containsAll method obviously should return true for
+     * any coll's content, because the empty subset is the
+     * subset of every set.</p>
+     * <p><b>Pre-Condition</b>: The collections is empty.</p>
+     * <p><b>Post-Condition</b>: The collections is empty.</p>
+     * <p><b>Expected Results</b>: The containsAll method return true.</p>
+     */
+    @Test
+    public void ContainsAll_BothEmpty_False(){
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        assertEquals("The method should return true because the collection is empty.", true, coll1.containsAll(coll2)); 
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two collections. coll2 includes
+     * all elements of the coll1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the values collection and then calls containsAll with coll2 as argument. 
+     * Therefore the maps and coll should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and coll1 contains 100 elements.
+     * map2 and coll2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: the maps and coll should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and coll should be unchanged. containsAll should return
+     * true as coll1 contains coll2 elements. </p>
+     */
+    @Test
+    public void ContainsAll_10to20contains100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        
+        assertTrue(coll1.containsAll(coll2));
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two collections. coll2 includes
+     * elements different from the elements of the coll1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are not in common with map1 then generates
+     * the values collection and then calls containsAll with coll2 as argument. 
+     * Therefore the maps and coll should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and coll1 contains 100 elements.
+     * map2 and coll2 contains 10 elements not present in coll1</p>
+     * <p><b>Post-Condition</b>: the maps and coll should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and coll should be unchanged. containsAll should return
+     * false as coll1 not contains coll2 elements. </p>
+     */
+    @Test
+    public void ContainsAll_10Notcontains100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 290; i < 300; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        
+        assertFalse(coll1.containsAll(coll2));
+    }
+
     //************************* TOARRAY METHOD *********************************
 
     /**
