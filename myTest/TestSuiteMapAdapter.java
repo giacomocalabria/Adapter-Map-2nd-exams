@@ -10,6 +10,10 @@ import static org.junit.Assert.assertTrue;
 import myAdapter.*;
 
 /**
+ * 
+ * <strong> Class TestSuiteMapAdapter </strong>
+ * <p>
+ * 
  * <p><b>Summary</b>: The test suite TestSuiteMapAdapter provides test on map methods.
  * It offer different type of test in different case scenario, in order to test their corret 
  * behaviour. The first section of this test suite contains the test in the TestMap.java file
@@ -25,7 +29,9 @@ import myAdapter.*;
  * 
  * This suite include modification test, inspection set and an section dedicated to HEntry method test.
  * In the test suite there are many test cases focusing on limit and special cases,
- * invalid arguments and etc.</p>
+ * invalid arguments and etc.
+ * 
+ * Each method is tested apart from others.</p>
  * 
  * @version 1.0
  * @see TestSuiteValuesCollection
@@ -339,7 +345,7 @@ public class TestSuiteMapAdapter {
     }
 
     /**
-     * <p><b>Summary</b>: size method test case. 
+     * <p><b>Summary</b>: size, isEmpty method test case. 
      * The test case asserts that a map with five mappings should have a size of 5 and
      * isEmpty call returning false. The map is modified before the asserts.</p>
      * <p><b>Test Case Design</b>: The design is a simple assert of
@@ -361,7 +367,7 @@ public class TestSuiteMapAdapter {
     }
 
     /**
-     * <p><b>Summary</b>: size method test case. 
+     * <p><b>Summary</b>: size, isEmpty method test case. 
      * The test case asserts that a map with 160 mappings should have a size of 160 and
      * isEmpty call returning false. The map is modified before the asserts.</p>
      * <p><b>Test Case Design</b>: The design is a simple assert of
@@ -458,8 +464,9 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Description</b>: The map is modified before the asserts. Then it cheks containsKey
      *  in different ranges.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
-     * <p><b>Post-Condition</b>: The map contains some mappings:</p>
-     * <p><b>Expected Results</b>: containsKey return false when the mappings are not present, true otherwhise.</p>
+     * <p><b>Post-Condition</b>: The map is not empty</p>
+     * <p><b>Expected Results</b>: containsKey return false when the mappings are not present, true otherwhise. 
+     * The map contains the right key during execution</p>
      */
     @Test
     public void Contains_Key_50to100(){
@@ -482,8 +489,9 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Description</b>: The map is modified before the asserts. Then it cheks containsValue
      * in different ranges.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
-     * <p><b>Post-Condition</b>: The map contains some mappings:</p>
-     * <p><b>Expected Results</b>: containsValue return false when the mappings are not present, true otherwhise.</p>
+     * <p><b>Post-Condition</b>: The map is not empty</p>
+     * <p><b>Expected Results</b>: containsValue return false when the mappings are not present, true otherwhise.
+     * The map contains the right value during execution</p>
      */
     @Test
     public void Contains_Value_50to100(){
@@ -973,7 +981,7 @@ public class TestSuiteMapAdapter {
      * <p><b>Summary</b>: remove method test case.</p>
      * <p><b>Test Case Design</b>: Tests the remove method feature that
      * returns the old value and after call remove method the map
-     * does note contains the key</p>
+     * does not contains the key</p>
      * <p><b>Test Description</b>: Put an mappings into the map. Then assert that
      * he remove the 987 values. Then assert that an second remove with the same 
      * key return null, because its not present yet. </p>

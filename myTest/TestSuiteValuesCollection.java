@@ -16,16 +16,18 @@ import myAdapter.*;
 /**
  * <strong> Class TestSuiteValuesCollection </strong>
  * <p>
- * <br><br><strong>Summary</strong>: The TestSuiteCollection class check
- * with its test that the CollectionAdapter's Methods, defined in HCollection interface, works properly.
+ * <br><br><strong>Summary</strong>: The TestSuiteValuesCollection check
+ * with its test that the values's Methods, defined in HCollection interface, works properly.
  * 
  * <br><br><strong>Test Suite Design</strong>: This class contains different test cases 
  * for each method of the HCollection interface.
  * 
  * Test cases include inspection test, modification test and iterator test. 
  * 
- * Each method is tested apart from others.
+ * Each method is tested apart from others.</p>
  * 
+ * @version 1.0
+ * @see TestSuiteMapAdapter
  * @author Giacomo Calabria
  */
 
@@ -75,21 +77,18 @@ public class TestSuiteValuesCollection {
         System.out.println("TestSuiteValuesCollection suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
 
-    //***************************** SIZE METHOD *******************************
+    // ****************************** SIZE ISEMPTY METHOD *************************
 
     /**
-     * <p><b>Summary</b>: size method test case. 
+     * <p><b>Summary</b>: size, isEmpty method test case. 
      * The test case asserts that an empty map should have an empty values collection
      * witch should have a size of zero and isEmpty call returning true. 
      * The map and the collection is not modified since its creation.</p>
-     * 
      * <p><b>Test Case Design</b>: The design is a simple assert of
-     * a size call and expected 0 size (empty). From the 
-     * Sommerville: "Test with sequences of zero lenght." Test based on the trivial but possible
-     * state of an empty map and collection.</p>
+     * a size call and expected 0 size (empty).</p>
      * 
      * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map
-     * and on the values collection.</p>
+     * and on the values Collection.</p>
      * <p><b>Pre-Condition</b>: The map and the values collection is empty.</p>
      * <p><b>Post-Condition</b>: The map and the values collection is still empty.</p>
      * <p><b>Expected Results</b>: The size method returns 0 and the isEmpty method returns true.</p>
@@ -104,18 +103,17 @@ public class TestSuiteValuesCollection {
     }
 
     /**
-     * <p><b>Summary</b>: size method test case. 
+     * <p><b>Summary</b>: size, isEmpty method test case. 
      * The test case asserts that a map with one element should have an relative values
      * collection with one element wich should have size of 1 and isEmpty call returning false. The map is modified before the asserts.</p>
      * 
      * <p><b>Test Case Design</b>: The design is a simple assert of
-     * a size call and expected 1 size and not being empty. From the
-     * Sommerville: "Test software with sequences which have only a single value"</p>
+     * a size call and expected 1 size and not being empty.</p>
      * 
      * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map and on the 
      * values collection.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
-     * <p><b>Post-Condition</b>: The map contains entry 1:159 .</p>
+     * <p><b>Post-Condition</b>: The map and coll contains entry 1=159 .</p>
      * <p><b>Expected Results</b>: The size method returns 1 and the isEmpty method returns false.</p>
      */
 
@@ -123,26 +121,51 @@ public class TestSuiteValuesCollection {
     public void Size_1Element(){
 
         map1.put(1, 159);
-        assertEquals("Empty map does not have size of zero.", 1, map1.size());
-        assertEquals("isEmpty did not returned true.", false, map1.isEmpty());
+        assertEquals("Empty map does not have size of one.", 1, map1.size());
+        assertEquals("isEmpty did not returned false.", false, map1.isEmpty());
         
         HCollection coll = map1.values();
-        assertEquals("Empty map does not have size of one.", 1, coll.size());
+        assertEquals("Empty collection does not have size of one.", 1, coll.size());
         assertEquals("isEmpty did not returned false.", false, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: size, isEmpty method test case. 
+     * The test case asserts that a map and its relative values collection with five mappings
+     * should have a size of 5 and isEmpty call returning false. 
+     * The map is modified before the asserts.</p>
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 5 size and not being empty. </p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the collection.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the collection contains five mappings.</p>
+     * <p><b>Expected Results</b>: The size method returns 5 and the isEmpty method returns false.</p>
+     */
     @Test
     public void Size_5Element(){
-
         for(int i = 0; i < 5; i++){
             map1.put(i, (i+15)*(i+2));
         }
 
         HCollection coll = map1.values();
-        assertEquals("Empty map does not have size of one.", 5, coll.size());
+        assertEquals("Empty collection does not have size of one.", 5, coll.size());
         assertEquals("isEmpty did not returned false.", false, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: size, isEmpty method test case. 
+     * The test case asserts that a map and its relative values collection with five mappings
+     * should have a size of 160 and isEmpty call returning false. 
+     * The map is modified before the asserts.</p>
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 160 size and not being empty. </p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the collection.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the collection contains five mappings.</p>
+     * <p><b>Expected Results</b>: The size method returns 160 and the isEmpty method returns false.</p>
+     */
     @Test
     public void Size_160Element(){
 
@@ -150,47 +173,58 @@ public class TestSuiteValuesCollection {
             map1.put(i, (i+15)*(i+2));
         }
         HCollection coll = map1.values();
-        assertEquals("Empty map does not have size of one.", 160, coll.size());
+        assertEquals("Empty collection does not have size of one.", 160, coll.size());
         assertEquals("isEmpty did not returned false.", false, coll.isEmpty());
     }
 
     // ********************* CONTAINS METHOD ******************************
 
+    /**
+     * <p><b>Summary</b>: contains method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of invoking the method in an empty map
+     * wich should always return false. </p>
+     * <p><b>Test Description</b>: value 'ci' is tested to be present in the map as value. </p>
+     * <p><b>Pre-Condition</b>: The map is empty. </p>
+     * <p><b>Post-Condition</b>: The map is unchanged, still empty.</p>
+     * <p><b>Expected Results</b>: contains returns false.</p>
+     */
     @Test
     public void Contains_EmptyColl(){
         HCollection coll = map1.values();
-        assertEquals("The map contains key 'ci' even if it is empty.", false, coll.contains("ci"));
+        assertEquals("The collection contains 'ci' even if it is empty.", false, coll.contains("ci"));
     }
 
+    /**
+     * <p><b>Summary</b>: contains method test case.</p>
+     * <p><b>Test Case Design</b>: Test the case of invoking the method before put and after put mappings on the map</p>
+     * <p><b>Test Description</b>: an values is tested to be present in the collection before and after put the mappings in the map. </p>
+     * <p><b>Pre-Condition</b>: The map and the collection is empty. </p>
+     * <p><b>Post-Condition</b>: The map and the collection contains a mapping: "mio"="ci" </p>
+     * <p><b>Expected Results</b>: contains return false when the value is not present, true otherwhise. </p>
+     */
     @Test
     public void Contains_1(){
         HCollection coll = map1.values();
-        assertEquals("The map contains key 'ci' even if it is empty.", false, coll.contains("ci"));
+        assertEquals("The collection contains 'ci' even if it is empty.", false, coll.contains("ci"));
         map1.put("mio","ci");
         coll = map1.values();
-        assertEquals("The map does not contains key 'ci' even if it should.", true, coll.contains("ci"));
+        assertEquals("The collection does not contains 'ci' even if it should.", true, coll.contains("ci"));
     }
 
     /**
      * <p><b>Summary</b>: contains method test case.
      * <p><b>Test Case Design</b>: The test case checks in various situation its internal state
-     * with contains, changing through execution.</p>
+     * with contains.</p>
      * <p><b>Test Description</b>: Numbers from 50 (included) to 100 (excluded) are added, then checks if
-     * elements from 25 to 125 are contained in the list in 3 different steps.
+     * elements from 25 to 125 are contained in the collection in 3 different steps.
      * <ul>
      * <li>{25:50} not contained (beginning).</li>
      * <li>{50:100} contained (middle).</li>
      * <li>{100:125} not contained (ending).</li>
      * </ul>
-     * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list is not empty.</p>
-     * <p><b>Expected Results</b>: The list contains the right elements during
-     * execution. In particular:
-     * <ul>
-     * <li>{25:50} not contained (beginning).</li>
-     * <li>{50:100} contained (middle).</li>
-     * <li>{100:125} not contained (ending).</li>
-     * </ul>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the collection is not empty.</p>
+     * <p><b>Expected Results</b>: The collection contains the right elements during execution.
      */
     @Test
     public void Contains_50to100(){
@@ -198,20 +232,28 @@ public class TestSuiteValuesCollection {
             map1.put(i,i);
         
         HCollection coll = map1.values();
-        for (int i = 25; i < 50; i++)
-        {
-            assertEquals("The list should NOT include " + i, false, coll.contains(i));
+        for (int i = 25; i < 50; i++){
+            assertEquals("The collection should NOT include " + i, false, coll.contains(i));
         }
-        for (int i = 50; i < 100; i++)
-        {
-            assertEquals("The list should include " + i, true, coll.contains(i));
+        for (int i = 50; i < 100; i++){
+            assertEquals("The collection should include " + i, true, coll.contains(i));
         }
-        for (int i = 100; i < 125; i++)
-        {
-            assertEquals("The list should NOT include " + i, false, coll.contains(i));
+        for (int i = 100; i < 125; i++){
+            assertEquals("The collection should NOT include " + i, false, coll.contains(i));
         }
     }
 
+    /**
+     * <p><b>Summary</b>: contains method test case.
+     * Calling the contains method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a contains method invoke with null key.</p>
+     * <p><b>Test Description</b>: contains method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test(expected = NullPointerException.class)
     public void Contains_Null_NPException(){
         HCollection coll = map1.values();
@@ -219,7 +261,15 @@ public class TestSuiteValuesCollection {
     }
 
     //****************************** EQUALS METHOD ****************************
-
+    /** 
+     * <p><b>Summary</b>: equals method test case.</p>
+     * <p><b>Test Case Design</b>: equals method is tested with an equal. The returned
+     *  values should be true.</p>
+     * <p><b>Test Description</b>: Maps is initialized, then equals invoke are asserted</p>
+     * <p><b>Pre-Condition</b>: maps contains 1=1</p>
+     * <p><b>Post-Condition</b>: Maps and Collections is unchanged.</p>
+     * <p><b>Expected Results</b>: The two Collections are equal</p>
+     */
     @Test
     public void Equals_1(){
         map1.put(1,1);
@@ -227,33 +277,65 @@ public class TestSuiteValuesCollection {
         HCollection coll1 = map1.values();
         HCollection coll2 = map2.values();
 
-        assertTrue(coll1.equals(coll2));
+        assertTrue("The two collection should be equal",coll1.equals(coll2));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The test case the method behaviour with 2 empty Collection.</p>
+     * <p><b>Test Case Design</b>: When both Collections are empty the equals
+     * method should return true because an empty Collection is equal to an
+     * empty Collection.</p>
+     * <p><b>Test Description</b>: Single assert, coll1.equals(coll2) invoked.</p>
+     * <p><b>Pre-Condition</b>: Both maps and Collections are empty.</p>
+     * <p><b>Post-Condition</b>: Both Collections are empty.</p>
+     * <p><b>Expected Results</b>: equals returns true. </p>
+     */
     @Test
     public void Equals_Empty_True(){
         HCollection coll1 = map1.values();
         HCollection coll2 = map2.values();
-        assertTrue(coll1.equals(coll2));
-        assertTrue(coll2.equals(coll1));
+        assertTrue("Two empty collection should be equal",coll1.equals(coll2));
+        assertTrue("Two empty collection should be equal",coll2.equals(coll1));
     }
 
+     /**
+     * <p><b>Summary</b>: equals method test case.
+     * The reflective property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be reflective,
+     * therefore x.equals(x) should always return true. </p>
+     * <p><b>Test Description</b>: The test invokes v.equals(v) when
+     * coll is empty, when it has 10 elements and when it has 1000 elements.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the collection has 1000 elements. </p>
+     * <p><b>Expected Results</b>: The values collection equals itself</p>
+     */
     @Test
     public void Equals_Reflective(){
-        HCollection coll1 = map1.values();
-        assertTrue(coll1.equals(coll1));    // Coll is empty
+        HCollection coll = map1.values();
+        assertTrue(coll.equals(coll));    // Coll is empty
         for(int i = 0; i < 10; i++){
             map1.put(i,i);
         }
-        coll1 = map1.values();
-        assertTrue(coll1.equals(coll1));    // Coll is not empty, should return true anyways
+        coll = map1.values();
+        assertTrue(coll.equals(coll));    // Coll is not empty, should return true anyways
         for(int i = 0; i < 1000; i++){
             map1.put(i,i);
         }
-        coll1 = map1.values();
-        assertTrue(coll1.equals(coll1));    // Coll is not empty, should return true anyways
+        coll = map1.values();
+        assertTrue(coll.equals(coll));    // Coll is not empty, should return true anyways
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The transitive property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be transitive</p>
+     * <p><b>Test Description</b>: The test invokes coll1.equals(coll2) and coll2.equals(coll3)
+     * and coll1.equals(coll3)</p>
+     * <p><b>Pre-Condition</b>: The tree maps contains the 30 same mappings</p>
+     * <p><b>Post-Condition</b>: The maps and collection is unchanged</p>
+     * <p><b>Expected Results</b>: Equals has transitive property.</p>
+     */
     @Test
     public void Equals_Transitive(){
         HMap map3 = new MapAdapter();
@@ -276,54 +358,51 @@ public class TestSuiteValuesCollection {
     /**
      * <p><b>Summary</b>: clear method test case.</p>
      * <p><b>Test Case Design</b>: Invokes clear method on an already empty
-     * list, which is a limit case.</p>
-     * <p><b>Test Description</b>: Calls clear on the list, then it should be
-     * equal to another empty list.</p>
-     * <p><b>Pre-Condition</b>: List is empty.</p>
-     * <p><b>Post-Condition</b>: List is still empty.</p>
-     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     * collection, which is a limit case.</p>
+     * <p><b>Test Description</b>: Calls clear on the collection,, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: map and collection is empty.</p>
+     * <p><b>Post-Condition</b>: maps and collection is still empty.</p>
+     * <p><b>Expected Results</b>: collection is Empty</p>
      */
     @Test
     public void Clear_Empty(){
         HCollection coll = map1.values();
         coll.clear();
-        assertEquals("List should be empty.", true, coll.isEmpty());
+        assertEquals("collection should be empty.", true, coll.isEmpty());
     }
 
     /**
      * <p><b>Summary</b>: clear method test case.</p>
-     * <p><b>Test Case Design</b>: Invokes clear method on a list containing 0.</p>
-     * <p><b>Test Description</b>: Calls clear on the list, then it should be
-     * equal to another empty list.</p>
-     * <p><b>Pre-Condition</b>: List contains 0.</p>
-     * <p><b>Post-Condition</b>: List is empty.</p>
-     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on a collection containing 1.</p>
+     * <p><b>Test Description</b>: Calls clear on the collection, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: The map contains 1=1, the collection contains 1</p>
+     * <p><b>Post-Condition</b>: The map and collection is empty.</p>
+     * <p><b>Expected Results</b>: collection is Empty</p>
      */
     @Test
-    public void Clear_1Element(){
+    public void Clear_1toEmtpy(){
         map1.put(1,1);
         HCollection coll = map1.values();
         coll.clear();
-        assertEquals("List should be empty.", true, coll.isEmpty());
+        assertEquals("collection should be empty.", true, coll.isEmpty());
     }
 
     /**
      * <p><b>Summary</b>: clear method test case.</p>
-     * <p><b>Test Case Design</b>: Invokes clear method on a list containing {0:1000}.</p>
-     * <p><b>Test Description</b>: Calls clear on the list, then it should be
-     * equal to another empty list.</p>
-     * <p><b>Pre-Condition</b>: List contains {0:1000}.</p>
-     * <p><b>Post-Condition</b>: List is empty.</p>
-     * <p><b>Expected Results</b>: List is equal to another empty list.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on a collection containing {0:1000}.</p>
+     * <p><b>Test Description</b>: Calls clear on the collection, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: The map and the collection contains 1000 elements</p>
+     * <p><b>Post-Condition</b>: The map and the collection is empty.</p>
+     * <p><b>Expected Results</b>: collection is empty</p>
      */
     @Test
-    public void Clear_0To1000(){
+    public void Clear_1000toEmtpy(){
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         HCollection coll = map1.values();
         coll.clear();
-        assertEquals("List should be empty.", true, coll.isEmpty());
+        assertEquals("collection should be empty.", true, coll.isEmpty());
     }
 
     // ******************* HASHCODE METHOD ************************************
@@ -333,20 +412,21 @@ public class TestSuiteValuesCollection {
      * Tests the behaviour of hashCode method with different
      * configurations.</p>
      * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
-     * so they must have the same elements each time, therefore they are equals.
+     * so they must have the same elements each time, and so they must have
+     * the same values collection each time, therefore they are equals.
      * If they are equals they must have the same hashCode.</p>
      * <p><b>Test Description</b>: Different configurations have been tested:
-     * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
-     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     * empty, 1=1, "ciao"=164, "ciao"=0:10</p>
+     * <p><b>Pre-Condition</b>: Collections have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: Collections have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: Collections have same hashCode and they are equal.</p>
      */
     @Test
     public void HashCode_Prop(){
         HCollection coll1 = map1.values();
         HCollection coll2 = map2.values();
         // Empty map case
-        assertEquals("maps should be equal.", true, coll1.equals(coll2));
+        assertEquals("Collections should be equal.", true, coll1.equals(coll2));
         assertEquals("Hash codes should be equal.", coll1.hashCode(), coll2.hashCode());
 
         // One element case
@@ -354,14 +434,14 @@ public class TestSuiteValuesCollection {
         map2.put(1,1);
         coll1 = map1.values();
         coll2 = map2.values();
-        assertEquals("maps should be equal.", true, coll1.equals(coll2));
+        assertEquals("Collections should be equal.", true, coll1.equals(coll2));
         assertEquals("Hash codes should be equal.", coll1.hashCode(), coll2.hashCode());
 
         map1.put("ciao",164);
         map2.put("ciao",164);
         coll1 = map1.values();
         coll2 = map2.values();
-        assertEquals("maps should be equal.", true, coll1.equals(coll2));
+        assertEquals("Collections should be equal.", true, coll1.equals(coll2));
         assertEquals("Hash codes should be equal.", coll1.hashCode(), coll2.hashCode());
 
         for(int i = 0; i < 10; i++){
@@ -370,18 +450,38 @@ public class TestSuiteValuesCollection {
         }
         coll1 = map1.values();
         coll2 = map2.values();
-        assertEquals("maps should be equal.", true, coll1.equals(coll2));
+        assertEquals("Collections should be equal.", true, coll1.equals(coll2));
         assertEquals("Hash codes should be equal.", coll1.hashCode(), coll2.hashCode());
     }
 
     //************************ ADD & ADDALL METHOD **********************************
 
+    /**
+     * <p><b>Summary</b>: add method test case.</p>
+     * <p><b>Test Case Design</b>: The methoud throws
+     * UnsupportedOperationException.</p>
+     * <p><b>Test Description</b>: add is invoked.</p>
+     * <p><b>Pre-Condition</b>: coll1 is empty.</p>
+     * <p><b>Post-Condition</b>: coll1 is empty.</p>
+     * <p><b>Expected Results</b>: The add method is not supported.
+     * UnsupportedOperationException is thrown.</p>
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void Add(){
         HCollection coll1 = map1.values();
         coll1.add(15);
     }
     
+    /**
+     * <p><b>Summary</b>: addAll method test case.</p>
+     * <p><b>Test Case Design</b>: The methoud throws
+     * UnsupportedOperationException.</p>
+     * <p><b>Test Description</b>: addAll is invoked.</p>
+     * <p><b>Pre-Condition</b>: coll1 is empty.</p>
+     * <p><b>Post-Condition</b>: coll1 is empty.</p>
+     * <p><b>Expected Results</b>: The addAll method is not supported.
+     * UnsupportedOperationException is thrown.</p>
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void AddAll(){
         HCollection coll1 = map1.values();
@@ -391,14 +491,36 @@ public class TestSuiteValuesCollection {
 
     //***************************** REMOVE METHOD **********************************
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a remove method invoke with null key.</p>
+     * <p><b>Test Description</b>: remove method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test (expected = NullPointerException.class)
-    public void Remove_EmptyNullKey_NPException(){
+    public void Remove_EmptyNull_NPException(){
         HCollection coll1 = map1.values();
         coll1.remove(null);
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with null key in this values collection should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a remove method invoke with null key.</p>
+     * <p><b>Test Description</b>: remove method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Collection are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test (expected = NullPointerException.class)
-    public void Remove_NullKey_NPException(){
+    public void Remove_Null_NPException(){
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
@@ -406,12 +528,35 @@ public class TestSuiteValuesCollection {
         coll1.remove(null);
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with a valid key in an empty values collection should
+     * return always false</p>
+     * <p><b>Test Case Design</b>: The test invokes remove method on an emtpy collection
+     * wich is a limit case in wich the remove method should always return false</p>
+     * <p><b>Test Description</b>: remove method gets called in an empty collection. </p>
+     * <p><b>Pre-Condition</b>: Map and Collection is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Collection is still empty.</p>
+     * <p><b>Expected Results</b>: remove method should be return false</p>
+     */
     @Test
     public void Remove_Empty(){
         HCollection coll1 = map1.values();
         assertFalse(coll1.remove(156));
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the remove method feature that
+     * returns the old value and after call remove method the collection
+     * does not contains the key</p>
+     * <p><b>Test Description</b>: Put an mappings into the map. Then assert that
+     * he remove the 987 values. Then assert that an second remove with the same 
+     * key return null, because its not present yet. </p>
+     * <p><b>Pre-Condition</b>: Map has 44=987 mappings and values collection has 987</p>
+     * <p><b>Post-Condition</b>: Collection is empty. </p>
+     * <p><b>Expected Results</b>:remove method works properly</p>
+     */
     @Test
     public void Remove_ReturnOldValue(){
         map1.put(44, 987);
@@ -419,7 +564,16 @@ public class TestSuiteValuesCollection {
         assertTrue(coll1.remove(987));
         assertFalse(coll1.remove(987));
     }
-
+    
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the remove method
+	 * in a case where the collection does not contain the key.</p>
+     * <p><b>Test Description</b>: remove is invoked with 2 different uncontained values.</p>
+     * <p><b>Pre-Condition</b>: Map contains "ciao"="bello". Values collection contains "bello" </p>
+     * <p><b>Post-Condition</b>: Map and collection is unchanged.</p>
+     * <p><b>Expected Results</b>: removes returns false.</p>
+     */
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
@@ -433,11 +587,11 @@ public class TestSuiteValuesCollection {
      * <p><b>Test Case Design</b>: Removes all the elements through remove method
      * to test its behaviour. Note that the limit case of removing the last element
      * is tested too.</p>
-     * <p><b>Test Description</b>: Calls remove 450 times on an map containing
-     * 450 mappings, making it empty.</p>
-     * <p><b>Pre-Condition</b>: Map contains 450 mappings.</p>
-     * <p><b>Post-Condition</b>: Map is empty.</p>
-     * <p><b>Expected Results</b>: Map is empty, obviusly its size is 0.</p>
+     * <p><b>Test Description</b>: Calls remove 450 times on an collection containing
+     * 450 elements, making it empty.</p>
+     * <p><b>Pre-Condition</b>: Map contains 450 mappings. Values collection contains also 450 elements</p>
+     * <p><b>Post-Condition</b>: Map and collection is empty.</p>
+     * <p><b>Expected Results</b>: collection is empty, obviusly its size is 0.</p>
      */
 
     @Test
@@ -450,24 +604,24 @@ public class TestSuiteValuesCollection {
             assertTrue(coll1.remove((i+654)*i));
         }
         assertEquals("Size should be 0", 0, coll1.size());
-        assertEquals("map should be empty.", true, coll1.isEmpty());
+        assertEquals("collection should be empty.", true, coll1.isEmpty());
     }
 
     //************************* TOARRAY METHOD *********************************
 
     /**
      * <p><b>Summary</b>: toArray method test case. 
-     * The test case asserts that an empty list
+     * The test case asserts that an empty collection
      * should return an empty array on a toArray call.
-     * The list is not modified
+     * The collection is not modified
      * since its creation.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of
      * a toArray call returning an empty array. From the 
      * Sommerville: "Test with sequences of zero lenght."</p>
      * <p><b>Test Description</b>: Test based on the trivial but possible
-     * state of an empty list.</p>
-     * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * state of an empty collection.</p>
+     * <p><b>Pre-Condition</b>: The collection is empty.</p>
+     * <p><b>Post-Condition</b>: The collection is still empty.</p>
      * <p><b>Expected Results</b>: The toArray method returns an empty
      * array and therefore its lenght is 0.</p>
      */
@@ -475,22 +629,22 @@ public class TestSuiteValuesCollection {
     public void ToArray_Empty_EmptyArray(){
         HCollection coll1 = map1.values();
         Object[] arr = coll1.toArray();
-        assertEquals("Empty list did not return empty array.", arr.length, 0);
+        assertEquals("Empty collection did not return empty array.", arr.length, 0);
     }
 
     /**
      * <p><b>Summary</b>: toArray method test case.
      * The test case asserts that, after many insertion, an array returned from a
-     * toArray call must match the expected list.</p>
+     * toArray call must match the expected collection.</p>
      * <p><b>Test Case Design</b>: The test inserts five element and then
-     * checks if the list elements matches the inserted elements.
+     * checks if the collection elements matches the inserted elements.
      * From the Sommerville: "Use sequences of different sizes in different tests.". Small
      * size tested here.</p>
      * <p><b>Test Description</b>: Inserts five 1 to the map. Then assertArrayEquals
      * is called.</p>
-     * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list contains {1,1,1,1,1}.</p>
-     * <p><b>Expected Results</b>: list1.toArray() returns
+     * <p><b>Pre-Condition</b>: The collection is empty.</p>
+     * <p><b>Post-Condition</b>: The collection contains {1,1,1,1,1}.</p>
+     * <p><b>Expected Results</b>: collection1.toArray() returns
      * [1, 1, 1, 1, 1].</p>
      */
     @Test
@@ -504,15 +658,15 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: toArray test case.
-     * The test adds one element to the list and then call
+     * The test adds one element to the collection and then call
      * toArray method.</p>
      * <p><b>Test Case Design</b>: Test focuses on toArray behaviour when
      * it has only one element, which is a limit case. From the Sommerville: "Test software
      * with sequences which have only a single value."</p>
-     * <p><b>Test Description</b>: Adds one to the list, calls toArray method
+     * <p><b>Test Description</b>: Adds one to the collection, calls toArray method
      * and checks the array's first element and its size.</p>
-     * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list has one element {1654}.</p>
+     * <p><b>Pre-Condition</b>: The collection is empty.</p>
+     * <p><b>Post-Condition</b>: The collection has one element {1654}.</p>
      * <p><b>Expected Results</b>: The element is stored correctly in the
      * array returned from the method (the array is [1]) and its size is 1.</p>
      */
@@ -544,14 +698,14 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: toArray(HCollection) method test case.
-     * The test adds element from 0 (included) to 10 (excluded) to the list and checks the array.</p>
+     * The test adds element from 0 (included) to 10 (excluded) to the collection and checks the array.</p>
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
-     * argument size is not enough for containing the list's elements, which a
+     * argument size is not enough for containing the collection's elements, which a
      * special case.</p>
-     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the list. arr contains the result
+     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the collection. arr contains the result
      * of toArray method, but exception is being thrown.</p>
-     * <p><b>Pre-Condition</b>: The list is empty, arr is empty.</p>
-     * <p><b>Post-Condition</b>: The list has 10 elements, arr is still empty.</p>
+     * <p><b>Pre-Condition</b>: The collection is empty, arr is empty.</p>
+     * <p><b>Post-Condition</b>: The collection has 10 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
 
@@ -679,14 +833,14 @@ public class TestSuiteValuesCollection {
     /**
      * <p><b>Summary</b>: hasNext and next methods test case.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of
-     * an iterator returned from an empty list
+     * an iterator returned from an empty collection
      * calling hasNext and next. From the Sommerville:
      * "Choose inputs that force the system to generate all error messages".</p>
      * <p><b>Test Description</b>: an iterator is returned from empty
-     * list. iterator.hasNext() should be false, while
+     * collection. iterator.hasNext() should be false, while
      * next() should throw NoSuchElementException.</p>
-     * <p><b>Pre-Condition</b>: The list is empty.</p>
-     * <p><b>Post-Condition</b>: The list is still empty.</p>
+     * <p><b>Pre-Condition</b>: The collection is empty.</p>
+     * <p><b>Post-Condition</b>: The collection is still empty.</p>
      * <p><b>Expected Results</b>: hasNext returns false, NSEE is thrown.</p>
      */
     @Test (expected = NoSuchElementException.class)
@@ -698,17 +852,17 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: hasNext and next methods test case.
-     * List contains 1 element and the test iterate through
+     * collection contains 1 element and the test iterate through
      * it.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of 1
-     * element in the list. Therefore hasNext should return
+     * element in the collection. Therefore hasNext should return
      * true while next() should return the only number
-     * in the list.</p>
+     * in the collection.</p>
      * <p><b>Test Description</b>: The number 1 is added, and an iterator
-     * iterates through the list. After returning the first elements,
+     * iterates through the collection. After returning the first elements,
      * it has no more next elements.</p>
-     * <p><b>Pre-Condition</b>: List contains 1, iterator has next.</p>
-     * <p><b>Post-Condition</b>: List contains 1, iterator has not next.</p>
+     * <p><b>Pre-Condition</b>: collection contains 1, iterator has next.</p>
+     * <p><b>Post-Condition</b>: collection contains 1, iterator has not next.</p>
      * <p><b>Expected Results</b>: The first hasNext call returns true,
      * the second returns false.</p>
      */
@@ -739,13 +893,13 @@ public class TestSuiteValuesCollection {
     /**
      * <p><b>Summary</b>: remove method test case.
      * Test should throw an exception.</p>
-     * <p><b>Test Case Design</b>: Tests if for a list a remove method
+     * <p><b>Test Case Design</b>: Tests if for a collection a remove method
      * throws HIllegalStateException, as no prev or next has been 
      * called, or remove or add have been called after the last call to
      * next or previous</p>
      * <p><b>Test Description</b>: remove is invoked by an iterator instance.</p>
-     * <p><b>Pre-Condition</b>: List has 1 element.</p>
-     * <p><b>Post-Condition</b>: List still has 1 element.</p>
+     * <p><b>Pre-Condition</b>: collection has 1 element.</p>
+     * <p><b>Post-Condition</b>: collection still has 1 element.</p>
      * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
      */
     @Test (expected = IllegalStateException.class)
@@ -899,3 +1053,19 @@ public class TestSuiteValuesCollection {
 	}
 
 }
+
+
+    /**
+     * <p><b>Summary</b>:</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>:</p>
+     * <p><b>Post-Condition</b>:</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+
+    /**
+     * <p><b>Summary</b>:</p>
+     * <p><b>Test Suite Design</b>:</p>
+     * 
+     */
