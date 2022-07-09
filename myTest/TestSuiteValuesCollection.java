@@ -16,13 +16,21 @@ import myAdapter.*;
 /**
  * <strong> Class TestSuiteValuesCollection </strong>
  * <p>
- * <br><br><strong>Summary</strong>: The TestSuiteValuesCollection check
- * with its test that the values's Methods, defined in HCollection interface, works properly.
+ * <br><br><strong>Summary</strong>: The TestSuiteValuesCollection provides test on values collection method.
+ * It offer different type of test in differente case scanario, in order to test thei correct behaviour.
+ * The first section of this test suite contains the test in the TestCollection.java file 
+ * assigned by the Professor, correctly translated in the JUnit format.
+ * After this section tere are several section for each method (or group of feature) contains 
+ * the test cases ideated by me. check
  * 
- * <br><br><strong>Test Suite Design</strong>: This class contains different test cases 
- * for each method of the HCollection interface.
  * 
- * Test cases include inspection test, modification test and iterator test. 
+ * 
+ * <br><br><strong>Test Suite Design</strong>: This test suite contains fine-grained different test cases 
+ * for each method of the HCollection interface in order to individuate errore in HCollection methods
+ * 
+ * Test cases include inspection test, modification test and iterator test. In the test suite there are
+ * many test cases focusing on limit and special cases,
+ * invalid arguments and etc.
  * 
  * Each method is tested apart from others.</p>
  * 
@@ -76,6 +84,167 @@ public class TestSuiteValuesCollection {
     public static void afterClassMethod(){
         System.out.println("TestSuiteValuesCollection suite ended. Time elapsed " + (System.currentTimeMillis() - timeStart)  + "ms.");
     }
+    
+    //***************** TEST COLLECTION ASSIGNED BY PROFESSOR *********************
+
+    /**
+     * <p><b>Summary</b>: verifico che temp contenga gli elementi di head</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: head con almeno un elemento</p>
+     * <p><b>Post-Condition</b>: temp che e' un array contenete gli elementi di head</p>
+     * <p><b>Expected Results</b>: size is 1 and the array contains the correct elements</p>
+     */
+    @Test
+	public void to_array() {
+        map1.put("Collection Adapter","Collection Adapter");
+        HCollection head = map1.values();
+		Object[] temp = head.toArray();
+		boolean size = (temp.length == 1);
+		boolean content = (temp[0].equals("Collection Adapter"));
+		assertTrue(size && content);
+	}
+    
+    /**
+     * <p><b>Summary</b>: verifico che head contenga gli elementi di head, facendo il confronto con il suo contenuto</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: head con almeno un elemento, a array di destinazione</p>
+     * <p><b>Post-Condition</b>: a contiene gli elementi di head</p>
+     * <p><b>Expected Results</b>: the array contains the correct elements</p>
+     */
+    @Test
+    public void to_array_a(){
+        map1.put("Collection Adapter","Collection Adapter");
+        HCollection head = map1.values();
+        Object[] a = new Object[10];
+		a = head.toArray(a);
+		boolean content = (a[0].equals("Collection Adapter"));
+		assertTrue(content);
+    }
+
+    /**
+     * <p><b>Summary</b>:test remove(Object o), rimuovo da ct l'elemento o e verifico che la dimensione di ct sia cambiata</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
+     * <p><b>Post-Condition</b>: ct senza l'elemento o</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+    @Test
+	public void remove_o(){
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+		Object o = "Collection Adapter";
+		boolean ris = ct.remove(o);
+		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>:</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
+     * <p><b>Post-Condition</b>: ct senza gli elementi di Collection c</p>
+     * <p><b>Expected Results</b>: test removeAll(Collection c), rimuovo da ct tutti gli elementi di c</p>
+     */
+    @Test
+	public void remove_all_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.removeAll(param);
+		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>:modifica ct facendogli contenere alla fine solo gli elementi presenti anche in c</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
+     * <p><b>Post-Condition</b>: ct intersecato a Collection c</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+    @Test
+	public void retain_all_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.retainAll(param);
+		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>: test metodo containsAll(Collection c) e verifico che gli elementi di c siano presenti in ct</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: ct contiene tutti gli elementi presenti nella Collection c</p>
+     * <p><b>Post-Condition</b>: ris e' true</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+    @Test
+	public void containsAll_c() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection param = map2.values();
+		boolean ris = ct.containsAll(param);
+		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>: test metodo equals(Object o) e controllo se sono uguali</p>
+     * <p><b>Test Case Design</b>:</p>
+     * <p><b>Test Description</b>:</p>
+     * <p><b>Pre-Condition</b>: due oggetti uguali</p>
+     * <p><b>Post-Condition</b>: ris vale true</p>
+     * <p><b>Expected Results</b>:</p>
+     */
+    @Test
+	public void equals_o() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+        map2.put(1,"Collection Adapter");
+		map2.put(2,"aaa");
+        map2.put(3,"bbb");
+        map2.put(4,"ccc");
+        
+        HCollection temp = map2.values();
+		
+		boolean ris = ct.equals(temp);
+		assertTrue(ris);
+	}
 
     // ****************************** SIZE ISEMPTY METHOD *************************
 
@@ -1014,8 +1183,7 @@ public class TestSuiteValuesCollection {
      * The collection is not modified
      * since its creation.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of
-     * a toArray call returning an empty array. From the 
-     * Sommerville: "Test with sequences of zero lenght."</p>
+     * a toArray call returning an empty array. </p>
      * <p><b>Test Description</b>: Test based on the trivial but possible
      * state of an empty collection.</p>
      * <p><b>Pre-Condition</b>: The collection is empty.</p>
@@ -1028,29 +1196,25 @@ public class TestSuiteValuesCollection {
         HCollection coll1 = map1.values();
         Object[] arr = coll1.toArray();
         assertEquals("Empty collection did not return empty array.", arr.length, 0);
+        assertArrayEquals(new Object[0], coll1.toArray());
     }
 
     /**
-     * <p><b>Summary</b>: toArray method test case.
-     * The test case asserts that, after many insertion, an array returned from a
-     * toArray call must match the expected collection.</p>
-     * <p><b>Test Case Design</b>: The test inserts five element and then
-     * checks if the collection elements matches the inserted elements.
-     * From the Sommerville: "Use sequences of different sizes in different tests.". Small
-     * size tested here.</p>
-     * <p><b>Test Description</b>: Inserts five 1 to the map. Then assertArrayEquals
+     * <p><b>Summary</b>: toArray method test case.</p>
+     * <p><b>Test Case Design</b>: Test the toArray method when the collection and the map
+     * contains only one element then checks if the collection element
+     *  matches the inserted elements.</p>
+     * <p><b>Test Description</b>: Inserts 1=1 to the map. Then assertArrayEquals
      * is called.</p>
-     * <p><b>Pre-Condition</b>: The collection is empty.</p>
-     * <p><b>Post-Condition</b>: The collection contains {1,1,1,1,1}.</p>
-     * <p><b>Expected Results</b>: collection1.toArray() returns
-     * [1, 1, 1, 1, 1].</p>
+     * <p><b>Pre-Condition</b>: The collection and map is empty.</p>
+     * <p><b>Post-Condition</b>: The collection and map contains 1 element.</p>
+     * <p><b>Expected Results</b>: coll1.toArray() returns [1].</p>
      */
     @Test
-    public void ToArray_11111_True(){
-        for(int i = 0; i < 5; i++)
-            map1.put(i,1);
+    public void ToArray_OneElement(){
+        map1.put(1,1);
         HCollection coll1 = map1.values();
-        Integer[] arr = {1,1,1,1,1};
+        Integer[] arr = {1};
         assertArrayEquals("Arrays do not match.", arr , coll1.toArray());
     }
 
@@ -1100,8 +1264,8 @@ public class TestSuiteValuesCollection {
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument size is not enough for containing the collection's elements, which a
      * special case.</p>
-     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the collection. arr contains the result
-     * of toArray method, but exception is being thrown.</p>
+     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the collection.
+     *  arr contains the result of toArray method, but exception is being thrown.</p>
      * <p><b>Pre-Condition</b>: The collection is empty, arr is empty.</p>
      * <p><b>Post-Condition</b>: The collection has 10 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
@@ -1118,6 +1282,19 @@ public class TestSuiteValuesCollection {
 
     // ************************** BACKED FEATURE *************************
 
+    /**
+     * <p><b>Summary</b>: backing clear and put test case. Test the correct propagation values
+     *  to map and viceversa by using the clear method on the 
+     * map and on the collection and the put method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the collection before and after
+     * some put call and clear call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the collection before and after
+     * some put call and clear call.</p>
+     * <p><b>Pre-Condition</b>: map and coll is empty. </p>
+     * <p><b>Post-Condition</b>: map and coll is empty. </p>
+     * <p><b>Expected Results</b>: put and clear should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_ClearPut(){
         HCollection coll = map1.values();
@@ -1142,6 +1319,19 @@ public class TestSuiteValuesCollection {
         assertEquals("Collection should be empty.", true, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: backing putall and remove test case. Test the correct propagation values
+     *  to map and viceversa by using the remove method on the 
+     * map and on the collection and the putall method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the collection before and after
+     * some putall call and remove call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the collection before and after
+     * some putall call and remove call.</p>
+     * <p><b>Pre-Condition</b>: map and coll is empty. </p>
+     * <p><b>Post-Condition</b>: map and coll is empty. </p>
+     * <p><b>Expected Results</b>: putall and remove should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_putAllRemove(){
         HCollection coll = map1.values();
@@ -1174,6 +1364,19 @@ public class TestSuiteValuesCollection {
         assertEquals("Collection should be empty.", true, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: backing put and remove test case.
+     * Test the correct propagation values to map and viceversa by using the remove method on the 
+     * map and on the collection and the put method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the collection before and after
+     * some put call and remove call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the collection before and after
+     * some put call and remove call.</p>
+     * <p><b>Pre-Condition</b>: map and coll is empty. </p>
+     * <p><b>Post-Condition</b>: map and coll is empty. </p>
+     * <p><b>Expected Results</b>: put and remove should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_PutRemove(){
         HCollection coll = map1.values();
@@ -1190,6 +1393,18 @@ public class TestSuiteValuesCollection {
         assertFalse(coll.contains(44));
     }
 
+    /**
+     * <p><b>Summary</b>: backing remove with iterator test case. Test the correct propagation
+     * from values to map and viceversa by using the remove method of iterator  </p>
+     * <p><b>Test Case Design</b>: Tests the iterator's remove
+     * method in a collection with 1000 elements util iterator has next element</p>
+     * <p><b>Test Description</b>: it invoke next and then remove until the iterator has the next
+     * element. Once he had finished the iterator clear all the collection. So the map and the 
+     * collection is emtpy</p>
+     * <p><b>Pre-Condition</b>: map1 and coll1 has 1000 elements</p>
+     * <p><b>Post-Condition</b>: map1 and coll1 are empty </p>
+     * <p><b>Expected Results</b>: map1 and coll1 are empty, so the iterator correctly remove all elements</p>
+     */
     @Test
     public void Backed_IteratorRemove(){
         HCollection coll = map1.values();
@@ -1216,14 +1431,98 @@ public class TestSuiteValuesCollection {
         assertEquals("Collection should be not empty.", true, coll.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: backing removeAll test case. Test the propagation from values to map
+     * and viceversa.</p>
+     * <p><b>Test Case Design</b>:Tests removeAll method with
+     * values HCollection. Correct propagation is tested in both ways.</p>
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and coll1 as consequence contains
+     * 50 elements. map2 contains only 5 mappings in 20-25 range. 
+     * After call removeAll all the elements in common between coll1 and coll2 will be removed.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, coll1 contains 50 values,
+     * map2 contains 5 mappings and coll2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and coll2 are unchanged. map1 and coll1 contains less elements.</p>
+     * <p><b>Expected Results</b>: the removeAll method correctly propagate the changes. Also removeAll
+     * method remove the elements in common between coll1 and coll2</p>
+     */
     @Test
     public void Backed_removeAll(){
+        for(int i = 0; i < 50; i++)
+            map1.put(i,i*i);
+        HCollection coll1 = map1.values();
 
+        for(int i = 0; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(coll1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++)
+            map2.put(i,i*i);
+        HCollection coll2 = map2.values();
+
+        coll1.removeAll(coll2);
+
+        for(int i = 0; i < 20; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(coll1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(coll1.contains(i*i));
+        }
+
+        for(int i = 25; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(coll1.contains(i*i));
+        }
     }
 
+    /**
+     * <p><b>Summary</b>: baking retainAll test case. Test the propagation from values to map
+     * and viceversa.</p>
+     * <p><b>Test Case Design</b>:Tests retainAll method with
+     * values HCollection. Correct propagation is tested in both ways.</p>
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and coll1 as consequence contains
+     * 50 elements. map2 contains only 5 mappings in 20-25 range. 
+     * After call retainAll all the elements in common between coll1 and coll2 will retain.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, coll1 contains 50 values,
+     * map2 contains 5 mappings and coll2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and coll2 are unchanged. map1 and coll1 contains less elements.</p>
+     * <p><b>Expected Results</b>: the retainAll method correctly propagate the changes. Also retainAll
+     * method retain the elements in common between coll1 and coll2</p>
+     */
     @Test
     public void Backed_retainAll(){
+        for(int i = 0; i < 50; i++)
+            map1.put(i,i*i);
+        HCollection coll1 = map1.values();
 
+        for(int i = 0; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(coll1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++)
+            map2.put(i,i*i);
+        HCollection coll2 = map2.values();
+
+        coll1.retainAll(coll2);
+
+        for(int i = 0; i < 20; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(coll1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(coll1.contains(i*i));
+        }
+
+        for(int i = 25; i < 50; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(coll1.contains(i*i));
+        }
     }
 
     //****************************** ITERATOR METHOD *******************************
@@ -1232,8 +1531,7 @@ public class TestSuiteValuesCollection {
      * <p><b>Summary</b>: hasNext and next methods test case.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of
      * an iterator returned from an empty collection
-     * calling hasNext and next. From the Sommerville:
-     * "Choose inputs that force the system to generate all error messages".</p>
+     * calling hasNext and next. </p>
      * <p><b>Test Description</b>: an iterator is returned from empty
      * collection. iterator.hasNext() should be false, while
      * next() should throw NoSuchElementException.</p>
@@ -1273,6 +1571,14 @@ public class TestSuiteValuesCollection {
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 
+    /**
+     * <p><b>Summary</b>:iterator next method test case</p>
+     * <p><b>Test Case Design</b>: Tests that next method return the correct elements</p>
+     * <p><b>Test Description</b>: Simply call next method on an collection contains 1 elements</p>
+     * <p><b>Pre-Condition</b>:map and coll contains 1 elements</p>
+     * <p><b>Post-Condition</b>: map and coll are unchanged</p>
+     * <p><b>Expected Results</b>: next return 1 and hasnext is false</p>
+     */
     @Test
     public void Iterator_Next_1(){
         map1.put(1,1);
@@ -1281,6 +1587,16 @@ public class TestSuiteValuesCollection {
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Test should throw an exception.</p>
+     * <p><b>Test Case Design</b>: Tests if for a collection a remove method
+     * throws IllegalStateException on an emtpy collection</p>
+     * <p><b>Test Description</b>: remove is invoked by an iterator instance on an emtpy coll.</p>
+     * <p><b>Pre-Condition</b>: collection is emtpy.</p>
+     * <p><b>Post-Condition</b>: collection is emtpy.</p>
+     * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
+     */
     @Test (expected = IllegalStateException.class)
     public void Iterator_Remove_Empty_HISE(){
         HIterator iter = map1.values().iterator();
@@ -1292,178 +1608,19 @@ public class TestSuiteValuesCollection {
      * <p><b>Summary</b>: remove method test case.
      * Test should throw an exception.</p>
      * <p><b>Test Case Design</b>: Tests if for a collection a remove method
-     * throws HIllegalStateException, as no prev or next has been 
+     * throws IllegalStateException, as no prev or next has been 
      * called, or remove or add have been called after the last call to
      * next or previous</p>
      * <p><b>Test Description</b>: remove is invoked by an iterator instance.</p>
      * <p><b>Pre-Condition</b>: collection has 1 element.</p>
      * <p><b>Post-Condition</b>: collection still has 1 element.</p>
-     * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
+     * <p><b>Expected Results</b>: IllegalStateException thrown.</p>
      */
     @Test (expected = IllegalStateException.class)
     public void Remove_OneElement_HISE(){
         map1.put(1,1);
         HIterator iter = map1.values().iterator();
-        iter.remove(); /* Exception throw as no prev or next has been
-                            called, or remove or add have been called after
-                            the last call to
-                            next or previous*/
+        iter.remove();
     }
-
-    //***************** TEST COLLECTION CONSEGNA ******************************
-
-    @Test
-	/**
-	 * @safe.precondition head con almeno un elemento
-	 * @safe.postcondition temp che e' un array contenete gli elementi di head
-	 * @safe.summary verifico che temp contenga gli elementi di head
-	 */
-	public void to_array() {
-        map1.put("Collection Adapter","Collection Adapter");
-        HCollection head = map1.values();
-		Object[] temp = head.toArray();
-		boolean size = (temp.length == 1);
-		boolean content = (temp[0].equals("Collection Adapter"));
-		assertTrue(size && content);
-	}
-    
-    /**
-	 * @safe.precondition head con almeno un elemento, a array di destinazione
-	 * @safe.postcondition a contiene gli elementi di head
-	 * @safe.summary verifico che head contenga gli elementi di head, facendo il confronto con il suo contenuto
-	 */
-    @Test
-    public void to_array_a(){
-        map1.put("Collection Adapter","Collection Adapter");
-        HCollection head = map1.values();
-        Object[] a = new Object[10];
-		a = head.toArray(a);
-		boolean content = (a[0].equals("Collection Adapter"));
-		assertTrue(content);
-    }
-
-    @Test
-	/**
-	 * @safe.precondition ct con almeno un elemento
-	 * @safe.postcondition ct senza l'elemento o
-	 * @safe.summary test remove(Object o), rimuovo da ct l'elemento o e verifico che la dimensione di ct sia cambiata
-	 */
-	public void remove_o(){
-        map1.put(1,"Collection Adapter");
-        map1.put(2,"aaa");
-        map1.put(3,"bbb");
-        map1.put(4,"ccc");
-        
-        HCollection ct = map1.values();
-		Object o = "Collection Adapter";
-		boolean ris = ct.remove(o);
-		assertTrue(ris);
-	}
-
-    @Test
-	/**
-	 * @safe.precondition ct con almeno un elemento
-	 * @safe.postcondition ct senza gli elementi di Collection c
-	 * @safe.summary test removeAll(Collection c), rimuovo da ct tutti gli elementi di c
-	 */
-	public void remove_all_c() {
-        map1.put(1,"Collection Adapter");
-        map1.put(2,"aaa");
-        map1.put(3,"bbb");
-        map1.put(4,"ccc");
-        
-        HCollection ct = map1.values();
-        map2.put(2,"aaa");
-        map2.put(3,"bbb");
-        map2.put(4,"ccc");
-        
-        HCollection param = map2.values();
-		boolean ris = ct.removeAll(param);
-		assertTrue(ris);
-	}
-	
-	@Test
-	/**
-	 * @safe.precondition ct con almeno un elemento
-	 * @safe.postcondition ct intersecato a Collection c
-	 * @safe.summary modifica ct facendogli contenere alla fine solo gli elementi presenti anche in c
-	 */
-	public void retain_all_c() {
-        map1.put(1,"Collection Adapter");
-        map1.put(2,"aaa");
-        map1.put(3,"bbb");
-        map1.put(4,"ccc");
-        
-        HCollection ct = map1.values();
-        map2.put(2,"aaa");
-        map2.put(3,"bbb");
-        map2.put(4,"ccc");
-        
-        HCollection param = map2.values();
-		boolean ris = ct.retainAll(param);
-		assertTrue(ris);
-	}
-
-    @Test
-	/**
-	 * @safe.precondition ct contiene tutti gli elementi presenti nella Collection c
-	 * @safe.postcondition ris e' true
-	 * @safe.summary test metodo containsAll(Collection c) e verifico che gli elementi di c siano presenti in ct
-	 */
-	public void containsAll_c() {
-        map1.put(1,"Collection Adapter");
-        map1.put(2,"aaa");
-        map1.put(3,"bbb");
-        map1.put(4,"ccc");
-        
-        HCollection ct = map1.values();
-        map2.put(2,"aaa");
-        map2.put(3,"bbb");
-        map2.put(4,"ccc");
-        
-        HCollection param = map2.values();
-		boolean ris = ct.containsAll(param);
-		assertTrue(ris);
-	}
-	
-	@Test
-	/**
-	 * @safe.precondition due oggetti uguali
-	 * @safe.postcondition ris vale true
-	 * @safe.summary test metodo equals(Object o) e controllo se sono uguali
-	 */
-	public void equals_o() {
-        map1.put(1,"Collection Adapter");
-        map1.put(2,"aaa");
-        map1.put(3,"bbb");
-        map1.put(4,"ccc");
-        
-        HCollection ct = map1.values();
-        map2.put(1,"Collection Adapter");
-		map2.put(2,"aaa");
-        map2.put(3,"bbb");
-        map2.put(4,"ccc");
-        
-        HCollection temp = map2.values();
-		
-		boolean ris = ct.equals(temp);
-		assertTrue(ris);
-	}
 
 }
-
-
-    /**
-     * <p><b>Summary</b>:</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
-     * <p><b>Pre-Condition</b>:</p>
-     * <p><b>Post-Condition</b>:</p>
-     * <p><b>Expected Results</b>:</p>
-     */
-
-    /**
-     * <p><b>Summary</b>:</p>
-     * <p><b>Test Suite Design</b>:</p>
-     * 
-     */
