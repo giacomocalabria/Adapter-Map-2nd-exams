@@ -37,6 +37,7 @@ import myAdapter.*;
  * @see TestSuiteValuesCollection
  * @see TestSuiteKeySet
  * @see TestSuiteEntrySet
+ * @see MapAdapter
  * @author Giacomo Calabria
  */
 

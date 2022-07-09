@@ -13,6 +13,33 @@ import java.util.NoSuchElementException;
 // Adapter package import
 import myAdapter.*;
 
+/**
+ * <strong> Class TestSuiteEntrySet </strong>
+ * <p>
+ * <br><br><strong>Summary</strong>: The TestSuiteEntrySet provides test on keyset set methods.
+ * It offer different type of test in differente case scanario, in order to test their correct behaviour.
+ * The first section of this test suite contains the test in the TestCollection.java file 
+ * assigned by the Professor, correctly translated in the JUnit format.
+ * After this section there are several section for each method (or group of feature) contains 
+ * the test cases ideated by me.  
+ * 
+ * 
+ * <br><br><strong>Test Suite Design</strong>: This test suite contains fine-grained different test cases 
+ * for each method of the HCollection interface in order to individuate errors in HCollection methods
+ * 
+ * Test cases include inspection test, modification test and iterator test. In the test suite there are
+ * many test cases focusing on limit and special cases,
+ * invalid arguments and etc.
+ * 
+ * Each method is tested apart from others.</p>
+ * 
+ * @version 1.0
+ * @see TestSuiteMapAdapter
+ * @see MapAdapter
+ * @see MapEntryAdapter
+ * @author Giacomo Calabria
+ */
+
 public class TestSuiteEntrySet {
     HMap map1 = null;
     HMap map2 = null;

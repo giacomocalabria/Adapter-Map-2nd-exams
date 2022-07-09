@@ -16,17 +16,15 @@ import myAdapter.*;
 /**
  * <strong> Class TestSuiteValuesCollection </strong>
  * <p>
- * <br><br><strong>Summary</strong>: The TestSuiteValuesCollection provides test on values collection method.
- * It offer different type of test in differente case scanario, in order to test thei correct behaviour.
+ * <br><br><strong>Summary</strong>: The TestSuiteValuesCollection provides test on values collection methods.
+ * It offer different type of test in differente case scanario, in order to test their correct behaviour.
  * The first section of this test suite contains the test in the TestCollection.java file 
  * assigned by the Professor, correctly translated in the JUnit format.
- * After this section tere are several section for each method (or group of feature) contains 
- * the test cases ideated by me. check
- * 
- * 
+ * After this section there are several section for each method (or group of feature) contains 
+ * the test cases ideated by me.
  * 
  * <br><br><strong>Test Suite Design</strong>: This test suite contains fine-grained different test cases 
- * for each method of the HCollection interface in order to individuate errore in HCollection methods
+ * for each method of the HCollection interface in order to individuate errors in HCollection methods
  * 
  * Test cases include inspection test, modification test and iterator test. In the test suite there are
  * many test cases focusing on limit and special cases,
