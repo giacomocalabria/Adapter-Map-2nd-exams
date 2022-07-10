@@ -1251,7 +1251,7 @@ public class TestSuiteValuesCollection {
      */
 
     @Test (expected = NullPointerException.class)
-    public void ToArrat_DestNull_NPException(){
+    public void ToArray_DestNull_NPException(){
         HCollection coll1 = map1.values();
         coll1.toArray(null);
     }
@@ -1277,6 +1277,40 @@ public class TestSuiteValuesCollection {
         HCollection coll1 = map1.values();
         coll1.toArray(arr);
     }
+
+    //*************************** TOSTRING METHOD *****************************
+
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on an empty
+	 * collection.</p>
+     * <p><b>Test Description</b>: toString is invoked on a
+	 * empty collection.</p>
+     * <p><b>Pre-Condition</b>: map1 and coll1 are empty.</p>
+     * <p><b>Post-Condition</b>: map1 and coll1 are empty.</p>
+     * <p><b>Expected Results</b>: coll1.toString return [] </p>
+     */
+	@Test
+	public void ToString_Empty(){
+        HCollection coll1 = map1.values();
+		assertEquals("[]", coll1.toString());
+	}
+
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on a
+	 * map containing 1=Ciaoooo so that values collection contains Ciaoooo</p>
+     * <p><b>Test Description</b>: toString is invoked on the collection.</p>
+     * <p><b>Pre-Condition</b>: map1 contains 1=Ciaoooo.</p>
+     * <p><b>Post-Condition</b>: map1 contains 1=Ciaoooo.</p>
+     * <p><b>Expected Results</b>: coll1.toString [Ciaoooo] </p>
+     */
+	@Test
+	public void ToString_OneElement(){
+		map1.put(1, "Ciaoooo");
+        HCollection coll1 = map1.values();
+		assertEquals("[Ciaoooo]", coll1.toString());
+	}
 
     // ************************** BACKED FEATURE *************************
 

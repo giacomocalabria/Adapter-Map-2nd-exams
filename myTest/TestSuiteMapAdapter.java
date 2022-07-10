@@ -1310,9 +1310,9 @@ public class TestSuiteMapAdapter {
 	 * map.</p>
      * <p><b>Test Description</b>: toString is invoked on a
 	 * empty map.</p>
-     * <p><b>Pre-Condition</b>: m is empty.</p>
-     * <p><b>Post-Condition</b>: m is empty.</p>
-     * <p><b>Expected Results</b>: m.toString returns {}</p>
+     * <p><b>Pre-Condition</b>: map1 is empty.</p>
+     * <p><b>Post-Condition</b>: map1 is empty.</p>
+     * <p><b>Expected Results</b>: map1.toString returns {}</p>
      */
 	@Test
 	public void ToString_Empty(){
@@ -1324,9 +1324,9 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Case Design</b>: Tests toString method on a
 	 * map containing 1=Ciaoooo.</p>
      * <p><b>Test Description</b>: toString is invoked on the map.</p>
-     * <p><b>Pre-Condition</b>: m contains 1=Ciaoooo.</p>
-     * <p><b>Post-Condition</b>: m contains 1=One.</p>
-     * <p><b>Expected Results</b>: m.toString returns {1=Ciaoooo}</p>
+     * <p><b>Pre-Condition</b>: map1 contains 1=Ciaoooo.</p>
+     * <p><b>Post-Condition</b>: map1 still contains 1=Ciaoooo.</p>
+     * <p><b>Expected Results</b>: map1.toString returns {1=Ciaoooo}</p>
      */
 	@Test
 	public void ToString_OneElement(){
