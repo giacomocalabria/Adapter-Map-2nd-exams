@@ -68,7 +68,7 @@ public class TestSuiteKeySet {
      * After JUnit method. It assigns null to m2.
      * It was preferred to not call the clear method as it was target
      * of some test cases, therefore after method cancels any reference to
-     * the previous pointed objects, then removed by the Garbage Collector.
+     * the previous pointed objects, then removed by the Garbage keyector.
      */
     @After
     public void afterMethod(){
@@ -143,7 +143,7 @@ public class TestSuiteKeySet {
     // ********************* CONTAINS METHOD ******************************
 
     @Test
-    public void Contains_EmptyColl(){
+    public void Contains_Emptykey(){
         HSet key = map1.keySet();
         assertEquals("The set contains key 'ci' even if it is empty.", false, key.contains("ci"));
     }
@@ -571,64 +571,137 @@ public class TestSuiteKeySet {
         key1.toArray(arr);
     }
 
+    //*************************** TOSTRING METHOD *****************************
+
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on an empty
+	 * set.</p>
+     * <p><b>Test Description</b>: toString is invoked on a
+	 * empty set.</p>
+     * <p><b>Pre-Condition</b>: map1 and key are empty.</p>
+     * <p><b>Post-Condition</b>: map1 and key are empty.</p>
+     * <p><b>Expected Results</b>: key.toString return [] </p>
+     */
+	@Test
+	public void ToString_Empty(){
+        HSet key = map1.keySet();
+		assertEquals("[]", key.toString());
+	}
+
+    /**
+     * <p><b>Summary</b>: toString method test case.</p>
+     * <p><b>Test Case Design</b>: Tests toString method on a
+	 * map containing Ciaoooo=1 so that key set contains Ciaoooo</p>
+     * <p><b>Test Description</b>: toString is invoked on the set.</p>
+     * <p><b>Pre-Condition</b>: map1 contains Ciaoooo=1.</p>
+     * <p><b>Post-Condition</b>: map1 contains Ciaoooo=1.</p>
+     * <p><b>Expected Results</b>: key.toString [Ciaoooo] </p>
+     */
+	@Test
+	public void ToString_OneElement(){
+		map1.put("Ciaoooo", 1);
+        HSet key = map1.keySet();
+		assertEquals("[Ciaoooo]", key.toString());
+	}
+
     // ************************** BACKED FEATURE *************************
 
+    /**
+     * <p><b>Summary</b>: backing clear and put test case. Test the correct propagation keySet
+     *  to map and viceversa by using the clear method on the 
+     * map and on the set and the put method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the set before and after
+     * some put call and clear call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the set before and after
+     * some put call and clear call.</p>
+     * <p><b>Pre-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Post-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Expected Results</b>: put and clear should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_ClearPut(){
-        HSet coll = map1.keySet();
+        HSet key = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("set should be not empty.", false, coll.isEmpty());
-        coll.clear();
+        assertEquals("set should be not empty.", false, key.isEmpty());
+        key.clear();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
         
         for(int i = 0; i < 1000; i ++){
             map1.put(i,i);
         }
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("set should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, key.isEmpty());
         map1.clear();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: backing putall and remove test case. Test the correct propagation keyset
+     *  to map and viceversa by using the remove method on the 
+     * map and on the set and the putall method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the set before and after
+     * some putall call and remove call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the set before and after
+     * some putall call and remove call.</p>
+     * <p><b>Pre-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Post-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Expected Results</b>: putall and remove should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_putAllRemove(){
-        HSet coll = map1.keySet();
+        HSet key = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
         for(int i = 0; i < 1000; i ++){
             map2.put(i,i);
         }
         map1.putAll(map2);
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("set should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, key.isEmpty());
         
-        HIterator iter = coll.iterator();
+        HIterator iter = key.iterator();
         while(iter.hasNext())
-            coll.remove(iter.next());
+            key.remove(iter.next());
         
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
         
         map1.putAll(map2);
 
         assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("set should be not empty.", false, coll.isEmpty());
+        assertEquals("set should be not empty.", false, key.isEmpty());
 
         for(int i = 0; i < 1000; i ++){
             map1.remove(i);
         }
 
         assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, coll.isEmpty());
+        assertEquals("set should be empty.", true, key.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: backing put and remove test case.
+     * Test the correct propagation values to map and viceversa by using the remove method on the 
+     * map and on the set and the put method on the map</p>
+     * <p><b>Test Case Design</b>: Using some assertion it test the backing of contents
+     * in the map and the set before and after
+     * some put call and remove call. </p>
+     * <p><b>Test Description</b>: Test the backing of contents in the map and the set before and after
+     * some put call and remove call.</p>
+     * <p><b>Pre-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Post-Condition</b>: map and keyset is empty. </p>
+     * <p><b>Expected Results</b>: put and remove should add and remove elements from both side. </p>
+     */
     @Test
     public void Backed_PutRemove(){
         HSet key1 = map1.keySet();
@@ -645,10 +718,21 @@ public class TestSuiteKeySet {
         assertFalse(key1.contains(17));
     }
 
+    /**
+     * <p><b>Summary</b>: backing remove with iterator test case. Test the correct propagation
+     * from keySet to map and viceversa by using the remove method of iterator  </p>
+     * <p><b>Test Case Design</b>: Tests the iterator's remove
+     * method in a set with 1000 elements util iterator has next element</p>
+     * <p><b>Test Description</b>: it invoke next and then remove until the iterator has the next
+     * element. Once he had finished the iterator clear all the set. So the map and the 
+     * set is emtpy</p>
+     * <p><b>Pre-Condition</b>: map1 and keySet has 1000 elements</p>
+     * <p><b>Post-Condition</b>: map1 and keySet are empty </p>
+     * <p><b>Expected Results</b>: map1 and keySet are empty, so the iterator correctly remove all elements</p>
+     */
     @Test
-    public void Backed_KeyIteratorRemove(){
+    public void Backed_IteratorRemove(){
 
-        // SET
         HSet key = map1.keySet();
         assertEquals("Map should be empty.", true, map1.isEmpty());
         assertEquals("set should be empty.", true, key.isEmpty());
@@ -673,41 +757,98 @@ public class TestSuiteKeySet {
         assertEquals("set should be empty.", true, key.isEmpty());
     }
 
-    @Test
-    public void Backed_EntryIteratorRemove(){
-        HSet entry = map1.entrySet();
-        assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, entry.isEmpty());
-        for(int i = 0; i < 1000; i ++){
-            map1.put(i,i);
-        }
-        assertEquals("Map should be not empty.", false, map1.isEmpty());
-        assertEquals("set should be not empty.", false, entry.isEmpty());
-
-        assertEquals("Map should be not empty.", 1000, map1.size());
-        assertEquals("set should be not empty.", 1000, entry.size());
-        
-        HIterator iter = entry.iterator();
-        while(iter.hasNext()){
-            iter.next();
-            iter.remove();     
-        }
-        
-        assertEquals("set should be empty.", 0, entry.size());
-        assertEquals("Map should be empty.", 0, map1.size());
-        
-        assertEquals("Map should be empty.", true, map1.isEmpty());
-        assertEquals("set should be empty.", true, entry.isEmpty());
-    }
-
+    /**
+     * <p><b>Summary</b>: backing removeAll test case. Test the propagation from keyset to map
+     * and viceversa.</p>
+     * <p><b>Test Case Design</b>:Tests removeAll method with
+     * keySet HSet. Correct propagation is tested in both ways.</p>
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and key1 as consequence contains
+     * 50 elements. map2 contains only 5 mappings in 20-25 range. 
+     * After call removeAll all the elements in common between key1 and key2 will be removed.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, key1 contains 50 values,
+     * map2 contains 5 mappings and key2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and key2 are unchanged. map1 and key1 contains less elements.</p>
+     * <p><b>Expected Results</b>: the removeAll method correctly propagate the changes. Also removeAll
+     * method remove the elements in common between key1 and key2</p>
+     */
     @Test
     public void Backed_removeAll(){
+        for(int i = 0; i < 50; i++)
+            map1.put(i,i*i);
+        HSet key1 = map1.keySet();
 
+        for(int i = 0; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(key1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++)
+            map2.put(i,i*i);
+        HSet key2 = map2.keySet();
+
+        key1.removeAll(key2);
+
+        for(int i = 0; i < 20; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(key1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(key1.contains(i*i));
+        }
+
+        for(int i = 25; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(key1.contains(i*i));
+        }
     }
 
+    /**
+     * <p><b>Summary</b>: baking retainAll test case. Test the propagation from keyset to map
+     * and viceversa.</p>
+     * <p><b>Test Case Design</b>:Tests retainAll method with
+     * keySet HSet. Correct propagation is tested in both ways.</p>
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and key1 as consequence contains
+     * 50 elements. map2 contains only 5 mappings in 20-25 range. 
+     * After call retainAll all the elements in common between key1 and key2 will retain.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, key1 contains 50 values,
+     * map2 contains 5 mappings and key2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and key2 are unchanged. map1 and key1 contains less elements.</p>
+     * <p><b>Expected Results</b>: the retainAll method correctly propagate the changes. Also retainAll
+     * method retain the elements in common between key1 and key2</p>
+     */
     @Test
     public void Backed_retainAll(){
+        for(int i = 0; i < 50; i++)
+            map1.put(i,i*i);
+        HSet key1 = map1.keySet();
 
+        for(int i = 0; i < 50; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(key1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++)
+            map2.put(i,i*i);
+        HSet key2 = map2.keySet();
+
+        key1.retainAll(key2);
+
+        for(int i = 0; i < 20; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(key1.contains(i*i));
+        }
+
+        for(int i = 20; i < 25; i++){
+            assertTrue(map1.containsValue(i*i));
+            assertTrue(key1.contains(i*i));
+        }
+
+        for(int i = 25; i < 50; i++){
+            assertFalse(map1.containsValue(i*i));
+            assertFalse(key1.contains(i*i));
+        }
     }
 
     //****************************** ITERATOR METHOD *******************************
@@ -716,8 +857,7 @@ public class TestSuiteKeySet {
      * <p><b>Summary</b>: hasNext and next methods test case.</p>
      * <p><b>Test Case Design</b>: Tests the limit case of
      * an iterator returned from an empty set
-     * calling hasNext and next. From the Sommerville:
-     * "Choose inputs that force the system to generate all error messages".</p>
+     * calling hasNext and next. </p>
      * <p><b>Test Description</b>: an iterator is returned from empty
      * set. iterator.hasNext() should be false, while
      * next() should throw NoSuchElementException.</p>
@@ -728,7 +868,7 @@ public class TestSuiteKeySet {
     @Test (expected = NoSuchElementException.class)
     public void Iterator_HasNext_Emtpy(){
         HIterator iter = map1.keySet().iterator();
-        assertEquals("Empty set iterator should not have next.", false, iter.hasNext());
+        assertEquals("Empty sets iterator should not have next.", false, iter.hasNext());
         iter.next();
     }
 
@@ -749,8 +889,7 @@ public class TestSuiteKeySet {
      * the second returns false.</p>
      */
     @Test
-    public void Iterator_HasNext_Begin1_True()
-    {
+    public void Iterator_HasNext_Begin1_True(){
         map1.put(1,1);
         HIterator iter = map1.keySet().iterator();
         assertEquals("Should have next.", true, iter.hasNext());
@@ -758,6 +897,14 @@ public class TestSuiteKeySet {
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 
+    /**
+     * <p><b>Summary</b>:iterator next method test case</p>
+     * <p><b>Test Case Design</b>: Tests that next method return the correct elements</p>
+     * <p><b>Test Description</b>: Simply call next method on an set contains 1 elements</p>
+     * <p><b>Pre-Condition</b>:map and set contains 1 elements</p>
+     * <p><b>Post-Condition</b>: map and set are unchanged</p>
+     * <p><b>Expected Results</b>: next return 1 and hasnext is false</p>
+     */
     @Test
     public void Iterator_Next_1(){
         map1.put(1,1);
@@ -766,6 +913,16 @@ public class TestSuiteKeySet {
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Test should throw an exception.</p>
+     * <p><b>Test Case Design</b>: Tests if for a set a remove method
+     * throws IllegalStateException on an emtpy set</p>
+     * <p><b>Test Description</b>: remove is invoked by an iterator instance on an emtpy set.</p>
+     * <p><b>Pre-Condition</b>: set is emtpy.</p>
+     * <p><b>Post-Condition</b>: set is emtpy.</p>
+     * <p><b>Expected Results</b>: HIllegalStateException thrown.</p>
+     */
     @Test (expected = IllegalStateException.class)
     public void Iterator_Remove_Empty_HISE(){
         HIterator iter = map1.keySet().iterator();
