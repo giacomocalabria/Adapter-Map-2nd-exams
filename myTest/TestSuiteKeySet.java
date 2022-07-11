@@ -146,7 +146,15 @@ public class TestSuiteKeySet {
         HSet key = map1.keySet();
         assertEquals("The set contains key 'ci' even if it is empty.", false, key.contains("ci"));
     }
-
+    /**
+     * <p><b>Summary</b>: contains method test case.</p>
+     * <p><b>Test Case Design</b>: Test the case of invoking the method before put and after put mappings on the map</p>
+     * <p><b>Test Description</b>: an values is tested to be present in the collection
+     *  before and after put the mappings in the map. </p>
+     * <p><b>Pre-Condition</b>: The map and the collection is empty. </p>
+     * <p><b>Post-Condition</b>: The map and the collection contains a mapping: "mio"="ci" </p>
+     * <p><b>Expected Results</b>: contains return false when the value is not present, true otherwhise. </p>
+     */
     @Test
     public void Contains_1(){
         HSet key = map1.keySet();
@@ -158,7 +166,7 @@ public class TestSuiteKeySet {
     /**
      * <p><b>Summary</b>: contains method test case.
      * <p><b>Test Case Design</b>: The test case checks in various situation its internal state
-     * with contains, changing through execution.</p>
+     * with contains.</p>
      * <p><b>Test Description</b>: Numbers from 50 (included) to 100 (excluded) are added, then checks if
      * elements from 25 to 125 are contained in the set in 3 different steps.
      * <ul>
@@ -166,15 +174,9 @@ public class TestSuiteKeySet {
      * <li>{50:100} contained (middle).</li>
      * <li>{100:125} not contained (ending).</li>
      * </ul>
-     * <p><b>Pre-Condition</b>: The set is empty.</p>
-     * <p><b>Post-Condition</b>: The set is not empty.</p>
-     * <p><b>Expected Results</b>: The set contains the right elements during
-     * execution. In particular:
-     * <ul>
-     * <li>{25:50} not contained (beginning).</li>
-     * <li>{50:100} contained (middle).</li>
-     * <li>{100:125} not contained (ending).</li>
-     * </ul>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the set is not empty.</p>
+     * <p><b>Expected Results</b>: The set contains the right elements during execution.
      */
     @Test
     public void Contains_50to100(){
@@ -193,6 +195,17 @@ public class TestSuiteKeySet {
         }
     }
 
+    /**
+     * <p><b>Summary</b>: contains method test case.
+     * Calling the contains method with null key in this keySet should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a contains method invoke with null key.</p>
+     * <p><b>Test Description</b>: contains method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and set is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test(expected = NullPointerException.class)
     public void Contains_Key_Null_NPException(){
         HSet key = map1.keySet();
@@ -201,6 +214,15 @@ public class TestSuiteKeySet {
 
     //****************************** EQUALS METHOD ****************************
 
+    /** 
+     * <p><b>Summary</b>: equals method test case.</p>
+     * <p><b>Test Case Design</b>: equals method is tested with an equal. The returned
+     *  values should be true.</p>
+     * <p><b>Test Description</b>: Maps is initialized, then equals invoke are asserted</p>
+     * <p><b>Pre-Condition</b>: maps contains 1=1</p>
+     * <p><b>Post-Condition</b>: Maps and sets are unchanged.</p>
+     * <p><b>Expected Results</b>: The two sets are equal</p>
+     */
     @Test
     public void Equals_1(){
         map1.put(1,1);
@@ -211,6 +233,17 @@ public class TestSuiteKeySet {
         assertTrue(key1.equals(key2));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The test case the method behaviour with 2 empty set.</p>
+     * <p><b>Test Case Design</b>: When both sets are empty the equals
+     * method should return true because an empty set is equal to an
+     * empty set.</p>
+     * <p><b>Test Description</b>: Single assert, {@code key1.equals(key2)} invoked.</p>
+     * <p><b>Pre-Condition</b>: Both maps and sets are empty.</p>
+     * <p><b>Post-Condition</b>: Both sets are empty.</p>
+     * <p><b>Expected Results</b>: equals returns true. </p>
+     */
     @Test
     public void Equals_Empty_True(){
         HSet key1 = map1.keySet();
