@@ -488,15 +488,17 @@ public class MapAdapter implements HMap{
                 throw new IllegalArgumentException();
             
             int i = 0;
+            Object[] arr = new Object[size()];
             for (Enumeration e = table.keys() ; e.hasMoreElements() ; i++){
                 Object key = e.nextElement();
 
                 MapEntryAdapter me = new MapEntryAdapter(key);
                 me.setValue(table.get(key));
-
                 arrayTarget[i] = me;
+                arr[i] = me;
             }
-            return arrayTarget;
+            return arr;
+
         }
 
         /**
@@ -940,10 +942,13 @@ public class MapAdapter implements HMap{
                 throw new IllegalArgumentException();
 
             int i = 0;
+            Object[] arr = new Object[size()];
             for (Enumeration e = table.elements() ; e.hasMoreElements() ; i++){
-                arrayTarget[i] = e.nextElement();
+                Object next = e.nextElement();
+                arrayTarget[i] = next;
+                arr[i] = next;
             }
-            return arrayTarget;
+            return arr;
         }
 
         /**
@@ -1031,14 +1036,16 @@ public class MapAdapter implements HMap{
             if(coll == null)
                 throw new NullPointerException();
 
-            HIterator i = coll.iterator();
-            boolean hasRemOne = false;
-            while(i.hasNext()){
-                Object el = i.next();
-                if(remove(el))
-                    hasRemOne = true;
+            boolean modified = false;
+            HIterator it = coll.iterator();
+            while (it.hasNext()){
+                Object element = it.next();
+                while (this.contains(element)){
+                    this.remove(element);
+                    modified = true;
+                }
             }
-            return hasRemOne;                    
+            return modified;                    
         }
     
         /**
@@ -1320,49 +1327,42 @@ public class MapAdapter implements HMap{
 
         /**
          * Returns an array containing all of the elements in this set; the
-         * runtime type of the returned array is that of the specified array. If the
-         * set fits in the specified array, it is returned therein. Otherwise, a
-         * new array is allocated with the runtime type of the specified array and the
-         * size of this set.
-         * <p>
+         * runtime type of the returned array is that of the specified array.
+         * If the set fits in the specified array, it is returned therein.
+         * Otherwise, a new array is allocated with the runtime type of the
+         * specified array and the size of this set.
          *
-         * If this set fits in the specified array with room to spare (i.e., the
-         * array has more elements than this set), the element in the array
-         * immediately following the end of the collection is set to null. This
-         * is useful in determining the length of this collection <i>only</i> if the
-         * caller knows that this collection does not contain any null
-         * elements.)
-         * <p>  
+         * <p>If this set fits in the specified array with room to spare
+         * (i.e., the array has more elements than this set), the element in
+         * the array immediately following the end of the set is set to
+         * {@code null}.  (This is useful in determining the length of this
+         * set <i>only</i> if the caller knows that this set does not contain
+         * any null elements.)
          *
-         * If this collection makes any guarantees as to what order its elements are
-         * returned by its iterator, this method must return the elements in the same
-         * order.
-         * <p>
+         * <p>If this set makes any guarantees as to what order its elements
+         * are returned by its iterator, this method must return the elements
+         * in the same order.
          *
-         * Like the toArray method, this method acts as bridge between
-         * array-based and collection-based APIs. Further, this method allows precise
-         * control over the runtime type of the output array, and may, under certain
-         * circumstances, be used to save allocation costs
-         * <p>
+         * <p>Like the {@link #toArray()} method, this method acts as bridge between
+         * array-based and collection-based APIs.  Further, this method allows
+         * precise control over the runtime type of the output array, and may,
+         * under certain circumstances, be used to save allocation costs.
          *
-         * Suppose l is a List known to contain only strings. The
-         * following code can be used to dump the list into a newly allocated array of
-         * String:
+         * <p>Suppose {@code x} is a set known to contain only strings.
+         * The following code can be used to dump the set into a newly allocated
+         * array of {@code String}:
          *
          * <pre>
-         * String[] x = (String[]) v.toArray(new String[0]);
-         * </pre>
-         * <p>
+         *     String[] y = x.toArray(new String[0]);</pre>
          *
-         * <p>Note that {@code toArray(new Object[0])} is identical in function to
+         * Note that {@code toArray(new Object[0])} is identical in function to
          * {@code toArray()}.
          *
-         * @param arrayTarget the array into which the elements of this collection are to be
-         *                      stored, if it is big enough; otherwise, a new array of the same
-         *                      runtime type is allocated for this purpose.
-         * @return an array containing all of the elements in this collection
-         *
-         * @throws NullPointerException if the specified array is null.
+         * @param a the array into which the elements of this set are to be
+         *        stored, if it is big enough; otherwise, a new array of the same
+         *        runtime type is allocated for this purpose.
+         * @return an array containing all the elements in this set
+         * @throws NullPointerException if the specified array is null
          * @throws IllegalArgumentException if the specified array's lenght
          *          is less then this set lenght
          */
@@ -1374,10 +1374,13 @@ public class MapAdapter implements HMap{
                 throw new IllegalArgumentException();
                 
             int i = 0;
-            for (Enumeration e = table.keys() ; e.hasMoreElements() ; i++){
-                arrayTarget[i] = e.nextElement();
+            Object[] arr = new Object[size()];
+            for (Enumeration e = table.keys(); e.hasMoreElements(); i++){
+                Object next = e.nextElement();
+                arrayTarget[i] = next;
+                arr[i] = next;
             }
-            return arrayTarget;
+            return arr;
         }
 
         /**
@@ -1436,7 +1439,7 @@ public class MapAdapter implements HMap{
             HIterator i = coll.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
-                if(!table.contains(tmp))
+                if(!this.contains(tmp))
                     return false;
             }
             return true;
@@ -1460,14 +1463,14 @@ public class MapAdapter implements HMap{
             if(coll == null)
                 throw new NullPointerException();
 
-            HIterator i = coll.iterator();
-            boolean hasRemOne = false;
-            while(i.hasNext()){
-                Object el = i.next();
-                if(remove(el))
-                    hasRemOne = true;
+            boolean modified = false;
+            HIterator iter = coll.iterator();
+            while (iter.hasNext()){
+                Object el = iter.next();
+                if (this.remove(el))
+                    modified = true;
             }
-            return hasRemOne;
+            return modified;
         }
 
         /**
