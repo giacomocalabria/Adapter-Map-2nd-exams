@@ -98,8 +98,7 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 0 size (empty).</p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map
-     * and on the entrySet set.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the entrySet set.</p>
      * <p><b>Pre-Condition</b>: The map and the entrySet set is empty.</p>
      * <p><b>Post-Condition</b>: The map and the entrySet set is still empty.</p>
      * <p><b>Expected Results</b>: The size method returns 0 and the isEmpty method returns true.</p>
@@ -107,7 +106,7 @@ public class TestSuiteEntrySet {
     @Test
     public void Size_Empty(){
         HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 0, entry.size());
+        assertEquals("Empty set does not have size of one.", 0, entry.size());
         assertEquals("isEmpty did not returned false.", true, entry.isEmpty());
     }
 
@@ -120,7 +119,7 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 1 size and not being empty.</p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map and on the entrySet.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the entrySet.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and set contains entry 1=159 .</p>
      * <p><b>Expected Results</b>: The size method returns 1 and the isEmpty method returns false.</p>
@@ -129,7 +128,7 @@ public class TestSuiteEntrySet {
     public void Size_1Element(){
         map1.put(1, 159);
         HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 1, entry.size());
+        assertEquals("Empty set does not have size of one.", 1, entry.size());
         assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
     }
 
@@ -152,7 +151,7 @@ public class TestSuiteEntrySet {
             map1.put(i, (i+15)*(i+2));
         }
         HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 5, entry.size());
+        assertEquals("Empty set does not have size of one.", 5, entry.size());
         assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
     }
 
@@ -164,7 +163,7 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 160 size and not being empty. </p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the setn.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the set.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and the set contains five mappings.</p>
      * <p><b>Expected Results</b>: The size method returns 160 and the isEmpty method returns false.</p>
@@ -175,7 +174,7 @@ public class TestSuiteEntrySet {
             map1.put(i, (i+15)*(i+2));
         }
         HSet entry = map1.entrySet();
-        assertEquals("Empty map does not have size of one.", 160, entry.size());
+        assertEquals("Empty set does not have size of one.", 160, entry.size());
         assertEquals("isEmpty did not returned false.", false, entry.isEmpty());
     }
 
@@ -191,11 +190,11 @@ public class TestSuiteEntrySet {
      * <p><b>Expected Results</b>: contains returns false.</p>
      */
     @Test
-    public void Contains_EmptyColl(){
+    public void Contains_Empty(){
         HSet entry = map1.entrySet();
         HMap.HEntry em = new MapEntryAdapter(156);
         em.setValue(11);
-        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
+        assertEquals("The set contains Entry 156=11 even if it is empty.", false, entry.contains(em));
     }
 
     /**
@@ -213,10 +212,10 @@ public class TestSuiteEntrySet {
         em.setValue(15);
 
         HSet entry = map1.entrySet();
-        assertEquals("The map contains entry em even if it is empty.", false, entry.contains(em));
+        assertEquals("The set contains entry 15=15 even if it is empty.", false, entry.contains(em));
         
         map1.put(15,15);
-        assertEquals("The map contains entry em even if it is empty.", true, entry.contains(em));
+        assertEquals("The set does not contains entry 15=15 even if it should.", true, entry.contains(em));
     }
 
     /**
@@ -242,17 +241,17 @@ public class TestSuiteEntrySet {
         for (int i = 25; i < 50; i++){
             HMap.HEntry em = new MapEntryAdapter(i);
             em.setValue(i);
-            assertEquals("The list should NOT include " + i, false, entry.contains(em));
+            assertFalse("The set should NOT include " + i+"="+i, entry.contains(em));
         }
         for (int i = 50; i < 100; i++){
             HMap.HEntry em = new MapEntryAdapter(i);
             em.setValue(i);
-            assertEquals("The list should include " + i, true, entry.contains(em));
+            assertTrue("The set should include " + i+"="+i, entry.contains(em));
         }
         for (int i = 100; i < 125; i++){
             HMap.HEntry em = new MapEntryAdapter(i);
             em.setValue(i); 
-            assertEquals("The list should NOT include " + i, false, entry.contains(em));
+            assertFalse("The set should NOT include " + i+"="+i, entry.contains(em));
         }
     }
 
@@ -300,7 +299,7 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: When both sets are empty the equals
      * method should return true because an empty set is equal to an
      * empty set.</p>
-     * <p><b>Test Description</b>: Single assert, {@code key1.equals(key2)} invoked.</p>
+     * <p><b>Test Description</b>: Single assert, {@code entry1.equals(entry2)} invoked.</p>
      * <p><b>Pre-Condition</b>: Both maps and sets are empty.</p>
      * <p><b>Post-Condition</b>: Both sets are empty.</p>
      * <p><b>Expected Results</b>: equals returns true. </p>
@@ -318,7 +317,7 @@ public class TestSuiteEntrySet {
      * The reflective property of equal method is tested.</p>
      * <p><b>Test Case Design</b>: equals method should be reflective,
      * therefore x.equals(x) should always return true. </p>
-     * <p><b>Test Description</b>: The test invokes {@code key1.equals(key1)} when
+     * <p><b>Test Description</b>: The test invokes {@code entry1.equals(entry1)} when
      * key is empty, when it has 10 elements and when it has 1000 elements.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and the set has 1000 elements. </p>
@@ -347,8 +346,8 @@ public class TestSuiteEntrySet {
      * <p><b>Summary</b>: equals method test case.
      * The transitive property of equal method is tested.</p>
      * <p><b>Test Case Design</b>: equals method should be transitive</p>
-     * <p><b>Test Description</b>: The test invokes key1.equals(key2) and key2.equals(key3)
-     * and key1.equals(key3)</p>
+     * <p><b>Test Description</b>: The test invokes entry1.equals(entry2) and entry2.equals(key3)
+     * and entry1.equals(key3)</p>
      * <p><b>Pre-Condition</b>: The tree maps contains the 30 same mappings</p>
      * <p><b>Post-Condition</b>: The maps and set is unchanged</p>
      * <p><b>Expected Results</b>: Equals has transitive property.</p>
@@ -386,7 +385,7 @@ public class TestSuiteEntrySet {
     public void Clear_Empty(){
         HSet entry = map1.entrySet();
         entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
+        assertEquals("set should be empty.", true, entry.isEmpty());
     }
 
     /**
@@ -402,7 +401,7 @@ public class TestSuiteEntrySet {
         map1.put(1,1);
         HSet entry = map1.entrySet();
         entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
+        assertEquals("Set should be empty.", true, entry.isEmpty());
     }
 
     /**
@@ -420,7 +419,7 @@ public class TestSuiteEntrySet {
         }
         HSet entry = map1.entrySet();
         entry.clear();
-        assertEquals("List should be empty.", true, entry.isEmpty());
+        assertEquals("Set should be empty.", true, entry.isEmpty());
     }
 
     // ******************* HASHCODE METHOD ************************************
@@ -473,8 +472,8 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: The methoud throws
      * UnsupportedOperationException.</p>
      * <p><b>Test Description</b>: add is invoked.</p>
-     * <p><b>Pre-Condition</b>: key1 is empty.</p>
-     * <p><b>Post-Condition</b>: key1 is empty.</p>
+     * <p><b>Pre-Condition</b>: entry1 is empty.</p>
+     * <p><b>Post-Condition</b>: entry1 is empty.</p>
      * <p><b>Expected Results</b>: The add method is not supported.
      * UnsupportedOperationException is thrown.</p>
      */
@@ -489,8 +488,8 @@ public class TestSuiteEntrySet {
      * <p><b>Test Case Design</b>: The methoud throws
      * UnsupportedOperationException.</p>
      * <p><b>Test Description</b>: addAll is invoked.</p>
-     * <p><b>Pre-Condition</b>: key1 is empty.</p>
-     * <p><b>Post-Condition</b>: key1 is empty.</p>
+     * <p><b>Pre-Condition</b>: entry1 is empty.</p>
+     * <p><b>Post-Condition</b>: entry1 is empty.</p>
      * <p><b>Expected Results</b>: The addAll method is not supported.
      * UnsupportedOperationException is thrown.</p>
      */
@@ -641,8 +640,8 @@ public class TestSuiteEntrySet {
      */
     @Test (expected = NullPointerException.class)
     public void RemoveAll_EmptyNull_NPException(){
-        HSet key1 = map1.entrySet();
-        key1.removeAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.removeAll(null);
     }
 
     /**
@@ -661,8 +660,8 @@ public class TestSuiteEntrySet {
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        key1.removeAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.removeAll(null);
     }
 
     /**
@@ -673,21 +672,21 @@ public class TestSuiteEntrySet {
      * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
      * the entrySet Set and then calls removeAll with an empty Set. 
      * Therefore the maps should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements.</p>
-     * <p><b>Post-Condition</b>: The maps and key1 are unchaged.</p>
+     * <p><b>Pre-Condition</b>: The maps and entry1 contains 45 elements.</p>
+     * <p><b>Post-Condition</b>: The maps and entry1 are unchaged.</p>
      * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
-     * returns false, key1 is unchanged.</p>
+     * returns false, entry1 is unchanged.</p>
      */
     @Test
-    public void RemoveAll_EmptykeyArg(){
+    public void RemoveAll_EmptyArg(){
         for(int i = 0; i < 45; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet keyE = map2.entrySet();
-        assertTrue(keyE.isEmpty());
-        assertFalse(key1.isEmpty());
-        assertFalse("removeAll did not remove anything, therefore it should return false.", key1.removeAll(keyE));
+        HSet entry1 = map1.entrySet();
+        HSet entryE = map2.entrySet();
+        assertTrue(entryE.isEmpty());
+        assertFalse(entry1.isEmpty());
+        assertFalse("removeAll did not remove anything, therefore it should return false.", entry1.removeAll(entryE));
         assertFalse(map1.isEmpty());
     }
 
@@ -699,37 +698,37 @@ public class TestSuiteEntrySet {
      * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
      * the entrySet Set and then calls removeAll on an empty Set. 
      * Therefore the maps should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements. keyE is empty</p>
-     * <p><b>Post-Condition</b>: The maps and key1 are unchaged. keyE is empty</p>
+     * <p><b>Pre-Condition</b>: The maps and entry1 contains 45 elements. entryE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and entry1 are unchaged. entryE is empty</p>
      * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
-     * returns false, key1 is unchanged. keyE is still empty</p>
+     * returns false, entry1 is unchanged. entryE is still empty</p>
      */
     @Test
-    public void RemoveAll_Emptykey(){
+    public void RemoveAll_Empty(){
         for(int i = 0; i < 45; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet keyE = map2.entrySet();
-        assertTrue(keyE.isEmpty());
-        assertFalse(key1.isEmpty());
+        HSet entry1 = map1.entrySet();
+        HSet entryE = map2.entrySet();
+        assertTrue(entryE.isEmpty());
+        assertFalse(entry1.isEmpty());
         assertFalse(map1.isEmpty());
-        assertFalse("removeAll did not remove anything, therefore it should return false.", keyE.removeAll(key1));
+        assertFalse("removeAll did not remove anything, therefore it should return false.", entryE.removeAll(entry1));
         assertFalse(map1.isEmpty());
     }
 
     /**
      * <p><b>Summary</b>: removeAll method test case.</p>
-     * <p><b>Test Case Design</b>: removeAll method called between two Sets. key2 includes
-     * all elements of the key1</p>
+     * <p><b>Test Case Design</b>: removeAll method called between two Sets. entry2 includes
+     * all elements of the entry1</p>
      * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
      * the map2 wich are all in common with map1 then generates
-     * the values Set and then calls removeAll with key2 as argument. 
+     * the values Set and then calls removeAll with entry2 as argument. 
      * Therefore the map1 should be changed and map2 should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements. key2 contains 10 elements</p>
-     * <p><b>Post-Condition</b>: The map1 and key1 are unchaged. key2 is unchanged</p>
-     * <p><b>Expected Results</b>: The map1 and key1 are changed, therefore removeAll
-     * returns true, key2 is unchanged. </p>
+     * <p><b>Pre-Condition</b>: The map1 and entry1 contains 100 elements. entry2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and entry1 are unchaged. entry2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and entry1 are changed, therefore removeAll
+     * returns true, entry2 is unchanged. </p>
      */
 
     @Test
@@ -740,13 +739,13 @@ public class TestSuiteEntrySet {
         for(int i = 10; i < 20; i++){
             map2.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet key2 = map2.entrySet();
-        assertEquals(10, key2.size());
-        assertEquals(100, key1.size());
-        assertTrue(key1.removeAll(key2));
-        assertEquals(10, key2.size());
-        assertEquals(90, key1.size());
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map2.entrySet();
+        assertEquals(10, entry2.size());
+        assertEquals(100, entry1.size());
+        assertTrue(entry1.removeAll(entry2));
+        assertEquals(10, entry2.size());
+        assertEquals(90, entry1.size());
     }
 
     //************************* RETAINALL METHOD *******************************
@@ -764,8 +763,8 @@ public class TestSuiteEntrySet {
      */
     @Test (expected = NullPointerException.class)
     public void RetainAll_EmptyNull_NPException(){
-        HSet key1 = map1.entrySet();
-        key1.retainAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.retainAll(null);
     }
 
     /**
@@ -784,8 +783,8 @@ public class TestSuiteEntrySet {
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        key1.retainAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.retainAll(null);
     }
 
     /**
@@ -796,23 +795,23 @@ public class TestSuiteEntrySet {
      * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
      * the entrySet Set and then calls retainAll with an empty Set. 
      * Therefore the maps should be changed.</p>
-     * <p><b>Pre-Condition</b>: The map and key1 contains 45 elements. keyE is empty</p>
-     * <p><b>Post-Condition</b>: The map and key1 are chaged. keyE is still empty</p>
-     * <p><b>Expected Results</b>: The map and key1 changed, therefore retainAll
-     * returns true, key1 is changed.</p>
+     * <p><b>Pre-Condition</b>: The map and entry1 contains 45 elements. entryE is empty</p>
+     * <p><b>Post-Condition</b>: The map and entry1 are chaged. entryE is still empty</p>
+     * <p><b>Expected Results</b>: The map and entry1 changed, therefore retainAll
+     * returns true, entry1 is changed.</p>
      */
     @Test
     public void RetainAll_EmptySetArg(){
         for(int i = 0; i < 45; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet keyE = map2.entrySet();
-        assertTrue(keyE.isEmpty());
-        assertFalse(key1.isEmpty());
-        assertTrue("retainAll did not retain anything, therefore it should return false.", key1.retainAll(keyE));
+        HSet entry1 = map1.entrySet();
+        HSet entryE = map2.entrySet();
+        assertTrue(entryE.isEmpty());
+        assertFalse(entry1.isEmpty());
+        assertTrue("retainAll did not retain anything, therefore it should return false.", entry1.retainAll(entryE));
         assertTrue(map1.isEmpty());
-        assertTrue(key1.isEmpty());
+        assertTrue(entry1.isEmpty());
     }
 
     /**
@@ -823,40 +822,40 @@ public class TestSuiteEntrySet {
      * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
      * the entrySet Set and then calls retainAll on an empty Set. 
      * Therefore the maps should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements. keyE is empty</p>
-     * <p><b>Post-Condition</b>: The maps and key1 are unchaged. keyE is still empty</p>
+     * <p><b>Pre-Condition</b>: The maps and entry1 contains 45 elements. entryE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and entry1 are unchaged. entryE is still empty</p>
      * <p><b>Expected Results</b>: The maps are unchanged, therefore retainAll
-     * returns false, key1 is unchanged.</p>
+     * returns false, entry1 is unchanged.</p>
      */
     @Test
     public void RetainAll_Emptykey(){
         for(int i = 0; i < 45; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet keyE = map2.entrySet();
-        assertTrue(keyE.isEmpty());
-        assertFalse(key1.isEmpty());
+        HSet entry1 = map1.entrySet();
+        HSet entryE = map2.entrySet();
+        assertTrue(entryE.isEmpty());
+        assertFalse(entry1.isEmpty());
         assertFalse(map1.isEmpty());
-        assertFalse("retainAll did not retain anything, therefore it should return false.", keyE.retainAll(key1));
-        assertTrue(keyE.isEmpty());
-        assertFalse(key1.isEmpty());
+        assertFalse("retainAll did not retain anything, therefore it should return false.", entryE.retainAll(entry1));
+        assertTrue(entryE.isEmpty());
+        assertFalse(entry1.isEmpty());
         assertFalse(map1.isEmpty());
     }
 
     /**
      * <p><b>Summary</b>: retainAll method test case.</p>
-     * <p><b>Test Case Design</b>: retainAll method called between two Sets. key2 includes
-     * all elements of the key1</p>
+     * <p><b>Test Case Design</b>: retainAll method called between two Sets. entry2 includes
+     * all elements of the entry1</p>
      * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
      * the map2 wich are all in common with map1 then generates
-     * the entrySet Set and then calls retainAll with key2 as argument. 
+     * the entrySet Set and then calls retainAll with entry2 as argument. 
      * Therefore the map1 should be changed and map2 should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
-     * map2 and key2 contains 10 elements</p>
-     * <p><b>Post-Condition</b>: The map1 and key1 are chaged. map2 and key2 is unchanged</p>
-     * <p><b>Expected Results</b>: The map1 and key1 are changed, therefore retainAll
-     * returns true, key2 and map2 is unchanged. </p>
+     * <p><b>Pre-Condition</b>: The map1 and entry1 contains 100 elements.
+     * map2 and entry2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and entry1 are chaged. map2 and entry2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and entry1 are changed, therefore retainAll
+     * returns true, entry2 and map2 is unchanged. </p>
      */
     @Test
     public void RetainAll_10to20Retain100(){
@@ -866,18 +865,18 @@ public class TestSuiteEntrySet {
         for(int i = 10; i < 20; i++){
             map2.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet key2 = map2.entrySet();
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map2.entrySet();
         
-        assertEquals(10, key2.size());
-        assertEquals(100, key1.size());
-        assertEquals(100,map1.size());
-        assertEquals(10,map2.size());
+        assertEquals(10, entry2.size());
+        assertEquals(100, entry1.size());
+        assertEquals(100, map1.size());
+        assertEquals(10, map2.size());
         
-        assertTrue(key1.retainAll(key2));
+        assertTrue(entry1.retainAll(entry2));
         
-        assertEquals(10, key2.size());
-        assertEquals(10, key1.size());
+        assertEquals(10, entry2.size());
+        assertEquals(10, entry1.size());
         assertEquals(10,map1.size());
         assertEquals(10,map2.size());
     }
@@ -897,8 +896,8 @@ public class TestSuiteEntrySet {
      */
     @Test (expected = NullPointerException.class)
     public void ContainsAll_EmptyNull_NPException(){
-        HSet key1 = map1.entrySet();
-        key1.containsAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.containsAll(null);
     }
 
     /**
@@ -917,8 +916,8 @@ public class TestSuiteEntrySet {
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        key1.containsAll(null);
+        HSet entry1 = map1.entrySet();
+        entry1.containsAll(null);
     }
 
     /**
@@ -927,22 +926,22 @@ public class TestSuiteEntrySet {
      * of another Set, which is obviusly false.</p>
      * <p><b>Test Case Design</b>: The test case tests the limit case of
      * checking an empty Set containing something.</p>
-     * <p><b>Test Description</b>: The key2 contains 45 elements.
+     * <p><b>Test Description</b>: The entry2 contains 45 elements.
      * The containsAll method obviously should return false for
      * any key's content as the Set is empty.</p>
-     * <p><b>Pre-Condition</b>: The key1 is empty. The key2 contains 45 elements</p>
-     * <p><b>Post-Condition</b>: The keye1 is still empty. The key2 is unchanged</p>
+     * <p><b>Pre-Condition</b>: The entry1 is empty. The entry2 contains 45 elements</p>
+     * <p><b>Post-Condition</b>: The entryE1 is still empty. The entry2 is unchanged</p>
      * <p><b>Expected Results</b>: The containsAll method return false.</p>
      */
     @Test
     public void ContainsAll_Empty_False(){
-        HSet key1 = map1.entrySet();
+        HSet entry1 = map1.entrySet();
         for(int i = 0; i < 45; i++){
             map2.put(i*i*i,(i+654)*i);
         }
-        HSet key2 = map2.entrySet();
+        HSet entry2 = map2.entrySet();
 
-        assertEquals("The method should return false because the Set is empty.", false, key1.containsAll(key2)); 
+        assertEquals("The method should return false because the Set is empty.", false, entry1.containsAll(entry2)); 
     }
 
    /**
@@ -963,24 +962,24 @@ public class TestSuiteEntrySet {
      */
     @Test
     public void ContainsAll_BothEmpty_False(){
-        HSet key1 = map1.entrySet();
-        HSet key2 = map2.entrySet();
-        assertTrue("The method should return true because the Set is empty.", key1.containsAll(key2)); 
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map2.entrySet();
+        assertTrue("The method should return true because the Set is empty.", entry1.containsAll(entry2)); 
     }
 
     /**
      * <p><b>Summary</b>: containsAll method test case.</p>
-     * <p><b>Test Case Design</b>: containsAll method called between two Sets. key2 includes
-     * all elements of the key1</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two Sets. entry2 includes
+     * all elements of the entry1</p>
      * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
      * the map2 wich are all in common with map1 then generates
-     * the entrySet Set and then calls containsAll with key2 as argument. 
-     * Therefore the maps and key should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
-     * map2 and key2 contains 10 elements</p>
-     * <p><b>Post-Condition</b>: the maps and key should be unchanged.</p>
-     * <p><b>Expected Results</b>: the maps and key should be unchanged. containsAll should return
-     * true as key1 contains key2 elements. </p>
+     * the entrySet Set and then calls containsAll with entry2 as argument. 
+     * Therefore the maps and entrySet should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and entry1 contains 100 elements.
+     * map2 and entry2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: the maps and entrySet should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and entrySet should be unchanged. containsAll should return
+     * true as entry1 contains entry2 elements. </p>
      */
     @Test
     public void ContainsAll_10to20contains100(){
@@ -998,17 +997,17 @@ public class TestSuiteEntrySet {
 
     /**
      * <p><b>Summary</b>: containsAll method test case.</p>
-     * <p><b>Test Case Design</b>: containsAll method called between two Sets. key2 includes
-     * elements different from the elements of the key1</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two Sets. entry2 includes
+     * elements different from the elements of the entry1</p>
      * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
      * the map2 wich are not in common with map1 then generates
-     * the entrySet Set and then calls containsAll with key2 as argument. 
-     * Therefore the maps and key should be unchanged.</p>
-     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
-     * map2 and key2 contains 10 elements not present in key1</p>
-     * <p><b>Post-Condition</b>: the maps and key should be unchanged.</p>
-     * <p><b>Expected Results</b>: the maps and key should be unchanged. containsAll should return
-     * false as key1 not contains key2 elements. </p>
+     * the entrySet Set and then calls containsAll with entry2 as argument. 
+     * Therefore the maps and entrySet should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and entry1 contains 100 elements.
+     * map2 and entry2 contains 10 elements not present in entry1</p>
+     * <p><b>Post-Condition</b>: the maps and entrySet should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and entrySet should be unchanged. containsAll should return
+     * false as entry1 not contains entry2 elements. </p>
      */
     @Test
     public void ContainsAll_10Notcontains100(){
@@ -1018,10 +1017,10 @@ public class TestSuiteEntrySet {
         for(int i = 290; i < 300; i++){
             map2.put(i*i*i,(i+654)*i);
         }
-        HSet key1 = map1.entrySet();
-        HSet key2 = map2.entrySet();
+        HSet entry1 = map1.entrySet();
+        HSet entry2 = map2.entrySet();
         
-        assertFalse(key1.containsAll(key2));
+        assertFalse(entry1.containsAll(entry2));
     }
 
     //************************* TOARRAY METHOD *********************************
@@ -1046,7 +1045,7 @@ public class TestSuiteEntrySet {
     public void ToArray_Empty_EmptyArray(){
         HSet entry1 = map2.entrySet();
         Object[] arr2 = entry1.toArray();
-        assertEquals("Empty list did not return empty array.", arr2.length, 0);
+        assertEquals("Empty Set did not return empty array.", arr2.length, 0);
     }
 
     /**
@@ -1058,7 +1057,7 @@ public class TestSuiteEntrySet {
      * is called.</p>
      * <p><b>Pre-Condition</b>: The set and map is empty.</p>
      * <p><b>Post-Condition</b>: The set and map contains 1 element.</p>
-     * <p><b>Expected Results</b>: key1.toArray() returns [1].</p>
+     * <p><b>Expected Results</b>: entry1.toArray() returns [1].</p>
      */
     @Test
     public void ToArray_1_True(){
@@ -1085,18 +1084,13 @@ public class TestSuiteEntrySet {
      */
     @Test
     public void ToArray_ArrayDest_1(){
-        Object[] arr = new Object[1];
-        map1.put(145,1654);
-        HSet key1 = map1.entrySet();
-        key1.toArray(arr);
-        assertEquals("The array size should be 1.", 1, arr.length);
-        assertEquals("The element should be 145.", 145, arr[0]);
-        
         Object[] arr1 = new Object[1];
+        map1.put(145,1654);
         HSet entry1 = map1.entrySet();
         entry1.toArray(arr1);
-        HMap.HEntry em = new MapEntryAdapter(145);
-        em.setValue(1654);
+
+        HMap.HEntry em = new MapEntryAdapter(145,1654);
+    
         assertEquals("The array size should be 1.", 1, arr1.length);
         assertEquals("The element should be 1654.", em, arr1[0]);
     }
@@ -1111,10 +1105,11 @@ public class TestSuiteEntrySet {
      * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
      */
     @Test (expected = NullPointerException.class)
-    public void ToArray_DestNullKey_NPException(){
-        HSet key1 = map1.entrySet();
-        key1.toArray(null);
+    public void ToArray_DestNull_NPException(){
+        HSet entry1 = map1.entrySet();
+        entry1.toArray(null);
     }
+
 
     /**
      * <p><b>Summary</b>: toArray(HSet) method test case.
@@ -1128,32 +1123,14 @@ public class TestSuiteEntrySet {
      * <p><b>Post-Condition</b>: The set has 2 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
-    @Test (expected = NullPointerException.class)
-    public void ToArray_DestNullEntry_NPException(){
-        HSet entry1 = map1.entrySet();
-        entry1.toArray(null);
-    }
-
-    /**
-     * <p><b>Summary</b>: toArray(HSet) method test case.
-     * The test adds element from 0 (included) to 10 (excluded) to the list and checks the array.</p>
-     * <p><b>Test Case Design</b>: The test checks the method behaviour when the
-     * argument size is not enough for containing the list's elements, which a
-     * special case.</p>
-     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the list. arr contains the result
-     * of toArray method, but exception is being thrown.</p>
-     * <p><b>Pre-Condition</b>: The list is empty, arr is empty.</p>
-     * <p><b>Post-Condition</b>: The list has 10 elements, arr is still empty.</p>
-     * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
-     */
 
     @Test (expected = IllegalArgumentException.class)
     public void ToArray_DestSmaller(){
         map1.put(1,1);
         map1.put(2,3);
         Object[] arr = new Object[1];
-        HSet key1 = map1.entrySet();
-        key1.toArray(arr);
+        HSet entry1 = map1.entrySet();
+        entry1.toArray(arr);
     }
 
     //*************************** TOSTRING METHOD *****************************
@@ -1177,17 +1154,17 @@ public class TestSuiteEntrySet {
     /**
      * <p><b>Summary</b>: toString method test case.</p>
      * <p><b>Test Case Design</b>: Tests toString method on a
-	 * map containing Ciaoooo=1 so that key set contains Ciaoooo</p>
+	 * map containing 1=1 so that entry set contains 1=1</p>
      * <p><b>Test Description</b>: toString is invoked on the set.</p>
-     * <p><b>Pre-Condition</b>: map1 contains Ciaoooo=1.</p>
-     * <p><b>Post-Condition</b>: map1 contains Ciaoooo=1.</p>
-     * <p><b>Expected Results</b>: key.toString [Ciaoooo] </p>
+     * <p><b>Pre-Condition</b>: map1 contains 1=1.</p>
+     * <p><b>Post-Condition</b>: map1 contains 1=1.</p>
+     * <p><b>Expected Results</b>: key.toString [1=1] </p>
      */
 	@Test
 	public void ToString_OneElement(){
-		map1.put("Ciaoooo", 1);
+		map1.put(1, 1);
         HSet key = map1.entrySet();
-		assertEquals("[Ciaoooo]", key.toString());
+		assertEquals("[1=1]", key.toString());
 	}
 
     // ************************** BACKED FEATURE *************************
@@ -1289,18 +1266,24 @@ public class TestSuiteEntrySet {
      */
     @Test
     public void Backed_PutRemove(){
-        HSet key1 = map1.entrySet();
-        assertFalse(key1.contains(156));
+        HSet entry1 = map1.entrySet();
+        assertFalse(entry1.contains(new MapEntryAdapter(15, 156)));
+        
         map1.put(15,156);
-        assertTrue(key1.contains(15));
+        assertTrue(entry1.contains(new MapEntryAdapter(15, 156)));
+        
         map1.remove(15);
-        assertFalse(key1.contains(15));
+        assertFalse(entry1.contains(new MapEntryAdapter(15, 156)));
+        
         map1.put(17,44);
         assertTrue(map1.containsKey(17));
-        assertTrue(key1.contains(17));
-        key1.remove(17);
-        assertFalse(map1.containsValue(17));
-        assertFalse(key1.contains(17));
+        assertTrue(map1.containsValue(44));
+        assertTrue(entry1.contains(new MapEntryAdapter(17, 44)));
+        
+        entry1.remove(new MapEntryAdapter(17, 44));
+        assertFalse(map1.containsKey(17));
+        assertFalse(map1.containsValue(44));
+        assertFalse(entry1.contains(new MapEntryAdapter(17, 44)));
     }
 
     /**
@@ -1347,45 +1330,49 @@ public class TestSuiteEntrySet {
      * and viceversa.</p>
      * <p><b>Test Case Design</b>:Tests removeAll method with
      * entrySet HSet. Correct propagation is tested in both ways.</p>
-     * <p><b>Test Description</b>: map1 contains 50 mappings, and key1 as consequence contains
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and entry1 as consequence contains
      * 50 elements. map2 contains only 5 mappings in 20-25 range. 
-     * After call removeAll all the elements in common between key1 and key2 will be removed.</p>
-     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, key1 contains 50 values,
-     * map2 contains 5 mappings and key2 contains 5 values</p>
-     * <p><b>Post-Condition</b>: map2 and key2 are unchanged. map1 and key1 contains less elements.</p>
+     * After call removeAll all the elements in common between entry1 and entry2 will be removed.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, entry1 contains 50 values,
+     * map2 contains 5 mappings and entry2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and entry2 are unchanged. map1 and entry1 contains less elements.</p>
      * <p><b>Expected Results</b>: the removeAll method correctly propagate the changes. Also removeAll
-     * method remove the elements in common between key1 and key2</p>
+     * method remove the elements in common between entry1 and entry2</p>
      */
     @Test
     public void Backed_removeAll(){
         for(int i = 0; i < 50; i++)
-            map1.put(i*i,i);
-        HSet key1 = map1.entrySet();
+            map1.put(i,i);
+        HSet entry1 = map1.entrySet();
 
         for(int i = 0; i < 50; i++){
-            assertTrue(map1.containsKey(i*i));
-            assertTrue(key1.contains(i*i));
+            assertTrue(map1.containsKey(i));
+            assertTrue(map1.containsValue(i));
+            assertTrue(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 20; i < 25; i++)
-            map2.put(i*i,i);
-        HSet key2 = map2.entrySet();
+            map2.put(i,i);
+        HSet entry2 = map2.entrySet();
 
-        key1.removeAll(key2);
+        entry1.removeAll(entry2);
 
         for(int i = 0; i < 20; i++){
-            assertTrue(map1.containsKey(i*i));
-            assertTrue(key1.contains(i*i));
+            assertTrue(map1.containsKey(i));
+            assertTrue(map1.containsValue(i));
+            assertTrue(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 20; i < 25; i++){
-            assertFalse(map1.containsKey(i*i));
-            assertFalse(key1.contains(i*i));
+            assertFalse(map1.containsKey(i));
+            assertFalse(map1.containsValue(i));
+            assertFalse(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 25; i < 50; i++){
-            assertTrue(map1.containsKey(i*i));
-            assertTrue(key1.contains(i*i));
+            assertTrue(map1.containsKey(i));
+            assertTrue(map1.containsValue(i));
+            assertTrue(entry1.contains(new MapEntryAdapter(i,i)));
         }
     }
 
@@ -1394,45 +1381,49 @@ public class TestSuiteEntrySet {
      * and viceversa.</p>
      * <p><b>Test Case Design</b>:Tests retainAll method with
      * entrySet HSet. Correct propagation is tested in both ways.</p>
-     * <p><b>Test Description</b>: map1 contains 50 mappings, and key1 as consequence contains
+     * <p><b>Test Description</b>: map1 contains 50 mappings, and entry1 as consequence contains
      * 50 elements. map2 contains only 5 mappings in 20-25 range. 
-     * After call retainAll all the elements in common between key1 and key2 will retain.</p>
-     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, key1 contains 50 values,
-     * map2 contains 5 mappings and key2 contains 5 values</p>
-     * <p><b>Post-Condition</b>: map2 and key2 are unchanged. map1 and key1 contains less elements.</p>
+     * After call retainAll all the elements in common between entry1 and entry2 will retain.</p>
+     * <p><b>Pre-Condition</b>:map1 contains 50 mappings, entry1 contains 50 values,
+     * map2 contains 5 mappings and entry2 contains 5 values</p>
+     * <p><b>Post-Condition</b>: map2 and entry2 are unchanged. map1 and entry1 contains less elements.</p>
      * <p><b>Expected Results</b>: the retainAll method correctly propagate the changes. Also retainAll
-     * method retain the elements in common between key1 and key2</p>
+     * method retain the elements in common between entry1 and entry2</p>
      */
     @Test
     public void Backed_retainAll(){
         for(int i = 0; i < 50; i++)
-            map1.put(i*i,i);
-        HSet key1 = map1.entrySet();
+            map1.put(i,i);
+        HSet entry1 = map1.entrySet();
 
         for(int i = 0; i < 50; i++){
-            assertTrue(map1.containsKey(i*i));
-            assertTrue(key1.contains(i*i));
+            assertTrue(map1.containsKey(i));
+            assertTrue(map1.containsValue(i));
+            assertTrue(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 20; i < 25; i++)
-            map2.put(i*i,i);
-        HSet key2 = map2.entrySet();
+            map2.put(i,i);
+        HSet entry2 = map2.entrySet();
 
-        key1.retainAll(key2);
+        entry1.retainAll(entry2);
 
         for(int i = 0; i < 20; i++){
-            assertFalse(map1.containsKey(i*i));
-            assertFalse(key1.contains(i*i));
+            assertFalse(map1.containsKey(i));
+            assertFalse(map1.containsValue(i));
+            assertFalse(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 20; i < 25; i++){
-            assertTrue(map1.containsKey(i*i));
-            assertTrue(key1.contains(i*i));
+            assertTrue(map1.containsKey(i));
+            assertTrue(map1.containsValue(i));
+            assertTrue(entry1.contains(new MapEntryAdapter(i,i)));
         }
 
         for(int i = 25; i < 50; i++){
-            assertFalse(map1.containsKey(i*i));
-            assertFalse(key1.contains(i*i));
+            assertFalse(map1.containsKey(i));
+            assertFalse(map1.containsValue(i));
+            assertFalse(entry1.contains(new MapEntryAdapter(i,i)));
         }
     }
 
@@ -1494,7 +1485,7 @@ public class TestSuiteEntrySet {
     public void Iterator_Next_1(){
         map1.put(1,1);
         HIterator iter = map1.entrySet().iterator();
-        assertEquals("Should have 1 as next.", 1, iter.next());
+        assertEquals("Should have 1 as next.", new MapEntryAdapter(1,1), iter.next());
         assertEquals("Should not have next.", false, iter.hasNext());
     }
 

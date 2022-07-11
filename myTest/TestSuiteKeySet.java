@@ -97,8 +97,7 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 0 size (empty).</p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map
-     * and on the keySet set.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the keySet set.</p>
      * <p><b>Pre-Condition</b>: The map and the keySet set is empty.</p>
      * <p><b>Post-Condition</b>: The map and the keySet set is still empty.</p>
      * <p><b>Expected Results</b>: The size method returns 0 and the isEmpty method returns true.</p>
@@ -119,14 +118,13 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 1 size and not being empty.</p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map and on the keySet.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the keySet.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and set contains entry 1=159 .</p>
      * <p><b>Expected Results</b>: The size method returns 1 and the isEmpty method returns false.</p>
      */
     @Test
     public void Size_1Element(){
-
         map1.put(1, 159);
         HSet key = map1.keySet();
         assertEquals("Empty set does not have size of one.", 1, key.size());
@@ -148,7 +146,6 @@ public class TestSuiteKeySet {
      */
     @Test
     public void Size_5Element(){
-
         for(int i = 0; i < 5; i++){
             map1.put(i, (i+15)*(i+2));
         }
@@ -167,14 +164,13 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: The design is a simple assert of
      * a size call and expected 160 size and not being empty. </p>
      * 
-     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the setn.</p>
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the set.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and the set contains five mappings.</p>
      * <p><b>Expected Results</b>: The size method returns 160 and the isEmpty method returns false.</p>
      */
     @Test
     public void Size_160Element(){
-
         for(int i = 0; i < 160; i++){
             map1.put(i, (i+15)*(i+2));
         }
@@ -195,7 +191,7 @@ public class TestSuiteKeySet {
      * <p><b>Expected Results</b>: contains returns false.</p>
      */
     @Test
-    public void Contains_Emptykey(){
+    public void Contains_Empty(){
         HSet key = map1.keySet();
         assertEquals("The set contains 'ci' even if it is empty.", false, key.contains("ci"));
     }
