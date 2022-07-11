@@ -199,6 +199,7 @@ public class TestSuiteKeySet {
         HSet key = map1.keySet();
         assertEquals("The set contains 'ci' even if it is empty.", false, key.contains("ci"));
     }
+
     /**
      * <p><b>Summary</b>: contains method test case.</p>
      * <p><b>Test Case Design</b>: Test the case of invoking the method before put and after put mappings on the map</p>
@@ -602,7 +603,6 @@ public class TestSuiteKeySet {
      * <p><b>Post-Condition</b>: Map and set is empty.</p>
      * <p><b>Expected Results</b>: set is empty, obviusly its size is 0.</p>
      */
-
     @Test
     public void Remove_450ToEmpty(){
         for(int i = 0; i < 450; i++){
@@ -1091,7 +1091,6 @@ public class TestSuiteKeySet {
      * <p><b>Post-Condition</b>: The set is still empty.</p>
      * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
      */
-
     @Test (expected = NullPointerException.class)
     public void ToArray_DestNull_NPException(){
         HSet key1 = map1.keySet();
@@ -1110,7 +1109,6 @@ public class TestSuiteKeySet {
      * <p><b>Post-Condition</b>: The set has 2 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
-
     @Test (expected = IllegalArgumentException.class)
     public void ToArray_DestSmaller(){
         map1.put(1,1);
