@@ -143,12 +143,12 @@ public class TestSuiteValuesCollection {
 	}
 
     /**
-     * <p><b>Summary</b>:</p>
+     * <p><b>Summary</b>: test removeAll(Collection c), rimuovo da ct tutti gli elementi di c</p>
      * <p><b>Test Case Design</b>:</p>
      * <p><b>Test Description</b>:</p>
      * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
      * <p><b>Post-Condition</b>: ct senza gli elementi di Collection c</p>
-     * <p><b>Expected Results</b>: test removeAll(Collection c), rimuovo da ct tutti gli elementi di c</p>
+     * <p><b>Expected Results</b>: </p>
      */
     @Test
 	public void remove_all_c() {
@@ -466,12 +466,12 @@ public class TestSuiteValuesCollection {
         assertTrue("Two empty collection should be equal",coll2.equals(coll1));
     }
 
-     /**
+    /**
      * <p><b>Summary</b>: equals method test case.
      * The reflective property of equal method is tested.</p>
      * <p><b>Test Case Design</b>: equals method should be reflective,
      * therefore x.equals(x) should always return true. </p>
-     * <p><b>Test Description</b>: The test invokes v.equals(v) when
+     * <p><b>Test Description</b>: The test invokes coll.equals(coll) when
      * coll is empty, when it has 10 elements and when it has 1000 elements.</p>
      * <p><b>Pre-Condition</b>: The map is empty.</p>
      * <p><b>Post-Condition</b>: The map and the collection has 1000 elements. </p>
@@ -526,7 +526,7 @@ public class TestSuiteValuesCollection {
      * <p><b>Summary</b>: clear method test case.</p>
      * <p><b>Test Case Design</b>: Invokes clear method on an already empty
      * collection, which is a limit case.</p>
-     * <p><b>Test Description</b>: Calls clear on the collection,, then it should be empty</p>
+     * <p><b>Test Description</b>: Calls clear on the collection, then it should be empty</p>
      * <p><b>Pre-Condition</b>: map and collection is empty.</p>
      * <p><b>Post-Condition</b>: maps and collection is still empty.</p>
      * <p><b>Expected Results</b>: collection is Empty</p>
@@ -716,7 +716,7 @@ public class TestSuiteValuesCollection {
      * <p><b>Summary</b>: remove method test case.</p>
      * <p><b>Test Case Design</b>: Tests the remove method feature that
      * returns the old value and after call remove method the collection
-     * does not contains the key</p>
+     * does not contains the value</p>
      * <p><b>Test Description</b>: Put an mappings into the map. Then assert that
      * he remove the 987 values. Then assert that an second remove with the same 
      * key return null, because its not present yet. </p>
@@ -1218,11 +1218,10 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: toArray test case.
-     * The test adds one element to the collection and then call
-     * toArray method.</p>
+     * The test adds one element to the m and then call
+     * toArray method on the values collection.</p>
      * <p><b>Test Case Design</b>: Test focuses on toArray behaviour when
-     * it has only one element, which is a limit case. From the Sommerville: "Test software
-     * with sequences which have only a single value."</p>
+     * it has only one element, which is a limit case.</p>
      * <p><b>Test Description</b>: Adds one to the collection, calls toArray method
      * and checks the array's first element and its size.</p>
      * <p><b>Pre-Condition</b>: The collection is empty.</p>
@@ -1245,8 +1244,8 @@ public class TestSuiteValuesCollection {
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument is null, which a special case.</p>
      * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
-     * <p><b>Pre-Condition</b>: The map is empty</p>
-     * <p><b>Post-Condition</b>: The map is still empty.</p>
+     * <p><b>Pre-Condition</b>: The collection is empty</p>
+     * <p><b>Post-Condition</b>: The collection is still empty.</p>
      * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
      */
 
@@ -1258,14 +1257,13 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: toArray(HCollection) method test case.
-     * The test adds element from 0 (included) to 10 (excluded) to the collection and checks the array.</p>
+     * The collection has 2 elements and checks the array.</p>
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument size is not enough for containing the collection's elements, which a
      * special case.</p>
-     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the collection.
-     *  arr contains the result of toArray method, but exception is being thrown.</p>
-     * <p><b>Pre-Condition</b>: The collection is empty, arr is empty.</p>
-     * <p><b>Post-Condition</b>: The collection has 10 elements, arr is still empty.</p>
+     * <p><b>Test Description</b>: arr contains the result of toArray method, but exception is being thrown.</p>
+     * <p><b>Pre-Condition</b>: The collection has 2 elements, arr is empty.</p>
+     * <p><b>Post-Condition</b>:The collection has 2 element, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
 

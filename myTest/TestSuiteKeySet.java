@@ -36,7 +36,6 @@ import myAdapter.*;
  * @version 1.0
  * @see TestSuiteMapAdapter
  * @see MapAdapter
- * @see MapEntryAdapter
  * @author Giacomo Calabria
  */
 
@@ -220,6 +219,17 @@ public class TestSuiteKeySet {
         assertTrue(key2.equals(key1));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The reflective property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be reflective,
+     * therefore x.equals(x) should always return true. </p>
+     * <p><b>Test Description</b>: The test invokes {@code key1.equals(key1)} when
+     * key is empty, when it has 10 elements and when it has 1000 elements.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the set has 1000 elements. </p>
+     * <p><b>Expected Results</b>: The keySet equals itself</p>
+     */
     @Test
     public void Equals_Reflective(){
         HSet key1 = map1.keySet();
@@ -239,6 +249,16 @@ public class TestSuiteKeySet {
         assertTrue(key1.equals(key1));    // Set is empty
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.
+     * The transitive property of equal method is tested.</p>
+     * <p><b>Test Case Design</b>: equals method should be transitive</p>
+     * <p><b>Test Description</b>: The test invokes key1.equals(key2) and key2.equals(key3)
+     * and key1.equals(key3)</p>
+     * <p><b>Pre-Condition</b>: The tree maps contains the 30 same mappings</p>
+     * <p><b>Post-Condition</b>: The maps and set is unchanged</p>
+     * <p><b>Expected Results</b>: Equals has transitive property.</p>
+     */
     @Test
     public void Equals_Transitive(){
         HMap map3 = new MapAdapter();
@@ -263,11 +283,10 @@ public class TestSuiteKeySet {
      * <p><b>Summary</b>: clear method test case.</p>
      * <p><b>Test Case Design</b>: Invokes clear method on an already empty
      * set, which is a limit case.</p>
-     * <p><b>Test Description</b>: Calls clear on the set, then it should be
-     * equal to another empty set.</p>
-     * <p><b>Pre-Condition</b>: set is empty.</p>
-     * <p><b>Post-Condition</b>: set is still empty.</p>
-     * <p><b>Expected Results</b>: set is equal to another empty set.</p>
+     * <p><b>Test Description</b>: Calls clear on the set, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: map and set is empty.</p>
+     * <p><b>Post-Condition</b>: maps and set is still empty.</p>
+     * <p><b>Expected Results</b>: set is Empty</p>
      */
     @Test
     public void Clear_Empty(){
@@ -278,12 +297,11 @@ public class TestSuiteKeySet {
 
     /**
      * <p><b>Summary</b>: clear method test case.</p>
-     * <p><b>Test Case Design</b>: Invokes clear method on a set containing 0.</p>
-     * <p><b>Test Description</b>: Calls clear on the set, then it should be
-     * equal to another empty set.</p>
-     * <p><b>Pre-Condition</b>: set contains 0.</p>
-     * <p><b>Post-Condition</b>: set is empty.</p>
-     * <p><b>Expected Results</b>: set is equal to another empty set.</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on a set containing 1.</p>
+     * <p><b>Test Description</b>: Calls clear on the set, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: The map contains 1=1, the set contains 1</p>
+     * <p><b>Post-Condition</b>: The map and set is empty.</p>
+     * <p><b>Expected Results</b>: set is Empty</p>
      */
     @Test
     public void Clear_1Element(){
@@ -298,9 +316,9 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: Invokes clear method on a set containing {0:1000}.</p>
      * <p><b>Test Description</b>: Calls clear on the set, then it should be
      * equal to another empty set.</p>
-     * <p><b>Pre-Condition</b>: set contains {0:1000}.</p>
-     * <p><b>Post-Condition</b>: set is empty.</p>
-     * <p><b>Expected Results</b>: set is equal to another empty set.</p>
+     * <p><b>Pre-Condition</b>: The map and the set contains 1000 elements</p>
+     * <p><b>Post-Condition</b>: The map and the set is empty.</p>
+     * <p><b>Expected Results</b>: set is empty</p>
      */
     @Test
     public void Clear_0To1000(){
@@ -319,16 +337,17 @@ public class TestSuiteKeySet {
      * Tests the behaviour of hashCode method with different
      * configurations.</p>
      * <p><b>Test Case Design</b>: The same operations are applied to map 1 and 2,
-     * so they must have the same elements each time, therefore they are equals.
+     * so they must have the same elements each time, and so they must have
+     * the same keySet each time, therefore they are equals.
      * If they are equals they must have the same hashCode.</p>
      * <p><b>Test Description</b>: Different configurations have been tested:
      * empty, {1,1}, {"ciao",164}, {"ciao",0:10}</p>
-     * <p><b>Pre-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Post-Condition</b>: Maps have same hashCode and they are equal.</p>
-     * <p><b>Expected Results</b>: Maps have same hashCode and they are equal.</p>
+     * <p><b>Pre-Condition</b>: sets have same hashCode and they are equal.</p>
+     * <p><b>Post-Condition</b>: sets have same hashCode and they are equal.</p>
+     * <p><b>Expected Results</b>: sets have same hashCode and they are equal.</p>
      */
     @Test
-    public void HashCode_Prop_Key(){
+    public void HashCode_Prop(){
         HSet key1 = map1.keySet();
         HSet key2 = map2.keySet();
         // Empty map case
@@ -362,12 +381,32 @@ public class TestSuiteKeySet {
 
     //************************ ADD & ADDALL METHOD **********************************
 
+    /**
+     * <p><b>Summary</b>: add method test case.</p>
+     * <p><b>Test Case Design</b>: The methoud throws
+     * UnsupportedOperationException.</p>
+     * <p><b>Test Description</b>: add is invoked.</p>
+     * <p><b>Pre-Condition</b>: key1 is empty.</p>
+     * <p><b>Post-Condition</b>: key1 is empty.</p>
+     * <p><b>Expected Results</b>: The add method is not supported.
+     * UnsupportedOperationException is thrown.</p>
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void Add_key(){
         HSet key1 = map1.keySet();
         key1.add(15);
     }
     
+    /**
+     * <p><b>Summary</b>: addAll method test case.</p>
+     * <p><b>Test Case Design</b>: The methoud throws
+     * UnsupportedOperationException.</p>
+     * <p><b>Test Description</b>: addAll is invoked.</p>
+     * <p><b>Pre-Condition</b>: key1 is empty.</p>
+     * <p><b>Post-Condition</b>: key1 is empty.</p>
+     * <p><b>Expected Results</b>: The addAll method is not supported.
+     * UnsupportedOperationException is thrown.</p>
+     */
     @Test (expected = UnsupportedOperationException.class)
     public void AddAll_key(){
         HSet key1 = map1.keySet();
@@ -377,14 +416,36 @@ public class TestSuiteKeySet {
 
     //***************************** REMOVE METHOD **********************************
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with null key in this keySet should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a remove method invoke with null key.</p>
+     * <p><b>Test Description</b>: remove method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and set is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test (expected = NullPointerException.class)
-    public void Remove_EmptyNullKey_NPException(){
+    public void Remove_EmptyNull_NPException(){
         HSet key1 = map1.keySet();
         key1.remove(null);
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with null key in this keySet should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a remove method invoke with null key.</p>
+     * <p><b>Test Description</b>: remove method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and set contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and set are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
     @Test (expected = NullPointerException.class)
-    public void Remove_NullKey_NPException(){
+    public void Remove_Null_NPException(){
         for(int i = 0; i < 450; i++){
             map1.put(i*i*i,(i+654)*i);
         }
@@ -392,20 +453,52 @@ public class TestSuiteKeySet {
         key1.remove(null);
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.
+     * Calling the remove method with a valid key in an empty keySet should
+     * return always false</p>
+     * <p><b>Test Case Design</b>: The test invokes remove method on an emtpy set
+     * wich is a limit case in wich the remove method should always return false</p>
+     * <p><b>Test Description</b>: remove method gets called in an empty set. </p>
+     * <p><b>Pre-Condition</b>: Map and set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and set is still empty.</p>
+     * <p><b>Expected Results</b>: remove method should be return false</p>
+     */
     @Test
     public void Remove_Empty(){
         HSet key1 = map1.keySet();
         assertFalse(key1.remove(156));
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the remove method feature that
+     * returns the old value and after call remove method the set
+     * does not contains the key</p>
+     * <p><b>Test Description</b>: Put an mappings into the map. Then assert that
+     * he remove the 44 values. Then assert that an second remove with the same 
+     * key return null, because its not present yet. </p>
+     * <p><b>Pre-Condition</b>: Map has 44=987 mappings and keySet has 44</p>
+     * <p><b>Post-Condition</b>: Map and Set is empty. </p>
+     * <p><b>Expected Results</b>:remove method works properly</p>
+     */
     @Test
-    public void Remove_2Times(){
+    public void Remove_ReturnOldValue(){
         map1.put(44, 987);
         HSet key1 = map1.keySet();
         assertTrue(key1.remove(44));
         assertFalse(key1.remove(44));
     }
 
+    /**
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the remove method
+	 * in a case where the set does not contain the key.</p>
+     * <p><b>Test Description</b>: remove is invoked with 2 different uncontained values.</p>
+     * <p><b>Pre-Condition</b>: Map contains "ciao"="bello". keySet contains "ciao" </p>
+     * <p><b>Post-Condition</b>: Map and set is unchanged.</p>
+     * <p><b>Expected Results</b>: removes returns false.</p>
+     */
     @Test
     public void Remove_NotPresent(){
         map1.put("ciao","bello");
@@ -418,11 +511,11 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: Removes all the elements through remove method
      * to test its behaviour. Note that the limit case of removing the last element
      * is tested too.</p>
-     * <p><b>Test Description</b>: Calls remove 450 times on an map containing
-     * 450 mappings, making it empty.</p>
-     * <p><b>Pre-Condition</b>: Map contains 450 mappings.</p>
-     * <p><b>Post-Condition</b>: Map is empty.</p>
-     * <p><b>Expected Results</b>: Map is empty, obviusly its size is 0.</p>
+     * <p><b>Test Description</b>: Calls remove 450 times on an set containing
+     * 450 elements, making it empty.</p>
+     * <p><b>Pre-Condition</b>: Map contains 450 mappings. keySet contains also 450 elements</p>
+     * <p><b>Post-Condition</b>: Map and set is empty.</p>
+     * <p><b>Expected Results</b>: set is empty, obviusly its size is 0.</p>
      */
 
     @Test
@@ -435,7 +528,405 @@ public class TestSuiteKeySet {
             assertTrue(key1.remove(i*i*i));
         }
         assertEquals("Size should be 0", 0, key1.size());
-        assertEquals("map should be empty.", true, key1.isEmpty());
+        assertEquals("set should be empty.", true, key1.isEmpty());
+    }
+
+    //************************* REMOVEALL METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.
+     * Calling the removeAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a removeAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: removeAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RemoveAll_EmptyNull_NPException(){
+        HSet key1 = map1.keySet();
+        key1.removeAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.
+     * Calling the removeAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a removeAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: removeAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Set are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RemoveAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        key1.removeAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called with
+     * empty Set as an argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the keySet Set and then calls removeAll with an empty Set. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements.</p>
+     * <p><b>Post-Condition</b>: The maps and key1 are unchaged.</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
+     * returns false, key1 is unchanged.</p>
+     */
+    @Test
+    public void RemoveAll_EmptykeyArg(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet keyE = map2.keySet();
+        assertTrue(keyE.isEmpty());
+        assertFalse(key1.isEmpty());
+        assertFalse("removeAll did not remove anything, therefore it should return false.", key1.removeAll(keyE));
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called in an
+     * empty Set with an nonempty Set as argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the keySet Set and then calls removeAll on an empty Set. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements. keyE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and key1 are unchaged. keyE is empty</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore removeAll
+     * returns false, key1 is unchanged. keyE is still empty</p>
+     */
+    @Test
+    public void RemoveAll_Emptykey(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet keyE = map2.keySet();
+        assertTrue(keyE.isEmpty());
+        assertFalse(key1.isEmpty());
+        assertFalse(map1.isEmpty());
+        assertFalse("removeAll did not remove anything, therefore it should return false.", keyE.removeAll(key1));
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called between two Sets. key2 includes
+     * all elements of the key1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the values Set and then calls removeAll with key2 as argument. 
+     * Therefore the map1 should be changed and map2 should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements. key2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and key1 are unchaged. key2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and key1 are changed, therefore removeAll
+     * returns true, key2 is unchanged. </p>
+     */
+
+    @Test
+    public void RemoveAll_10to20Remove100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        assertEquals(10, key2.size());
+        assertEquals(100, key1.size());
+        assertTrue(key1.removeAll(key2));
+        assertEquals(10, key2.size());
+        assertEquals(90, key1.size());
+    }
+
+    //************************* RETAINALL METHOD *******************************
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.
+     * Calling the retainAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a retainAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: retainAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void RetainAll_EmptyNull_NPException(){
+        HSet key1 = map1.keySet();
+        key1.retainAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.
+     * Calling the retainAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a retainAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: retainAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Set are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ReretainAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        key1.retainAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called with
+     * empty Set as an argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the keySet Set and then calls retainAll with an empty Set. 
+     * Therefore the maps should be changed.</p>
+     * <p><b>Pre-Condition</b>: The map and key1 contains 45 elements. keyE is empty</p>
+     * <p><b>Post-Condition</b>: The map and key1 are chaged. keyE is still empty</p>
+     * <p><b>Expected Results</b>: The map and key1 changed, therefore retainAll
+     * returns true, key1 is changed.</p>
+     */
+    @Test
+    public void RetainAll_EmptykeyArg(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet keyE = map2.keySet();
+        assertTrue(keyE.isEmpty());
+        assertFalse(key1.isEmpty());
+        assertTrue("retainAll did not retain anything, therefore it should return false.", key1.retainAll(keyE));
+        assertTrue(map1.isEmpty());
+        assertTrue(key1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called in an
+     * empty Set with an nonempty Set as argument, which is a method's
+     * limit case.</p>
+     * <p><b>Test Description</b>: The test adds 45 elements to the map then generates
+     * the keySet Set and then calls retainAll on an empty Set. 
+     * Therefore the maps should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The maps and key1 contains 45 elements. keyE is empty</p>
+     * <p><b>Post-Condition</b>: The maps and key1 are unchaged. keyE is still empty</p>
+     * <p><b>Expected Results</b>: The maps are unchanged, therefore retainAll
+     * returns false, key1 is unchanged.</p>
+     */
+    @Test
+    public void RetainAll_Emptykey(){
+        for(int i = 0; i < 45; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet keyE = map2.keySet();
+        assertTrue(keyE.isEmpty());
+        assertFalse(key1.isEmpty());
+        assertFalse(map1.isEmpty());
+        assertFalse("retainAll did not retain anything, therefore it should return false.", keyE.retainAll(key1));
+        assertTrue(keyE.isEmpty());
+        assertFalse(key1.isEmpty());
+        assertFalse(map1.isEmpty());
+    }
+
+    /**
+     * <p><b>Summary</b>: retainAll method test case.</p>
+     * <p><b>Test Case Design</b>: retainAll method called between two Sets. key2 includes
+     * all elements of the key1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the keySet Set and then calls retainAll with key2 as argument. 
+     * Therefore the map1 should be changed and map2 should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
+     * map2 and key2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and key1 are chaged. map2 and key2 is unchanged</p>
+     * <p><b>Expected Results</b>: The map1 and key1 are changed, therefore retainAll
+     * returns true, key2 and map2 is unchanged. </p>
+     */
+    @Test
+    public void RetainAll_10to20Retain100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        
+        assertEquals(10, key2.size());
+        assertEquals(100, key1.size());
+        assertEquals(100,map1.size());
+        assertEquals(10,map2.size());
+        
+        assertTrue(key1.retainAll(key2));
+        
+        assertEquals(10, key2.size());
+        assertEquals(10, key1.size());
+        assertEquals(10,map1.size());
+        assertEquals(10,map2.size());
+    }
+
+    //************************** CONTAINSALL METHOD  *****************************
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * Calling the containsAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a containsAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: containsAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Post-Condition</b>: Map and Set is empty.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ContainsAll_EmptyNull_NPException(){
+        HSet key1 = map1.keySet();
+        key1.containsAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * Calling the containsAll method with null key in this keySet Set should throw
+     * NullPointerException runtime exception.</p>
+     * <p><b>Test Case Design</b>: The test expects the aforementioned
+     * exception to be thrown after a containsAll method invoke with null key.</p>
+     * <p><b>Test Description</b>: containsAll method gets called with null key. </p>
+     * <p><b>Pre-Condition</b>: Map and Set contains 450 elements.</p>
+     * <p><b>Post-Condition</b>: Map and Set are unchanged.</p>
+     * <p><b>Expected Results</b>: NullPointerException has been trown.</p>
+     */
+    @Test (expected = NullPointerException.class)
+    public void ContainsAll_Null_NPException(){
+        for(int i = 0; i < 450; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        key1.containsAll(null);
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * The method tests if an empty Set contains the elements
+     * of another Set, which is obviusly false.</p>
+     * <p><b>Test Case Design</b>: The test case tests the limit case of
+     * checking an empty Set containing something.</p>
+     * <p><b>Test Description</b>: The key2 contains 45 elements.
+     * The containsAll method obviously should return false for
+     * any key's content as the Set is empty.</p>
+     * <p><b>Pre-Condition</b>: The key1 is empty. The key2 contains 45 elements</p>
+     * <p><b>Post-Condition</b>: The keye1 is still empty. The key2 is unchanged</p>
+     * <p><b>Expected Results</b>: The containsAll method return false.</p>
+     */
+    @Test
+    public void ContainsAll_Empty_False(){
+        HSet key1 = map1.keySet();
+        for(int i = 0; i < 45; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HSet key2 = map2.keySet();
+
+        assertEquals("The method should return false because the Set is empty.", false, key1.containsAll(key2)); 
+    }
+
+   /**
+     * <p><b>Summary</b>: containsAll method test case.
+     * The method tests if an empty Set contains the elements
+     * of another Set.</p>
+     * <p><b>Test Case Design</b>: The test case tests the limit case of
+     * checking an empty Set containing an empty Set, which is true, 
+     * as the empty subset is the subset of every set, therefore even of the
+     * empty set. The tested case is a limit case of containsAll.</p>
+     * <p><b>Test Description</b>: The Set is empty.
+     * The containsAll method obviously should return true for
+     * any key's content, because the empty subset is the
+     * subset of every set.</p>
+     * <p><b>Pre-Condition</b>: The Sets is empty.</p>
+     * <p><b>Post-Condition</b>: The Sets is empty.</p>
+     * <p><b>Expected Results</b>: The containsAll method return true.</p>
+     */
+    @Test
+    public void ContainsAll_BothEmpty_False(){
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        assertEquals("The method should return true because the Set is empty.", true, key1.containsAll(key2)); 
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two Sets. key2 includes
+     * all elements of the key1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are all in common with map1 then generates
+     * the keySet Set and then calls containsAll with key2 as argument. 
+     * Therefore the maps and key should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
+     * map2 and key2 contains 10 elements</p>
+     * <p><b>Post-Condition</b>: the maps and key should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and key should be unchanged. containsAll should return
+     * true as key1 contains key2 elements. </p>
+     */
+    @Test
+    public void ContainsAll_10to20contains100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i,i);
+        }
+        for(int i = 10; i < 20; i++){
+            map2.put(i,i);
+        }
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        
+        assertTrue(key1.containsAll(key2));
+    }
+
+    /**
+     * <p><b>Summary</b>: containsAll method test case.</p>
+     * <p><b>Test Case Design</b>: containsAll method called between two Sets. key2 includes
+     * elements different from the elements of the key1</p>
+     * <p><b>Test Description</b>: The test adds 100 elements to the map1 and 10 elements to
+     * the map2 wich are not in common with map1 then generates
+     * the keySet Set and then calls containsAll with key2 as argument. 
+     * Therefore the maps and key should be unchanged.</p>
+     * <p><b>Pre-Condition</b>: The map1 and key1 contains 100 elements.
+     * map2 and key2 contains 10 elements not present in key1</p>
+     * <p><b>Post-Condition</b>: the maps and key should be unchanged.</p>
+     * <p><b>Expected Results</b>: the maps and key should be unchanged. containsAll should return
+     * false as key1 not contains key2 elements. </p>
+     */
+    @Test
+    public void ContainsAll_10Notcontains100(){
+        for(int i = 0; i < 100; i++){
+            map1.put(i*i*i,(i+654)*i);
+        }
+        for(int i = 290; i < 300; i++){
+            map2.put(i*i*i,(i+654)*i);
+        }
+        HSet key1 = map1.keySet();
+        HSet key2 = map2.keySet();
+        
+        assertFalse(key1.containsAll(key2));
     }
 
     //************************* TOARRAY METHOD *********************************
@@ -461,26 +952,23 @@ public class TestSuiteKeySet {
         HSet key1 = map1.keySet();
         Object[] arr = key1.toArray();
         assertEquals("Empty set did not return empty array.", arr.length, 0);
+        assertArrayEquals(new Object[0], key1.toArray());
     }
 
     /**
-     * <p><b>Summary</b>: toArray method test case.
-     * The test case asserts that, after many insertion, an array returned from a
-     * toArray call must match the expected set.</p>
-     * <p><b>Test Case Design</b>: The test inserts five element and then
-     * checks if the set elements matches the inserted elements.
-     * From the Sommerville: "Use sequences of different sizes in different tests.". Small
-     * size tested here.</p>
-     * <p><b>Test Description</b>: Inserts five 1 to the map. Then assertArrayEquals
+     * <p><b>Summary</b>: toArray method test case.</p>
+     * <p><b>Test Case Design</b>: Test the toArray method when the set and the map
+     * contains only one element then checks if the set element
+     *  matches the inserted elements.</p>
+     * <p><b>Test Description</b>: Inserts 1=1 to the map. Then assertArrayEquals
      * is called.</p>
-     * <p><b>Pre-Condition</b>: The set is empty.</p>
-     * <p><b>Post-Condition</b>: The set contains {1}.</p>
-     * <p><b>Expected Results</b>: set1.toArray() returns [1].</p>
+     * <p><b>Pre-Condition</b>: The set and map is empty.</p>
+     * <p><b>Post-Condition</b>: The set and map contains 1 element.</p>
+     * <p><b>Expected Results</b>: key1.toArray() returns [1].</p>
      */
     @Test
     public void ToArray_1_True(){
-        for(int i = 0; i < 5; i++)
-            map1.put(1,i);
+        map1.put(1,1);
         HSet key1 = map1.keySet();
         Integer[] arr = {1};
         assertArrayEquals("Arrays do not match.", arr , key1.toArray());
@@ -488,15 +976,14 @@ public class TestSuiteKeySet {
 
     /**
      * <p><b>Summary</b>: toArray test case.
-     * The test adds one element to the set and then call
-     * toArray method.</p>
+     * The test adds one element to the map and then call
+     * toArray method on the keySet.</p>
      * <p><b>Test Case Design</b>: Test focuses on toArray behaviour when
-     * it has only one element, which is a limit case. From the Sommerville: "Test software
-     * with sequences which have only a single value."</p>
+     * it has only one element, which is a limit case.</p>
      * <p><b>Test Description</b>: Adds one to the set, calls toArray method
      * and checks the array's first element and its size.</p>
      * <p><b>Pre-Condition</b>: The set is empty.</p>
-     * <p><b>Post-Condition</b>: The set has one element {1654}.</p>
+     * <p><b>Post-Condition</b>: The set has one element {145}.</p>
      * <p><b>Expected Results</b>: The element is stored correctly in the
      * array returned from the method (the array is [1]) and its size is 1.</p>
      */
@@ -508,14 +995,6 @@ public class TestSuiteKeySet {
         key1.toArray(arr);
         assertEquals("The array size should be 1.", 1, arr.length);
         assertEquals("The element should be 145.", 145, arr[0]);
-        
-        Object[] arr1 = new Object[1];
-        HSet entry1 = map1.entrySet();
-        entry1.toArray(arr1);
-        HMap.HEntry em = new MapEntryAdapter(145);
-        em.setValue(1654);
-        assertEquals("The array size should be 1.", 1, arr1.length);
-        assertEquals("The element should be 1654.", em, arr1[0]);
     }
 
     /**
@@ -523,42 +1002,27 @@ public class TestSuiteKeySet {
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument is null, which a special case.</p>
      * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
-     * <p><b>Pre-Condition</b>: The map is empty</p>
-     * <p><b>Post-Condition</b>: The map is still empty.</p>
+     * <p><b>Pre-Condition</b>: The set is empty</p>
+     * <p><b>Post-Condition</b>: The set is still empty.</p>
      * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
      */
 
     @Test (expected = NullPointerException.class)
-    public void ToArray_DestNullKey_NPException(){
+    public void ToArray_DestNull_NPException(){
         HSet key1 = map1.keySet();
         key1.toArray(null);
-    }
-    /**
-     * <p><b>Summary</b>: toArray(HSet) method test case.</p>
-     * <p><b>Test Case Design</b>: The test checks the method behaviour when the
-     * argument is null, which a special case.</p>
-     * <p><b>Test Description</b>: If the specified array is null excpetion is being thrown. <p>
-     * <p><b>Pre-Condition</b>: The map is empty</p>
-     * <p><b>Post-Condition</b>: The map is still empty.</p>
-     * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
-     */
-
-    @Test (expected = NullPointerException.class)
-    public void ToArray_DestNullEntry_NPException(){
-        HSet entry1 = map1.entrySet();
-        entry1.toArray(null);
     }
 
     /**
      * <p><b>Summary</b>: toArray(HSet) method test case.
-     * The test adds element from 0 (included) to 10 (excluded) to the set and checks the array.</p>
+     * The set has 2 elements and checks the array.</p>
      * <p><b>Test Case Design</b>: The test checks the method behaviour when the
      * argument size is not enough for containing the set's elements, which a
      * special case.</p>
-     * <p><b>Test Description</b>: Adds elements from 0 (included) to 10 (excluded) to the set. arr contains the result
+     * <p><b>Test Description</b>: arr contains the result
      * of toArray method, but exception is being thrown.</p>
-     * <p><b>Pre-Condition</b>: The set is empty, arr is empty.</p>
-     * <p><b>Post-Condition</b>: The set has 10 elements, arr is still empty.</p>
+     * <p><b>Pre-Condition</b>: The set has 2 elements, arr is empty.</p>
+     * <p><b>Post-Condition</b>: The set has 2 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
 
@@ -774,32 +1238,32 @@ public class TestSuiteKeySet {
     @Test
     public void Backed_removeAll(){
         for(int i = 0; i < 50; i++)
-            map1.put(i,i*i);
+            map1.put(i*i,i);
         HSet key1 = map1.keySet();
 
         for(int i = 0; i < 50; i++){
-            assertTrue(map1.containsValue(i*i));
+            assertTrue(map1.containsKey(i*i));
             assertTrue(key1.contains(i*i));
         }
 
         for(int i = 20; i < 25; i++)
-            map2.put(i,i*i);
+            map2.put(i*i,i);
         HSet key2 = map2.keySet();
 
         key1.removeAll(key2);
 
         for(int i = 0; i < 20; i++){
-            assertTrue(map1.containsValue(i*i));
+            assertTrue(map1.containsKey(i*i));
             assertTrue(key1.contains(i*i));
         }
 
         for(int i = 20; i < 25; i++){
-            assertFalse(map1.containsValue(i*i));
+            assertFalse(map1.containsKey(i*i));
             assertFalse(key1.contains(i*i));
         }
 
         for(int i = 25; i < 50; i++){
-            assertTrue(map1.containsValue(i*i));
+            assertTrue(map1.containsKey(i*i));
             assertTrue(key1.contains(i*i));
         }
     }
@@ -821,32 +1285,32 @@ public class TestSuiteKeySet {
     @Test
     public void Backed_retainAll(){
         for(int i = 0; i < 50; i++)
-            map1.put(i,i*i);
+            map1.put(i*i,i);
         HSet key1 = map1.keySet();
 
         for(int i = 0; i < 50; i++){
-            assertTrue(map1.containsValue(i*i));
+            assertTrue(map1.containsKey(i*i));
             assertTrue(key1.contains(i*i));
         }
 
         for(int i = 20; i < 25; i++)
-            map2.put(i,i*i);
+            map2.put(i*i,i);
         HSet key2 = map2.keySet();
 
         key1.retainAll(key2);
 
         for(int i = 0; i < 20; i++){
-            assertFalse(map1.containsValue(i*i));
+            assertFalse(map1.containsKey(i*i));
             assertFalse(key1.contains(i*i));
         }
 
         for(int i = 20; i < 25; i++){
-            assertTrue(map1.containsValue(i*i));
+            assertTrue(map1.containsKey(i*i));
             assertTrue(key1.contains(i*i));
         }
 
         for(int i = 25; i < 50; i++){
-            assertFalse(map1.containsValue(i*i));
+            assertFalse(map1.containsKey(i*i));
             assertFalse(key1.contains(i*i));
         }
     }
