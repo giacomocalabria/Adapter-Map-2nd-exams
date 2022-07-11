@@ -402,7 +402,7 @@ public class TestSuiteMapAdapter {
      */
     @Test
     public void Contains_EmptyMapKey(){
-        assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsKey("ci"));
+        assertFalse("The map contains key 'ci' even if it is empty.", map1.containsKey("ci"));
     }
 
     /**
@@ -416,7 +416,7 @@ public class TestSuiteMapAdapter {
      */
     @Test
     public void Contains_EmptyMapValue(){
-        assertEquals("The map contains value 'ci' even if it is empty.", false, map1.containsValue("ci"));
+        assertFalse("The map contains value 'ci' even if it is empty.", map1.containsValue("ci"));
     }
 
     /**
@@ -430,10 +430,10 @@ public class TestSuiteMapAdapter {
     @Test
     public void Contains_1Key_and2(){
 
-        assertEquals("The map contains key 'ci' even if it is empty.", false, map1.containsKey("ci"));
+        assertFalse("The map contains key 'ci' even if it is empty.", map1.containsKey("ci"));
         map1.put("ci",15);
-        assertEquals("The map does not contains key 'ci' even if it should.", true, map1.containsKey("ci"));
-        assertEquals("The map should not contain key 'ao'.", false, map1.containsKey("ao"));
+        assertTrue("The map does not contains key 'ci' even if it should.", map1.containsKey("ci"));
+        assertFalse("The map should not contain key 'ao'.",  map1.containsKey("ao"));
         map1.put("ao",465);
         assertEquals("The map does not contains key 'ci' even if it should.",true,  map1.containsKey("ci"));
         assertEquals("The map does not contains key 'ao' even if it should.",true, map1.containsKey("ao"));
@@ -924,6 +924,23 @@ public class TestSuiteMapAdapter {
         assertEquals("Size should be 100",100,map1.size());
     }
 
+    /**
+     * <p><b>Summary</b>: put method test case
+     * Test that put method return old value.</p>
+     * <p><b>Test Case Design</b>: Tests that put method
+     * return the old value associated with a key.</p>
+     * <p><b>Test Description</b>: add 1=1 to the map then put
+     * 1=2 to the map the method put should return 1</p>
+     * <p><b>Pre-Condition</b>:the map contains 1=1</p>
+     * <p><b>Post-Condition</b>:the map contain 1=2 </p>
+     * <p><b>Expected Results</b>: the method put should return 1</p>
+     */
+    @Test
+    public void Put_OldValue(){
+        map1.put(1,1);
+        assertEquals(1,map1.put(1,2));
+    }
+
     //************************* REMOVE METHOD *********************************
 
     /**
@@ -1156,11 +1173,14 @@ public class TestSuiteMapAdapter {
 
         map1.putAll(map2);
 
-        assertEquals(false, map1.isEmpty());
+        assertFalse(map1.isEmpty());
         for(int i = 0; i < 100; i++){
             assertTrue(map1.containsKey(i*i));
             assertTrue(map1.containsValue(i+16));
         }
+
+        assertEquals(100, map1.size());
+        assertEquals(100, map2.size());
         
         map1.putAll(map2);
         for(int i = 0; i < 100; i++){
@@ -1194,28 +1214,28 @@ public class TestSuiteMapAdapter {
             map3.put(i*i+2, i+48);
         
         for(int i = 0; i < 100; i++){
-            assertEquals(true, map2.containsKey(i*i));
-            assertEquals(true, map2.containsValue(i+16));
+            assertTrue(map2.containsKey(i*i));
+            assertTrue(map2.containsValue(i+16));
         }
 
         for(int i = 0; i < 10; i++){
-            assertEquals(true, map3.containsKey(i*i+2));
-            assertEquals(true, map3.containsValue(i+48));
+            assertTrue(map3.containsKey(i*i+2));
+            assertTrue(map3.containsValue(i+48));
         }
 
-        assertEquals(true, map1.isEmpty());
+        assertTrue(map1.isEmpty());
         map1.putAll(map2);
 
         assertEquals(100, map1.size());
         for(int i = 0; i < 100; i++){
-            assertEquals(true, map1.containsKey(i*i));
-            assertEquals(true, map1.containsValue(i+16));
+            assertTrue(map1.containsKey(i*i));
+            assertTrue(map1.containsValue(i+16));
         }
 
         map1.putAll(map3);
         for(int i = 0; i < 10; i++){
-            assertEquals(true, map1.containsKey(i*i+2));
-            assertEquals(true, map1.containsValue(i+48));
+            assertTrue(map1.containsKey(i*i+2));
+            assertTrue(map1.containsValue(i+48));
         }
     }
 

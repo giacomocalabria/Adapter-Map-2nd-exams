@@ -29,6 +29,18 @@ public class MapAdapter implements HMap{
         table = new Hashtable(); 
     }
 
+    /**
+     * Constructor with map arguments.
+     * All the elements in the map argument should be included
+     * in the map 
+     * 
+     * @param map to be included in this map
+     */
+    public MapAdapter(HMap map){
+        table = new Hashtable();
+        putAll(map);
+    }
+
     // QUERY OPERATIONS
 
     /**
@@ -63,7 +75,7 @@ public class MapAdapter implements HMap{
      *         key
      *  @throws NullPointerException if the specified key is null (this map does not permit null key).
      */
-    public boolean containsKey(Object key) throws NullPointerException{
+    public boolean containsKey(Object key){
         return table.containsKey(key);
     }
 
@@ -80,7 +92,7 @@ public class MapAdapter implements HMap{
      *         specified value
      *  @throws NullPointerException if the specified value is null (this map does not permit null values).
      */
-    public boolean containsValue(Object value) throws NullPointerException{
+    public boolean containsValue(Object value){
         return table.contains(value);
     }
 
@@ -105,7 +117,7 @@ public class MapAdapter implements HMap{
      *         {@code null} if this map contains no mapping for the key
      * @throws NullPointerException if the specified key is null (this map does not permit null key).
      */
-    public Object get(Object key) throws NullPointerException{
+    public Object get(Object key){
         return table.get(key);
     }
 
@@ -129,7 +141,7 @@ public class MapAdapter implements HMap{
      * @throws NullPointerException if the specified key or value is null
      *         (this map does not permit null key).
      */
-    public Object put(Object key, Object value) throws NullPointerException{
+    public Object put(Object key, Object value){
         return table.put(key, value);
     }
 
@@ -157,7 +169,7 @@ public class MapAdapter implements HMap{
      * @throws NullPointerException if the specified key is null
      *         (this map does not permit null key).
      */
-    public Object remove(Object key)  throws NullPointerException{
+    public Object remove(Object key){
         Object value = table.remove(key); //null if not removed, valid otherwise
             
         return value;
@@ -174,11 +186,11 @@ public class MapAdapter implements HMap{
      * specified map is modified while the operation is in progress.
      *
      * @param m mappings to be stored in this map
-     *  @throws NullPointerException the specified map is null, or if this map
+     * @throws NullPointerException the specified map is null, or if this map
      *  does not permit null keys or values, and the specified
      *  map contains null keys or values. (this map does not permit null key).
      */
-    public void putAll(HMap t) throws NullPointerException{
+    public void putAll(HMap t){
         if (t == null)
             throw new NullPointerException();
         
@@ -506,7 +518,7 @@ public class MapAdapter implements HMap{
          * @throws UnsupportedOperationException as the operation is not supported
          */
     
-        public boolean add(Object obj) throws UnsupportedOperationException{
+        public boolean add(Object obj){
             throw new UnsupportedOperationException();
         }
 
@@ -514,7 +526,7 @@ public class MapAdapter implements HMap{
          * This method is unsupported for entrySet()
          * @throws UnsupportedOperationException as the operation is not supported
          */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+        public boolean addAll(HCollection coll){
             throw new UnsupportedOperationException();
         }
 
@@ -886,7 +898,7 @@ public class MapAdapter implements HMap{
             }
             return arr;
         }
-
+        
         /**
          * Returns an array containing all of the elements in this collection; the
          * runtime type of the returned array is that of the specified array. If the
@@ -956,7 +968,7 @@ public class MapAdapter implements HMap{
          * @throws UnsupportedOperationException as the operation is not supported
          */
     
-        public boolean add(Object obj) throws UnsupportedOperationException{
+        public boolean add(Object obj){
             throw new UnsupportedOperationException();
         }
         
@@ -964,7 +976,7 @@ public class MapAdapter implements HMap{
          * This method is unsupported
          * @throws UnsupportedOperationException as the operation is not supported
          */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+        public boolean addAll(HCollection coll){
             throw new UnsupportedOperationException();
         }
     
@@ -1388,7 +1400,7 @@ public class MapAdapter implements HMap{
          * @throws UnsupportedOperationException as the operation is not supported
          */
     
-        public boolean add(Object obj) throws UnsupportedOperationException{
+        public boolean add(Object obj){
             throw new UnsupportedOperationException();
         }
         
@@ -1396,7 +1408,7 @@ public class MapAdapter implements HMap{
          * This method is unsupported
          * @throws UnsupportedOperationException as the operation is not supported
          */
-        public boolean addAll(HCollection coll) throws UnsupportedOperationException{
+        public boolean addAll(HCollection coll){
             throw new UnsupportedOperationException();
         }
     
