@@ -18,11 +18,14 @@ import myAdapter.*;
  * <p>
  * <br><br><strong>Summary</strong>: The TestSuiteKeySet provides test on keySet set methods.
  * It offer different type of test in differente case scanario, in order to test their correct behaviour.
- * The first section of this test suite contains the test in the Testset.java file 
- * assigned by the Professor, correctly translated in the JUnit format.
- * After this section there are several section for each method (or group of feature) contains 
+ * There are several section for each method (or group of feature) contains 
  * the test cases ideated by me. 
  * 
+ * Note that all the test contained in the TestSet.java file 
+ * assigned by the Professor, are just included in this test suite in JUnit format.
+ * 
+ * In the TestSet.java file there are some test with add method (unsupported in keySet) and some test of
+ * the iterator removal, witch are included in the last section of this test suite. Also toString method is tested.
  * 
  * <br><br><strong>Test Suite Design</strong>: This test suite contains fine-grained different test cases 
  * for each method of the HSet interface in order to individuate errors in HSet methods
@@ -107,6 +110,20 @@ public class TestSuiteKeySet {
         assertEquals("isEmpty did not returned false.", true, key.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: size, isEmpty method test case. 
+     * The test case asserts that a map with one element should have an relative keySet
+     *  with one element wich should have size of 1 and isEmpty call
+     *  returning false. The map is modified before the asserts.</p>
+     * 
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 1 size and not being empty.</p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the map and on the keySet.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and set contains entry 1=159 .</p>
+     * <p><b>Expected Results</b>: The size method returns 1 and the isEmpty method returns false.</p>
+     */
     @Test
     public void Size_1Element(){
 
@@ -116,6 +133,19 @@ public class TestSuiteKeySet {
         assertEquals("isEmpty did not returned false.", false, key.isEmpty());
     }
 
+    /**
+     * <p><b>Summary</b>: size, isEmpty method test case. 
+     * The test case asserts that a map and its relative keySetwith five mappings
+     * should have a size of 5 and isEmpty call returning false. 
+     * The map is modified before the asserts.</p>
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 5 size and not being empty. </p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the set.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the set contains five mappings.</p>
+     * <p><b>Expected Results</b>: The size method returns 5 and the isEmpty method returns false.</p>
+     */
     @Test
     public void Size_5Element(){
 
@@ -128,6 +158,20 @@ public class TestSuiteKeySet {
         assertEquals("isEmpty did not returned false.", false, key.isEmpty());
     }
 
+    
+    /**
+     * <p><b>Summary</b>: size, isEmpty method test case. 
+     * The test case asserts that a map and its relative keySet with five mappings
+     * should have a size of 160 and isEmpty call returning false. 
+     * The map is modified before the asserts.</p>
+     * <p><b>Test Case Design</b>: The design is a simple assert of
+     * a size call and expected 160 size and not being empty. </p>
+     * 
+     * <p><b>Test Description</b>: size and isEmpty methods are invoked on the setn.</p>
+     * <p><b>Pre-Condition</b>: The map is empty.</p>
+     * <p><b>Post-Condition</b>: The map and the set contains five mappings.</p>
+     * <p><b>Expected Results</b>: The size method returns 160 and the isEmpty method returns false.</p>
+     */
     @Test
     public void Size_160Element(){
 
@@ -141,10 +185,19 @@ public class TestSuiteKeySet {
 
     // ********************* CONTAINS METHOD ******************************
 
+    /**
+     * <p><b>Summary</b>: contains method test case.</p>
+     * <p><b>Test Case Design</b>: Tests the limit case of invoking the method in an empty set
+     * wich should always return false. </p>
+     * <p><b>Test Description</b>: value 'ci' is tested to be present in the set. </p>
+     * <p><b>Pre-Condition</b>: The map and the set is empty. </p>
+     * <p><b>Post-Condition</b>: The map and the set is unchanged, still empty.</p>
+     * <p><b>Expected Results</b>: contains returns false.</p>
+     */
     @Test
     public void Contains_Emptykey(){
         HSet key = map1.keySet();
-        assertEquals("The set contains key 'ci' even if it is empty.", false, key.contains("ci"));
+        assertEquals("The set contains 'ci' even if it is empty.", false, key.contains("ci"));
     }
     /**
      * <p><b>Summary</b>: contains method test case.</p>
@@ -158,9 +211,9 @@ public class TestSuiteKeySet {
     @Test
     public void Contains_1(){
         HSet key = map1.keySet();
-        assertEquals("The set contains key 15 even if it is empty.", false, key.contains(15));
+        assertEquals("The set contains 15 even if it is empty.", false, key.contains(15));
         map1.put(15,15);
-        assertEquals("The set does not contains key 15 even if it should.", true, key.contains(15));
+        assertEquals("The set does not contains 15 even if it should.", true, key.contains(15));
     }
 
     /**
@@ -347,8 +400,7 @@ public class TestSuiteKeySet {
     /**
      * <p><b>Summary</b>: clear method test case.</p>
      * <p><b>Test Case Design</b>: Invokes clear method on a set containing {0:1000}.</p>
-     * <p><b>Test Description</b>: Calls clear on the set, then it should be
-     * equal to another empty set.</p>
+     * <p><b>Test Description</b>: Calls clear on the set, then it should be empty</p>
      * <p><b>Pre-Condition</b>: The map and the set contains 1000 elements</p>
      * <p><b>Post-Condition</b>: The map and the set is empty.</p>
      * <p><b>Expected Results</b>: set is empty</p>
@@ -740,7 +792,7 @@ public class TestSuiteKeySet {
      * returns true, key1 is changed.</p>
      */
     @Test
-    public void RetainAll_EmptykeyArg(){
+    public void RetainAll_EmptySetArg(){
         for(int i = 0; i < 45; i++){
             map1.put(i*i*i,(i+654)*i);
         }
@@ -903,7 +955,7 @@ public class TestSuiteKeySet {
     public void ContainsAll_BothEmpty_False(){
         HSet key1 = map1.keySet();
         HSet key2 = map2.keySet();
-        assertEquals("The method should return true because the Set is empty.", true, key1.containsAll(key2)); 
+        assertTrue("The method should return true because the Set is empty.", key1.containsAll(key2)); 
     }
 
     /**

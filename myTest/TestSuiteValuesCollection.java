@@ -34,6 +34,7 @@ import myAdapter.*;
  * 
  * @version 1.0
  * @see TestSuiteMapAdapter
+ * @see MapAdapter
  * @author Giacomo Calabria
  */
 
@@ -348,11 +349,11 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: contains method test case.</p>
-     * <p><b>Test Case Design</b>: Tests the limit case of invoking the method in an empty map
+     * <p><b>Test Case Design</b>: Tests the limit case of invoking the method in an empty collection
      * wich should always return false. </p>
-     * <p><b>Test Description</b>: value 'ci' is tested to be present in the map as value. </p>
-     * <p><b>Pre-Condition</b>: The map is empty. </p>
-     * <p><b>Post-Condition</b>: The map is unchanged, still empty.</p>
+     * <p><b>Test Description</b>: value 'ci' is tested to be present in the collection. </p>
+     * <p><b>Pre-Condition</b>: The map and the collection is empty. </p>
+     * <p><b>Post-Condition</b>: The map and the collection is unchanged, still empty.</p>
      * <p><b>Expected Results</b>: contains returns false.</p>
      */
     @Test
@@ -1114,7 +1115,7 @@ public class TestSuiteValuesCollection {
     public void ContainsAll_BothEmpty_False(){
         HCollection coll1 = map1.values();
         HCollection coll2 = map2.values();
-        assertEquals("The method should return true because the collection is empty.", true, coll1.containsAll(coll2)); 
+        assertTrue("The method should return true because the collection is empty.", coll1.containsAll(coll2)); 
     }
 
     /**
