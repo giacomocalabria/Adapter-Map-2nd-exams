@@ -199,10 +199,10 @@ public class TestSuiteKeySet {
     /**
      * <p><b>Summary</b>: contains method test case.</p>
      * <p><b>Test Case Design</b>: Test the case of invoking the method before put and after put mappings on the map</p>
-     * <p><b>Test Description</b>: an values is tested to be present in the collection
+     * <p><b>Test Description</b>: an values is tested to be present in the set
      *  before and after put the mappings in the map. </p>
-     * <p><b>Pre-Condition</b>: The map and the collection is empty. </p>
-     * <p><b>Post-Condition</b>: The map and the collection contains a mapping: "mio"="ci" </p>
+     * <p><b>Pre-Condition</b>: The map and the set is empty. </p>
+     * <p><b>Post-Condition</b>: The map and the set contains a mapping: "mio"="ci" </p>
      * <p><b>Expected Results</b>: contains return false when the value is not present, true otherwhise. </p>
      */
     @Test

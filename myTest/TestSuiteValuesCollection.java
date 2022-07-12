@@ -762,7 +762,6 @@ public class TestSuiteValuesCollection {
      * <p><b>Post-Condition</b>: Map and collection is empty.</p>
      * <p><b>Expected Results</b>: collection is empty, obviusly its size is 0.</p>
      */
-
     @Test
     public void Remove_450ToEmpty(){
         for(int i = 0; i < 450; i++){
@@ -897,6 +896,30 @@ public class TestSuiteValuesCollection {
         assertTrue(coll1.removeAll(coll2));
         assertEquals(10, coll2.size());
         assertEquals(90, coll1.size());
+    }
+
+    /**
+     * <p><b>Summary</b>: removeAll method test case.</p>
+     * <p><b>Test Case Design</b>: removeAll method called between two collections. coll2 includes
+     * all elements of the coll1</p>
+     * <p><b>Test Description</b>: The test adds two equal elements to map1
+     * so that coll1 has 2 equal elements. Call removeAll in order
+     * to remove the duplicates elements</p>
+     * <p><b>Pre-Condition</b>: the map1 and coll1 contains 2 elments. coll2 contains 1 elements</p>
+     * <p><b>Post-Condition</b>: The map1 and coll1 is changed. coll2 is unchanged</p>
+     * <p><b>Expected Results</b>: removeAll removes duplicates elements </p>
+     */
+    @Test
+    public void RemoveAll_duplicates(){
+        map1.put(1,1);
+        map1.put(2,1);
+        map2.put(156,1);
+        HCollection coll1 = map1.values();
+        HCollection coll2 = map2.values();
+        assertEquals(2, coll1.size());
+        assertEquals(1, coll2.size());
+        coll1.removeAll(coll2);
+        assertTrue(coll1.isEmpty());
     }
 
     //************************* RETAINALL METHOD *******************************
@@ -1112,7 +1135,7 @@ public class TestSuiteValuesCollection {
      * <p><b>Expected Results</b>: The containsAll method return true.</p>
      */
     @Test
-    public void ContainsAll_BothEmpty_False(){
+    public void ContainsAll_BothEmpty_True(){
         HCollection coll1 = map1.values();
         HCollection coll2 = map2.values();
         assertTrue("The method should return true because the collection is empty.", coll1.containsAll(coll2)); 
@@ -1250,7 +1273,6 @@ public class TestSuiteValuesCollection {
      * <p><b>Post-Condition</b>: The collection is still empty.</p>
      * <p><b>Expected Results</b>: NullPointerExceptio is thrown.</p>
      */
-
     @Test (expected = NullPointerException.class)
     public void ToArray_DestNull_NPException(){
         HCollection coll1 = map1.values();
@@ -1265,10 +1287,9 @@ public class TestSuiteValuesCollection {
      * special case.</p>
      * <p><b>Test Description</b>: arr contains the result of toArray method, but exception is being thrown.</p>
      * <p><b>Pre-Condition</b>: The collection has 2 elements, arr is empty.</p>
-     * <p><b>Post-Condition</b>:The collection has 2 element, arr is still empty.</p>
+     * <p><b>Post-Condition</b>:The collection has 2 elements, arr is still empty.</p>
      * <p><b>Expected Results</b>: HIllegalArgumentException is thrown.</p>
      */
-
     @Test (expected = IllegalArgumentException.class)
     public void ToArray_DestSmaller(){
         map1.put(1,1);

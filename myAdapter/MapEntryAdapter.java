@@ -11,6 +11,7 @@ package myAdapter;
  * 
  *  @author Giacomo Calabria
  *  @see Map.entrySet()
+ *  @see MapAdapter
  */
 public class MapEntryAdapter implements HMap.HEntry{
 

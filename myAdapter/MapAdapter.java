@@ -1023,7 +1023,7 @@ public class MapAdapter implements HMap{
             HIterator i = coll.iterator();
             while(i.hasNext()){
                 Object tmp = i.next();
-                if(!table.contains(tmp))
+                if(!this.contains(tmp))
                     return false;
             }
             return true;

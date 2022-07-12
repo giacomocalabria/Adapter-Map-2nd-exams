@@ -655,6 +655,22 @@ public class TestSuiteMapAdapter {
         assertEquals("Transitive property is not met.",true, map1.equals(map3));
     }
 
+    /**
+     * <p><b>Summary</b>: equals method test case.</p>
+     * <p><b>Test Case Design</b>: null argumenti. Specific test case. </p>
+     * 
+     * <p><b>Test Description</b>: The test invokes map1.equals(null) and should return 
+     * always false</p>
+     * <p><b>Pre-Condition</b>: The map is empty</p>
+     * <p><b>Post-Condition</b>: The map is unchanged. </p>
+     * <p><b>Expected Results</b>: Equals return false.</p>
+     */
+    @Test
+    public void Equals_null(){
+        assertFalse(map1.equals(null));
+    }
+
+
     //****************************** GET METHOD *******************************
 
     /**

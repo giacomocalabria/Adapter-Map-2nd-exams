@@ -11,7 +11,7 @@ import java.util.*;
  * for myTest package. In fact it has a main method to initiate and run all
  * the testing. It is based on JUnit framework.
  * 
- * Main class to execute {@link myTest}
+ * Main class to execute {@link myTest}z
  * <p>
  * 
  * @version JUnit 4.13
