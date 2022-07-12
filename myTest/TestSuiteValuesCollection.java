@@ -20,6 +20,9 @@ import myAdapter.*;
  * It offer different type of test in differente case scanario, in order to test their correct behaviour.
  * The first section of this test suite contains the test in the TestCollection.java file 
  * assigned by the Professor, correctly translated in the JUnit format.
+ * Some tests of the TestCollection.java file were not included because they are already included
+ * in the test cases ideated by me.
+ * 
  * After this section there are several section for each method (or group of feature) contains 
  * the test cases ideated by me.
  * 
@@ -87,12 +90,15 @@ public class TestSuiteValuesCollection {
     //***************** TEST COLLECTION ASSIGNED BY PROFESSOR *********************
 
     /**
-     * <p><b>Summary</b>: verifico che temp contenga gli elementi di head</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Summary</b>: toArray method test case.
+     * verifico che temp contenga gli elementi di head</p>
+     * <p><b>Test Case Design</b>: Tests toArray with a single element.</p>
+     * <p><b>Test Description</b>: La variabile booleana size è vera se leght è 1,
+     * content è vera se temp[0] equals "Collection Adapter". </p>
      * <p><b>Pre-Condition</b>: head con almeno un elemento</p>
      * <p><b>Post-Condition</b>: temp che e' un array contenete gli elementi di head</p>
-     * <p><b>Expected Results</b>: size is 1 and the array contains the correct elements</p>
+     * <p><b>Expected Results</b>: size is 1 and the array contains the correct elements
+     * so size AND content are true</p>
      */
     @Test
 	public void to_array() {
@@ -105,12 +111,14 @@ public class TestSuiteValuesCollection {
 	}
     
     /**
-     * <p><b>Summary</b>: verifico che head contenga gli elementi di head, facendo il confronto con il suo contenuto</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Summary</b>: toArray method test case.
+     * verifico che head contenga gli elementi di head, facendo il confronto con il suo contenuto</p>
+     * <p><b>Test Case Design</b>: Tests toArray with a single element.</p>
+     * <p><b>Test Description</b>: La variabile booleana content è vera se temp[0] equals "Collection Adapter".</p>
      * <p><b>Pre-Condition</b>: head con almeno un elemento, a array di destinazione</p>
      * <p><b>Post-Condition</b>: a contiene gli elementi di head</p>
-     * <p><b>Expected Results</b>: the array contains the correct elements</p>
+     * <p><b>Expected Results</b>: the array contains the correct elements
+     * so content is true</p>
      */
     @Test
     public void to_array_a(){
@@ -123,12 +131,12 @@ public class TestSuiteValuesCollection {
     }
 
     /**
-     * <p><b>Summary</b>:test remove(Object o), rimuovo da ct l'elemento o e verifico che la dimensione di ct sia cambiata</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Summary</b>: remove method test case.</p>
+     * <p><b>Test Case Design</b>: test remove(Object o), rimuovo da ct l'elemento o e verifico che la dimensione di ct sia cambiata</p>
+     * <p><b>Test Description</b>: o is removed from ct</p>
      * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
      * <p><b>Post-Condition</b>: ct senza l'elemento o</p>
-     * <p><b>Expected Results</b>:</p>
+     * <p><b>Expected Results</b>: ris is true</p>
      */
     @Test
 	public void remove_o(){
@@ -144,12 +152,13 @@ public class TestSuiteValuesCollection {
 	}
 
     /**
-     * <p><b>Summary</b>: test removeAll(Collection c), rimuovo da ct tutti gli elementi di c</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Summary</b>: removeAll method test case
+     * test removeAll(Collection c), rimuovo da ct tutti gli elementi di c</p>
+     * <p><b>Test Case Design</b>: tests removeAll method on a collection, should return true</p>
+     * <p><b>Test Description</b>: o is removed from ct</p>
      * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
      * <p><b>Post-Condition</b>: ct senza gli elementi di Collection c</p>
-     * <p><b>Expected Results</b>: </p>
+     * <p><b>Expected Results</b>: ris is true</p>
      */
     @Test
 	public void remove_all_c() {
@@ -169,12 +178,13 @@ public class TestSuiteValuesCollection {
 	}
 
     /**
-     * <p><b>Summary</b>:modifica ct facendogli contenere alla fine solo gli elementi presenti anche in c</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Summary</b>: retainAll method test case.
+     * modifica ct facendogli contenere alla fine solo gli elementi presenti anche in c</p>
+     * <p><b>Test Case Design</b>: Tests remove method on a collection, which should return true.</p>
+     * <p><b>Test Description</b>:  o is removed from ct.</p>
      * <p><b>Pre-Condition</b>: ct con almeno un elemento</p>
      * <p><b>Post-Condition</b>: ct intersecato a Collection c</p>
-     * <p><b>Expected Results</b>:</p>
+     * <p><b>Expected Results</b>: ris is true</p>
      */
     @Test
 	public void retain_all_c() {
@@ -195,11 +205,11 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: test metodo containsAll(Collection c) e verifico che gli elementi di c siano presenti in ct</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Test Case Design</b>: containsAll method is invoked.</p>
+     * <p><b>Test Description</b>: containsAll method is invoked.</p>
      * <p><b>Pre-Condition</b>: ct contiene tutti gli elementi presenti nella Collection c</p>
      * <p><b>Post-Condition</b>: ris e' true</p>
-     * <p><b>Expected Results</b>:</p>
+     * <p><b>Expected Results</b>: ris è true</p>
      */
     @Test
 	public void containsAll_c() {
@@ -220,11 +230,13 @@ public class TestSuiteValuesCollection {
 
     /**
      * <p><b>Summary</b>: test metodo equals(Object o) e controllo se sono uguali</p>
-     * <p><b>Test Case Design</b>:</p>
-     * <p><b>Test Description</b>:</p>
+     * <p><b>Test Case Design</b>: Tests equals behaviour with
+	 * 4 equals objects.</p>
+     * <p><b>Test Description</b>: Collection are made equal, then equals
+	 * is invoked.</p>
      * <p><b>Pre-Condition</b>: due oggetti uguali</p>
      * <p><b>Post-Condition</b>: ris vale true</p>
-     * <p><b>Expected Results</b>:</p>
+     * <p><b>Expected Results</b>: ris is true</p>
      */
     @Test
 	public void equals_o() {

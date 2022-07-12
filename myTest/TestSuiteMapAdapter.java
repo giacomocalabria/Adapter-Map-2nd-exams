@@ -94,12 +94,15 @@ public class TestSuiteMapAdapter {
      * <p><b>Summary</b>:Test the propagation of changes from the map to the keySet.
      * It is tested with adding and removing mappings from the map. </p>
      * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
-     * of the element in the keySet and vice-versa</p>
+     * of the element in the keySet</p>
      * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
-     * the map and after re added to the map.</p>
-     * <p><b>Pre-Condition</b>: The map contains args elements.</p>
-     * <p><b>Post-Condition</b>: The map contains args elements.</p>
-     * <p><b>Expected Results</b>: The map correctly propagates the changes to keySet</p>
+     * the map and after re-added to the map. In each state the size of the map and of the keySet is memorized
+     * in specific variables. The last assert simply verify that in each state the size of the map and the size of the
+     * keySet match correctly.</p>
+     * <p><b>Pre-Condition</b>: The map contains all args elements.</p>
+     * <p><b>Post-Condition</b>: The map contains all args elements.</p>
+     * <p><b>Expected Results</b>: The map correctly propagates the changes to keySet if the size of the map 
+     * is equal to the size of the keySet in each state</p>
      */
 
     @Test
@@ -130,10 +133,13 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Case Design</b>: Tests that the keySet correctly backed the changes
      * of the element in the map and vice-versa</p>
      * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
-     * the keySet and after re added to the map.</p>
+     * the keySet and after re added to the map. In each state the size of the map and of the set is memorized
+     * in specific variables. The last assert simply verify that in each state the size of the map and the
+     * size of the keySet match correctly</p>
      * <p><b>Pre-Condition</b>: The map contains args elements.</p>
      * <p><b>Post-Condition</b>: The map contains args elements.</p>
-     * <p><b>Expected Results</b>: The keySet correctly backed the changes to map</p>
+     * <p><b>Expected Results</b>: The keySet correctly backed the changes to map if the size of the map 
+     * is equal to the size of the keySet in each state</p>
      */
     @Test
     public void Backing_Map_KeySet(){
@@ -186,10 +192,10 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
      * of the element in the keySet using its iterator</p>
      * <p><b>Test Description</b>: The map is initialized with some mappings. Then with the keySet iterator
-     * it removes all elements</p>
+     * it removes all elements, so that at the end the keySet and the map are emtpy</p>
      * <p><b>Pre-Condition</b>: The map contains args elements.</p>
      * <p><b>Post-Condition</b>: The map is empty.</p>
-     * <p><b>Expected Results</b>: The keySet iterator works properly and empty the map</p>
+     * <p><b>Expected Results</b>: The keySet iterator works properly and empty the map and keySet</p>
      */
     @Test
     public void Emptying_KeySet_Iterator(){
@@ -239,10 +245,13 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
      * of the element in the values and vice-versa</p>
      * <p><b>Test Description</b>: The map is initialized with some mappings. Then an entry is removed from
-     * the map and after re added to the map.</p>
+     * the map and after re-added to the map. In each state the size of the map and of the Collection is memorized
+     * in specific variables. The last assert simply verify that in each state the size of the map and the
+     * size of the values collection match correctly</p></p>
      * <p><b>Pre-Condition</b>: The map contains args elements.</p>
      * <p><b>Post-Condition</b>: The map contains args elements.</p>
-     * <p><b>Expected Results</b>: The map correctly propagates the changes to valuest</p>
+     * <p><b>Expected Results</b>: The map correctly propagates the changes to values if the size of the map 
+     * is equal to the size of the values collection in each state</p></p>
      */
     @Test
     public void Test_ValuesMethod(){
@@ -282,10 +291,10 @@ public class TestSuiteMapAdapter {
      * <p><b>Test Case Design</b>: Tests that the map correctly propagates the changes
      * of the element in the values using its iterator</p>
      * <p><b>Test Description</b>: The map is initialized with some mappings. Then with the values iterator
-     * it removes all elements</p>
+     * it removes all elements, so that at the end the keySet and the map are emtpy</p>
      * <p><b>Pre-Condition</b>: The map contains args elements.</p>
      * <p><b>Post-Condition</b>: The map is empty.</p>
-     * <p><b>Expected Results</b>: The values iterator works properly and empty the map</p>
+     * <p><b>Expected Results</b>: The values iterator works properly and empty the map and the values collection.</p>
      */
     @Test
     public void Emptying_Values_Iterator(){
