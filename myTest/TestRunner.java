@@ -14,16 +14,13 @@ import java.util.*;
  * Main class to execute {@link myTest}
  * <p>
  * 
- * Precondition: Object methods are considered in a working status when they are used
- * 
  * @version JUnit 4.13
  * @version Harmcrest: 1.3
  * @version JVM from JME CLDC 1.1
  * 
  * @author Giacomo Calabria
  */
-public class TestRunner
-{
+public class TestRunner{
     // Contains the number of total test
     private static int numberOfTests = 0;
     private static int numberOfSuccesses = 0;
