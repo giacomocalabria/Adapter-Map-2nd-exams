@@ -39,7 +39,7 @@ package myAdapter;
  *  modify the map on which they operate, are specified to throw UnsupportedOperationException
  *  if this map does not support the operation. If this is the case, these methods
  *  may, but are not required to, throw an UnsupportedOperationException if the
- *  invocation would have no effect on the map. For example, invoking the putAll(Map)
+ *  invocation would have no effect on the map. For example, invoking the {@link #putAll(HMap)}
  *  method on an unmodifiable map may, but is not required to, throw the exception if
  *  the map whose mappings are to be "superimposed" is empty.
  * 

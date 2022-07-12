@@ -11,7 +11,7 @@ import java.util.Enumeration;
  *  are forbidden.
  * 
  *  @author Giacomo Calabria
- *  @see {@link java.util.Hashtable}
+ *  @see java.util.Hashtable
  */
 
 public class Hashtable{
