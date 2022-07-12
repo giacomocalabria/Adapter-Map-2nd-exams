@@ -657,7 +657,7 @@ public class TestSuiteMapAdapter {
 
     /**
      * <p><b>Summary</b>: equals method test case.</p>
-     * <p><b>Test Case Design</b>: null argumenti. Specific test case. </p>
+     * <p><b>Test Case Design</b>: null argumenti. Specific test case.</p>
      * 
      * <p><b>Test Description</b>: The test invokes map1.equals(null) and should return 
      * always false</p>
