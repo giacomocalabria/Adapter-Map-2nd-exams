@@ -150,7 +150,7 @@ public interface HCollection {
      * @throws NullPointerException if the specified array is null.
      */
 
-    Object[] toArray(Object arrayTarget[]);
+    Object[] toArray(Object[] arrayTarget);
 
     // Modification Operations
 
@@ -173,7 +173,7 @@ public interface HCollection {
      * the invariant that a collection always contains the specified element
      * after this call returns.
      *
-     * @param e element whose presence in this collection is to be ensured
+     * @param obj element whose presence in this collection is to be ensured
      * @return {@code true} if this collection changed as a result of the
      *         call
      */
@@ -188,7 +188,7 @@ public interface HCollection {
      * {@code true} if this collection contained the specified element (or
      * equivalently, if this collection changed as a result of the call).
      *
-     * @param o element to be removed from this collection, if present
+     * @param obj element to be removed from this collection, if present
      * @return {@code true} if an element was removed as a result of this call
      */
     boolean remove(Object obj);
@@ -199,7 +199,7 @@ public interface HCollection {
      * Returns {@code true} if this collection contains all of the elements
      * in the specified collection.
      *
-     * @param  c collection to be checked for containment in this collection
+     * @param  coll collection to be checked for containment in this collection
      * @return {@code true} if this collection contains all of the elements
      *         in the specified collection
      * @throws NullPointerException if the specified collection is null.
@@ -215,7 +215,7 @@ public interface HCollection {
      * specified collection is this collection, and this collection is
      * nonempty.)
      *
-     * @param c collection containing elements to be added to this collection
+     * @param coll collection containing elements to be added to this collection
      * @return {@code true} if this collection changed as a result of the call
      * @throws NullPointerException if the specified collection is null.
      * @see #add(Object)
@@ -228,7 +228,7 @@ public interface HCollection {
      * this collection will contain no elements in common with the specified
      * collection.
      *
-     * @param c collection containing elements to be removed from this collection
+     * @param coll collection containing elements to be removed from this collection
      * @return {@code true} if this collection changed as a result of the
      *         call
      *
@@ -244,7 +244,7 @@ public interface HCollection {
      * this collection all of its elements that are not contained in the
      * specified collection.
      *
-     * @param c collection containing elements to be retained in this collection
+     * @param coll collection containing elements to be retained in this collection
      * @return {@code true} if this collection changed as a result of the call
      *
      * @throws NullPointerException if the specified collection is null.

@@ -27,6 +27,11 @@ public class MapEntryAdapter implements HMap.HEntry{
         this.key = akey;
     }
 
+    /**
+     * Constructor with key and value argument
+     * @param akey - key to be assigned to the entry
+     * @param avalue - value to be assigned to the entry
+     */
     public MapEntryAdapter(Object akey, Object avalue){
         this.value = avalue;
         this.key = akey;

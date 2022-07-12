@@ -11,7 +11,7 @@ package myAdapter;
  *      <li> Method names have been improved.
  * </ul>
  * @author Giacomo Calabria
- * @see Collection
+ * @see HCollection
  * @see Iterable
  */
 public interface HIterator {

@@ -193,7 +193,7 @@ public interface HMap{
      *  does not permit null keys or values, and the specified
      *  map contains null keys or values. (this map does not permit null key).
      */
-    void putAll(HMap t);
+    void putAll(HMap m);
 
     /**
      * Removes all of the mappings from this map.
