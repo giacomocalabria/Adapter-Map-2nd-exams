@@ -127,7 +127,7 @@ public interface HSet extends HCollection{
      * Note that {@code toArray(new Object[0])} is identical in function to
      * {@code toArray()}.
      *
-     * @param a the array into which the elements of this set are to be
+     * @param arrayTarget the array into which the elements of this set are to be
      *        stored, if it is big enough; otherwise, a new array of the same
      *        runtime type is allocated for this purpose.
      * @return an array containing all the elements in this set
@@ -190,7 +190,7 @@ public interface HSet extends HCollection{
      * specified collection.  If the specified collection is also a set, this
      * method returns {@code true} if it is a <i>subset</i> of this set.
      *
-     * @param  c collection to be checked for containment in this set
+     * @param  coll collection to be checked for containment in this set
      * @return {@code true} if this set contains all of the elements of the
      *         specified collection
      * @throws NullPointerException if the specified collection contains one
@@ -209,7 +209,7 @@ public interface HSet extends HCollection{
      * sets.  The behavior of this operation is undefined if the specified
      * collection is modified while the operation is in progress.
      *
-     * @param  c collection containing elements to be added to this set
+     * @param  coll collection containing elements to be added to this set
      * @return {@code true} if this set changed as a result of the call
      *
      * @throws UnsupportedOperationException if the {@code addAll} operation
@@ -229,7 +229,7 @@ public interface HSet extends HCollection{
      * operation effectively modifies this set so that its value is the
      * <i>intersection</i> of the two sets.
      *
-     * @param  c collection containing elements to be retained in this set
+     * @param  coll collection containing elements to be retained in this set
      * @return {@code true} if this set changed as a result of the call
      * @throws NullPointerException if this set contains a null element and the
      *         specified collection does not permit null elements
@@ -245,7 +245,7 @@ public interface HSet extends HCollection{
      * set so that its value is the <i>asymmetric set difference</i> of
      * the two sets.
      *
-     * @param  c collection containing elements to be removed from this set
+     * @param  coll collection containing elements to be removed from this set
      * @return {@code true} if this set changed as a result of the call
      * @throws NullPointerException if this set contains a null element or
      * if the specified collection is null
