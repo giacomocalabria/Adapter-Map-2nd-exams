@@ -89,6 +89,24 @@ public class TestSuiteValuesCollection {
     
     //***************** TEST COLLECTION ASSIGNED BY PROFESSOR *********************
 
+    
+    /**
+     * <p><b>Summary</b>: contains method test case.
+     * verifico che coll1 contenga l' elemento</p>
+     * <p><b>Test Case Design</b>: Test contains method with one value</p>
+     * <p><b>Test Description</b>: Simply call  </p>
+     * <p><b>Pre-Condition</b>: coll1 contiene l'elemento da verificare </p>
+     * <p><b>Post-Condition</b>: ris e' true</p>
+     * <p><b>Expected Results</b>: coll1 conteiene l'elemento, contains return true</p>
+     */
+    @Test
+	public void contains_o(){
+        map1.put("Collection Adapter","Collection Adapter");
+        HCollection coll1 = map1.values();
+		boolean ris = coll1.contains("Collection Adapter");
+		assertTrue(ris);
+	}
+
     /**
      * <p><b>Summary</b>: toArray method test case.
      * verifico che temp contenga gli elementi di head</p>
@@ -255,6 +273,70 @@ public class TestSuiteValuesCollection {
 		
 		boolean ris = ct.equals(temp);
 		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>: clear method test case.
+     * svuotare il ct e testare se e' vuoto</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on an collection</p>
+     * <p><b>Test Description</b>: Calls clear on the collection, then it should be empty</p>
+     * <p><b>Pre-Condition</b>: ct contiene almeno un elemento</p>
+     * <p><b>Post-Condition</b>: non ci sono piu' value in ct</p>
+     * <p><b>Expected Results</b>: collection is Empty </p>
+     */
+    @Test
+	public void clear() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+		ct.clear();
+		assertTrue(ct.isEmpty());
+	}
+
+    /**
+     * <p><b>Summary</b>: isEmpty method test case.
+     * test metodo isEmpty() e controllo che ct sia vuoto attraverso il metodo isEmpty()</p>
+     * <p><b>Test Case Design</b>: Invokes clear method on an collection then isEmtpy should return true</p>
+     * <p><b>Test Description</b>: Calls clear on the collection, then it should be empty, 
+     * then isEmtpy should return true </p>
+     * <p><b>Pre-Condition</b>: ct contiene almeno un elemento</p>
+     * <p><b>Post-Condition</b>: ct vuoto, ris vale true</p>
+     * <p><b>Expected Results</b>: collection is Empty </p>
+     */
+    @Test
+	public void is_empty() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        
+        HCollection ct = map1.values();
+		ct.clear();
+		boolean ris = ct.isEmpty();
+		assertTrue(ris);
+	}
+
+    /**
+     * <p><b>Summary</b>: size method test case.
+     * verifico se size e' uguale a 4</p>
+     * <p><b>Test Case Design</b>: Invokes size method on an collection</p>
+     * <p><b>Test Description</b>: calls size methon on a collection with 4 elements</p>
+     * <p><b>Pre-Condition</b>: ct con 4 elementi</p>
+     * <p><b>Post-Condition</b>: size = 4</p>
+     * <p><b>Expected Results</b>: size = 4</p>
+     */
+    @Test
+	public void size() {
+        map1.put(1,"Collection Adapter");
+        map1.put(2,"aaa");
+        map1.put(3,"bbb");
+        map1.put(4,"ccc");
+        HCollection ct = map1.values();
+		int size = ct.size();
+		assertEquals(4, size);
 	}
 
     // ****************************** SIZE ISEMPTY METHOD *************************
