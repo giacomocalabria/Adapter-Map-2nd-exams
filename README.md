@@ -12,9 +12,9 @@ Supponendo di essere in ambiente Java Micro Edition CLDC 1.1
 
 Usiamo in questo ambiente una libreria di classi in ambiente J2SE 1.4.2
 
-* [Collection (J2SE 1.4.2) (geas.dei.unipd.it)](https://www2.cs.duke.edu/csed/java/jdk1.4.2/docs/api/java/util/Collection.html)
-* [J2SE 1.4.2 (geas.dei,unipd.it)](http://geas.dei.unipd.it/jdk1.4.2/docs/api/)
+* [J2SE 1.4.2 (geas.dei.unipd.it)](http://geas.dei.unipd.it/jdk1.4.2/docs/api/)
 * [Map (J2SE 1.4.2) (geas.dei.unipd.it)](http://geas.dei.unipd.it/jdk1.4.2/docs/api/java/util/Map.html)
+* [Collection (J2SE 1.4.2) (geas.dei.unipd.it)](https://www2.cs.duke.edu/csed/java/jdk1.4.2/docs/api/java/util/Collection.html)
 * [Set (J2SE 1.4.2) (geas.dei.unipd.it)](http://geas.dei.unipd.it/jdk1.4.2/docs/api/java/util/Set.html)
 
 Il secondo appello consiste nel sviluppare un ***adapter*** di Map utilizzando come ***adaptee*** per Map la classe Hashtable CLDC 1.1
@@ -26,15 +26,12 @@ Le classi di test sono contenute nel package myTest. Il package myTest contiene 
 
 Compilazione del progetto:
 
-* javac -cp "./JUnit/*;./Matcher/*" myAdapter/*.java myTest/*.java
+    javac -cp "./JUnit/*;./Matcher/*" myAdapter/*.java myTest/*.java
 
 Esecuzione di TestRunner:
 
-* java -cp "./;./JUnit/*;./Matcher/*" myTest.TestRunner"
+    java -cp "./;./JUnit/*;./Matcher/*" myTest.TestRunner"
 
 
-La documentazione è contenuta in una cartella denominata Documentazione.
-
-    La documentazione delle classi è stata documentata nel formato javadoc.
-
-    La test suite e i test case sono stati documentati anch'essi nel formato javadoc.
+La documentazione è contenuta in una cartella denominata Documentazione. 
+La documentazione delle classi, la test suite e i test case sono stati documentati nel formato javadoc.
