@@ -2,7 +2,7 @@
 
 Giacomo Calabria           	Matricola n°2007964
 
-Secondo appello dell' esame del corso di Elementi di Ingegneria del Software, canale 1
+Secondo appello dell' esame del corso di Elementi di Ingegneria del Software, canale 1. Valutazione finale: 30 e Lode
 
 Supponendo di essere in ambiente Java Micro Edition CLDC 1.1
 
