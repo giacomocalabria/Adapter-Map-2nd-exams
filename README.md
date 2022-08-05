@@ -1,8 +1,11 @@
 # Adapter-Map-2st-exams
 
-Giacomo Calabria           	Matricola n°2007964
-
+Giacomo Calabria, Matricola n°2007964
 Secondo appello dell' esame del corso di Elementi di Ingegneria del Software, canale 1. Valutazione finale: 30 e Lode
+
+E' possibile vedere la documentazione in formato javadoc alla github pages collegata a questa repo. E' accessibile al link
+
+[Documentazione Progetto (my Adapter e myTest) (Javadoc format)](https://giacomocalabria.github.io/Adapter-Map-2nd-exams/)
 
 Supponendo di essere in ambiente Java Micro Edition CLDC 1.1
 
